@@ -4,7 +4,7 @@ from pygame.draw import *
 map_name = "Типокарта.txt"
 WIDTH = 1200
 HEIGHT = 600
-screen = pg.display.set_mode((WIDTH, HEIGHT))
+
 GREY = (100, 100, 100)
 LIGHT_GREY = (150, 150, 150)
 DARK_GREY = (50, 50, 50)
@@ -27,7 +27,7 @@ def read_map(map_name):
 
 
 class Block():
-    def __init__(self):
+    def __init__(self, screen):
         self.length = 40
         self.screen = screen
 
@@ -38,7 +38,7 @@ class Block():
 
 
 
-def draw_map():
+def draw_map(block, map_list):
     """
     Рисуем карту
     """
@@ -51,5 +51,5 @@ def draw_map():
             if map_list[i][j] == '3':
                 block.draw(j, i, BROWN)
 
-block = Block()
-map_list = read_map(map_name)
+
+
