@@ -2,6 +2,8 @@ import pygame as pg
 from pygame.draw import *
 from level_constructor import *
 
+
+
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 running = True
