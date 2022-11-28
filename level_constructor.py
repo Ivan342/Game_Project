@@ -38,7 +38,8 @@ class Block():
 
 
 
-
+def block_length():
+    return 40
 
 def draw_map(block, map_list):
     """

@@ -60,8 +60,10 @@ class Personage:
                 if map[i][j] == '1':
                     if self.Vx > 0:
                         self.x = int(self.x) - ((int(self.x) + self.width) % 40)
+                        self.Vx = min(self.Vx, 0)
                     if self.Vx < 0:
                         self.x = int(self.x) + 40 - (int(self.x) % 40)
+                        self.Vx = max(self.Vx, 0)
 
     def Collision_y(self, map):
         '''
@@ -74,5 +76,8 @@ class Personage:
                 if map[i][j] == '1':
                     if self.Vy > 0:
                         self.y = int(self.y) - ((int(self.y) + self.height) % 40)
+                        self.Vy = min(self.Vy, 0)
                     if self.Vy < 0:
                         self.y = int(self.y) + 40 - (int(self.y) % 40)
+                        self.Vy = max(self.Vy, 0)
+
