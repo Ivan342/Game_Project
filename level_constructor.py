@@ -15,6 +15,8 @@ TIME_COLOR = GREY
 
 def read_map(map_name):
     """
+    1 - обычный блок
+    2 - смертельный блок
     :param map_name: имя файла, в котором записана карта
     :return: массив строк, каждая из которых освечает за свою строку карты
     """
@@ -35,6 +37,9 @@ class Block():
         rect(self.screen, color, ((x * self.length, y * self.length), (self.length, self.length)))
 
 
+
+
+
 def draw_map(block, map_list):
     """
     Рисуем карту
@@ -47,3 +52,11 @@ def draw_map(block, map_list):
                 block.draw(j, i, DARK_GREY)
             if map_list[i][j] == '3':
                 block.draw(j, i, BROWN)
+
+
+class MAP:
+    '''
+
+    '''
+    def __init__(self, map_list):
+        self.map_list = map_list

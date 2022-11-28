@@ -1,11 +1,20 @@
 import pygame as pg
-import keyboard  # using module keyboard
+import keyboard
 
 
 class Personage:
     def __init__(self, screen):
-        self.x = 0
-        self.y = 0
+        '''
+        self.x координата левого вверхнего угла по горизонтали
+        self.y - координата левого вверхнего угла по вертикали
+        self.radius - костыль для упррощения, потому что сейчас персонаж это шарик.
+        self.width - ширина персонажа, для нормальной отрисовки и проверки касаний собъектами. Считается от левого вверхнего угла
+        self.height - высота персонажа для проверки касаний. Считается от левого вверхнего угла
+        :param screen: экран, на который выводится персонаж
+        '''
+        self.screen = screen
+        self.x = 10
+        self.y = 10
         self.Vx = 0.1
         self.Vy = 0.1
         self.m = 10
@@ -29,12 +38,41 @@ class Personage:
         return 0
 
     def draw(self):
-        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))
+        pg.draw.rect(self.screen, self.color, (int(self.x), int(self.y), self.width, self.height))
 
     def move_x(self):
         self.x += self.Vx
+        #print(0)
+        #return x
 
     def move_y(self):
         self.y += self.Vy
 
 
+    def Collision_x(self, map):
+        '''
+        функция проверяет касание с блоками по x и выталкивает при касании
+        :param map: карта текущая
+        :return: ничего не выводит, только двигает
+        '''
+        for i in range( int(self.x) // 40, (int(self.x) + self.height)//40 + 1):
+            for j in range(int(self.y) // 40, (int(self.y) + self.height)//40 + 1):
+                if map[i][j] == '1':
+                    if self.Vx > 0:
+                        self.x = int(self.x) - ((int(self.x) + self.width) % 40)
+                    if self.Vx < 0:
+                        self.x = int(self.x) + 40 - (int(self.x) % 40)
+
+    def Collision_y(self, map):
+        '''
+        функция проверяет касание с блоками по y и выталкивает при касании
+        :param map: карта текущая
+        :return: ничего не выводит, только двигает
+        '''
+        for i in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
+            for j in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+                if map[i][j] == '1':
+                    if self.Vy > 0:
+                        self.y = int(self.y) - ((int(self.y) + self.height) % 40)
+                    if self.Vy < 0:
+                        self.y = int(self.y) + 40 - (int(self.y) % 40)
