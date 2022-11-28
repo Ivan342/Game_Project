@@ -1,6 +1,4 @@
-'''
-там чтобы блоки типа hill работали норм нужен фон. стандартные функции чет не работают
-'''
+
 import pygame as pg
 from pygame.draw import *
 
@@ -14,6 +12,7 @@ GREY = (100, 100, 100)
 LIGHT_GREY = (150, 150, 150)
 DARK_GREY = (50, 50, 50)
 BROWN = (40, 20, 10)
+WHITE = (255,255,255)
 
 TIME_COLOR = GREY
 
@@ -47,7 +46,7 @@ class Block():
         self.grass_box = self.grass.get_rect()
         self.ground = pg.image.load('земля.jpg').convert()
         self.ground_box = self.grass.get_rect()
-        self.hill = pg.image.load('склон.png').convert()
+        self.hill_left = pg.image.load('склон_лево.png').convert_alpha()
         self.hill_box = self.grass.get_rect()
     def draw_block_grass(self, x, y):
         '''
@@ -60,11 +59,11 @@ class Block():
         '''
         self.screen.blit(self.ground, (x * self.length, y * self.length))
 
-    def draw_block_hill(self, x, y):
+    def draw_block_hill_left(self, x, y):
         '''
-        рисует блок склона( пока не разобрался с фоном, вроде пнг, но питон сам заливает фон)
+        рисует блок склона(левого)
         '''
-        self.screen.blit(self.hill, (x * self.length, y * self.length))
+        self.screen.blit(self.hill_left, (x * self.length, y * self.length))
 
 
 
@@ -80,7 +79,7 @@ def draw_map(block, map_list):
             if map_list[i][j] == '2':
                 block.draw_block_under(j, i)
             if map_list[i][j] == '3':
-                block.draw_block_hill(j, i)
+                block.draw_block_hill_left(j, i)
 
 
 
