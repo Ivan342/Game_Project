@@ -2,7 +2,7 @@ import pygame as pg
 
 
 class Personage:
-    def __init__(self):
+    def __init__(self, screen):
         self.x = 0
         self.y = 0
         self.Vx = 0
@@ -18,7 +18,7 @@ class Personage:
         return 0
 
     def draw(self, screen, x, y):
-        pg.draw.circle(screen, self.color, x, y, self.radius)
+        pg.draw.circle(screen, self.color, (x, y), self.radius)
 
     def move(self, x, y):
         x += self.Vx
