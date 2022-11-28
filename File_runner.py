@@ -15,7 +15,8 @@ while running:
     draw_map(block, map_list)
     pers.move_x()
     pers.move_y()
-    pers.draw(screen, pers.x, pers.y)
+    pers.interaction_with_keyboard()
+    pers.draw()
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
@@ -23,7 +24,5 @@ while running:
             if event.button == 1:
                 pers.x = event.pos[0]
                 pers.y = event.pos[1]
-
-            pg.display.update()
     pg.display.update()
 pg.quit()

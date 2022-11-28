@@ -1,4 +1,5 @@
 import pygame as pg
+import keyboard  # using module keyboard
 
 
 class Personage:
@@ -12,20 +13,28 @@ class Personage:
         self.Fy = 0
         self.radius = 40
         self.screen = screen
+        self.acceleration = 0.0006
+        self.width = 50
+        self.height = 60
 
-    def interaction_with_keyboard(self, Vy, Vx):
-        self.Vx = Vx
-        self.Vy = Vy
+    def interaction_with_keyboard(self):
+        if keyboard.is_pressed('w'):
+            self.Vy -= self.acceleration
+        elif keyboard.is_pressed('s'):
+            self.Vy += self.acceleration
+        elif keyboard.is_pressed('a'):
+            self.Vx -= self.acceleration
+        elif keyboard.is_pressed('d'):
+            self.Vx += self.acceleration
         return 0
 
-    def draw(self, screen, x, y):
-        pg.draw.circle(screen, self.color, (x, y), self.radius)
+    def draw(self):
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))
 
     def move_x(self):
         self.x += self.Vx
-        #print(0)
-        #return x
 
     def move_y(self):
         self.y += self.Vy
+
 

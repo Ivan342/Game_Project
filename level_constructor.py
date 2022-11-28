@@ -35,9 +35,6 @@ class Block():
         rect(self.screen, color, ((x * self.length, y * self.length), (self.length, self.length)))
 
 
-
-
-
 def draw_map(block, map_list):
     """
     Рисуем карту
@@ -50,6 +47,3 @@ def draw_map(block, map_list):
                 block.draw(j, i, DARK_GREY)
             if map_list[i][j] == '3':
                 block.draw(j, i, BROWN)
-
-
-
