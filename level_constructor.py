@@ -19,6 +19,8 @@ TIME_COLOR = GREY
 
 def read_map(map_name):
     """
+    1 - обычный блок
+    2 - смертельный блок
     :param map_name: имя файла, в котором записана карта
     :return: массив строк, каждая из которых освечает за свою строку карты
     """
@@ -65,7 +67,8 @@ class Block():
         '''
         self.screen.blit(self.hill_left, (x * self.length, y * self.length))
 
-
+def block_length():
+    return 40
 
 def draw_map(block, map_list):
     """
@@ -82,4 +85,9 @@ def draw_map(block, map_list):
                 block.draw_block_hill_left(j, i)
 
 
+class MAP:
+    '''
 
+    '''
+    def __init__(self, map_list):
+        self.map_list = map_list
