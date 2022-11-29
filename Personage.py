@@ -13,10 +13,10 @@ class Personage:
         :param screen: экран, на который выводится персонаж
         '''
         self.screen = screen
-        self.x = 10
-        self.y = 10
-        self.Vx = 0.1
-        self.Vy = 0.1
+        self.x = 450
+        self.y = 100
+        self.Vx = 0
+        self.Vy = 0
         self.m = 10
         self.color = "red"
         self.Fy = 0
@@ -42,8 +42,6 @@ class Personage:
 
     def move_x(self):
         self.x += self.Vx
-        #print(0)
-        #return x
 
     def move_y(self):
         self.y += self.Vy
@@ -65,6 +63,15 @@ class Personage:
                         self.x = int(self.x) + 40 - (int(self.x) % 40)
                         self.Vx = max(self.Vx, 0)
 
+    # FIXME: реализована с очень большим количеством багов:
+    """
+    Баги: 1) Не может двигаться дальше середины карты: index out of range.
+            2) Есть возможность при движении сверху вниз пройти сквозь блок (Collision_y).
+            3) Как по мне, откидывание назад не лучшая идея. Оно также слишком сильное.
+            4) Не видит граничные блоки
+            Аналогично с Collision_y
+    """
+
     def Collision_y(self, map):
         '''
         функция проверяет касание с блоками по y и выталкивает при касании
@@ -80,4 +87,4 @@ class Personage:
                     if self.Vy < 0:
                         self.y = int(self.y) + 40 - (int(self.y) % 40)
                         self.Vy = max(self.Vy, 0)
-
+    # FIXME: реализована с очень большим количеством багов
