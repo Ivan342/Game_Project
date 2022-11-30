@@ -1,5 +1,17 @@
+import pygame
+from pygame import time, draw
+
 import pygame as pg
 import keyboard
+
+from level_constructor import *
+
+trace = ([])
+
+
+def draw_point(m, color, screen):
+    for [i, j] in m:
+        draw.circle(screen, color, (i, j), 1)
 
 
 class Personage:
@@ -13,20 +25,21 @@ class Personage:
         :param screen: экран, на который выводится персонаж
         '''
         self.screen = screen
-        self.x = 450
-        self.y = 100
-        self.Vx = 0
-        self.Vy = 0
-        self.m = 10
+        self.x = 10
+        self.y = 10
+        self.Vx = 0.1
+        self.Vy = 0.1
         self.color = "red"
         self.Fy = 0
         self.radius = 40
         self.screen = screen
-        self.acceleration = 0.0006
+        self.acceleration = 0.05
         self.width = 50
         self.height = 60
+        self.trace = trace
 
-    def interaction_with_keyboard(self):
+    def move_personage(self):
+        g = 0.006
         if keyboard.is_pressed('w'):
             self.Vy -= self.acceleration
         elif keyboard.is_pressed('s'):
@@ -35,17 +48,17 @@ class Personage:
             self.Vx -= self.acceleration
         elif keyboard.is_pressed('d'):
             self.Vx += self.acceleration
+
+        self.trace.append([self.x, self.y])
+        draw_point(trace, self.color, self.screen)
+
+        self.x += self.Vx
+        self.Vy += g
+        self.y += self.Vy
         return 0
 
     def draw(self):
         pg.draw.rect(self.screen, self.color, (int(self.x), int(self.y), self.width, self.height))
-
-    def move_x(self):
-        self.x += self.Vx
-
-    def move_y(self):
-        self.y += self.Vy
-
 
     def Collision_x(self, map):
         '''
@@ -53,8 +66,8 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-        for i in range( int(self.x) // 40, (int(self.x) + self.height)//40 + 1):
-            for j in range(int(self.y) // 40, (int(self.y) + self.height)//40 + 1):
+        for i in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
+            for j in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                 if map[i][j] == '1':
                     if self.Vx > 0:
                         self.x = int(self.x) - ((int(self.x) + self.width) % 40)
@@ -62,15 +75,6 @@ class Personage:
                     if self.Vx < 0:
                         self.x = int(self.x) + 40 - (int(self.x) % 40)
                         self.Vx = max(self.Vx, 0)
-
-    # FIXME: реализована с очень большим количеством багов:
-    """
-    Баги: 1) Не может двигаться дальше середины карты: index out of range.
-            2) Есть возможность при движении сверху вниз пройти сквозь блок (Collision_y).
-            3) Как по мне, откидывание назад не лучшая идея. Оно также слишком сильное.
-            4) Не видит граничные блоки
-            Аналогично с Collision_y
-    """
 
     def Collision_y(self, map):
         '''
@@ -87,4 +91,3 @@ class Personage:
                     if self.Vy < 0:
                         self.y = int(self.y) + 40 - (int(self.y) % 40)
                         self.Vy = max(self.Vy, 0)
-    # FIXME: реализована с очень большим количеством багов

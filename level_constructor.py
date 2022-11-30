@@ -10,6 +10,7 @@ LIGHT_GREY = (150, 150, 150)
 DARK_GREY = (50, 50, 50)
 BROWN = (40, 20, 10)
 RED = (255, 0, 0)
+GREEN = 0x00FF00
 
 TIME_COLOR = GREY
 
@@ -33,14 +34,15 @@ class Block:
     def __init__(self, screen):
         self.length = 40
         self.screen = screen
+        self.length = block_length()
 
     def draw(self, x, y, color):
         rect(self.screen, color, ((x * self.length, y * self.length), (self.length, self.length)))
 
 
-
 def block_length():
     return 40
+
 
 def draw_map(block, map_list):
     """
@@ -60,5 +62,6 @@ class MAP:
     '''
 
     '''
+
     def __init__(self, map_list):
         self.map_list = map_list

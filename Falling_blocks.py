@@ -5,6 +5,7 @@ from random import randint
 
 raw_list = []
 
+
 class Fall_block_raw():
     def __init__(self, screen):
         self.length = 40
@@ -15,13 +16,11 @@ class Fall_block_raw():
         self.y = -self.length + 100
         self.vy = 0
 
-
-    def new_raw(self, screen,  vely):
+    def new_raw(self, screen, vely):
         global raw_list
         new_raw = Fall_block_raw(screen)
         new_raw.vy = vely
         raw_list.append(new_raw)
-
 
     def fall(self):
         self.y += self.vy

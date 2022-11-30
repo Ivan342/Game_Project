@@ -1,9 +1,11 @@
 import pygame as pg
+from pygame import time
 from pygame.draw import *
 from Personage import *
 from level_constructor import *
 from Falling_blocks import *
 
+time_scale = 1000
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 running = True
@@ -15,6 +17,7 @@ fall_raw = Fall_block_raw(screen)
 spawn_filled = False
 need_clean = False
 game_speed = 0.5
+start_time = time.get_ticks()
 
 '''
 Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
@@ -24,7 +27,7 @@ while running:
     screen.fill(TIME_COLOR)
     for raw in raw_list:
         raw.fall()
-        raw.draw()
+        # raw.draw()
         if raw.y > HEIGHT + raw.length:
             need_clean = True
         if raw_list[-1].y <= -raw.length + 100 + raw.length:
@@ -42,12 +45,11 @@ while running:
 
     game_speed += raw_list[0].accel
     draw_map(block, map_list)
-    pers.move_x()
-    pers.move_y()
-    pers.interaction_with_keyboard()
+
     pers.draw()
-    pers.Collision_x(map.map_list)
-    pers.Collision_y(map.map_list)
+    # pers.Collision_x(map.map_list)
+    # pers.Collision_y(map.map_list)
+    pers.move_personage()
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
@@ -55,7 +57,5 @@ while running:
             if event.button == 1:
                 pers.x = event.pos[0]
                 pers.y = event.pos[1]
-
-            pg.display.update()
     pg.display.update()
 pg.quit()
