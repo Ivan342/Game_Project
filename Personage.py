@@ -66,8 +66,8 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-        for i in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
-            for j in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+        for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
+            for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                 if map[i][j] == '1':
                     if self.Vx > 0:
                         self.x = int(self.x) - ((int(self.x) + self.width) % 40)
@@ -82,8 +82,8 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-        for i in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
-            for j in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+        for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
+            for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                 if map[i][j] == '1':
                     if self.Vy > 0:
                         self.y = int(self.y) - ((int(self.y) + self.height) % 40)

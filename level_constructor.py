@@ -87,6 +87,12 @@ class MAP:
                     block.draw_block_hill_left(j, i)
 
     def map_chase(self, block, pers_x):
+        """
+
+        :param block:
+        :param pers_x:
+        :return:
+        """
         if pers_x >= WIDTH / 2 and pers_x <= len(self.map_list[0]) - WIDTH / 2:
             self.draw_map(block, pers_x)
             print(1)
