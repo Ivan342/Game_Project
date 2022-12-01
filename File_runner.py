@@ -47,7 +47,6 @@ while running:
 
     game_speed += raw_list[0].accel
     map.map_chase(block, pers.x)
-
     pers.draw()
     pers.Collision_x(map.map_list)
     pers.Collision_y(map.map_list)

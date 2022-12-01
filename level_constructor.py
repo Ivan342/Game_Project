@@ -78,9 +78,9 @@ class MAP:
         Рисуем карту
         """
         for i in range(len(self.map_list)):
-            for j in range(len(self.map_list[i])):
+            for j in range(int((x - WIDTH/2)//block_length)-1, int((x + WIDTH/2)//block_length)+1):
                 if self.map_list[i][j] == '1':
-                    block.draw_block_grass(j, i)
+                    block.draw_block_grass(j - (x - WIDTH/2)//block_length , i)
                 if self.map_list[i][j] == '2':
                     block.draw_block_under(j, i)
                 if self.map_list[i][j] == '3':
@@ -88,17 +88,14 @@ class MAP:
 
     def map_chase(self, block, pers_x):
         """
-
+        Движение карты за игроком
         :param block:
         :param pers_x:
         :return:
         """
-        if pers_x >= WIDTH / 2 and pers_x <= len(self.map_list[0]) - WIDTH / 2:
+        if pers_x >= WIDTH / 2 and pers_x <= len(self.map_list[0]) * block.length - WIDTH / 2:
             self.draw_map(block, pers_x)
-            print(1)
         elif pers_x < WIDTH / 2:
-            self.draw_map(block, WIDTH / 2)
-            print(2)
+            self.draw_map(block, WIDTH/2)
         else:
-            self.draw_map(block, len(self.map_list[0]))
-            print(3)
+            self.draw_map(block, len(self.map_list[0]) - WIDTH/2)
