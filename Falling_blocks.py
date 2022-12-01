@@ -13,7 +13,7 @@ class Fall_block_raw():
         self.raw_list = []
         self.screen = screen
         self.block_pos = [randint(0, 10) for i in range(int(WIDTH / self.length))]
-        self.y = -self.length + 100
+        self.y = -self.length
         self.vy = 0
 
     def new_raw(self, screen, vely):

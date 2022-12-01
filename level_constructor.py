@@ -1,7 +1,7 @@
 import pygame as pg
 from pygame.draw import *
 
-map_name = "Типокарта.txt"
+
 WIDTH = 1200
 HEIGHT = 600
 
@@ -11,57 +11,52 @@ DARK_GREY = (50, 50, 50)
 BROWN = (40, 20, 10)
 RED = (255, 0, 0)
 GREEN = 0x00FF00
+block_length = 40
 
 TIME_COLOR = GREY
 
-
-def read_map(map_name):
-    """
-    1 - обычный блок
-    2 - смертельный блок
-    :param map_name: имя файла, в котором записана карта
-    :return: массив строк, каждая из которых освечает за свою строку карты
-    """
-    ll = []
-    with open(map_name) as file:
-        for line in file.readlines():
-            ll.append(line.split())
-
-    return ll
 
 
 class Block:
     def __init__(self, screen):
         self.length = 40
         self.screen = screen
-        self.length = block_length()
+        self.length = block_length
 
     def draw(self, x, y, color):
         rect(self.screen, color, ((x * self.length, y * self.length), (self.length, self.length)))
 
 
-def block_length():
-    return 40
 
-
-def draw_map(block, map_list):
-    """
-    Рисуем карту
-    """
-    for i in range(len(map_list)):
-        for j in range(len(map_list[i])):
-            if map_list[i][j] == '1':
-                block.draw(j, i, LIGHT_GREY)
-            if map_list[i][j] == '2':
-                block.draw(j, i, DARK_GREY)
-            if map_list[i][j] == '3':
-                block.draw(j, i, BROWN)
 
 
 class MAP:
-    '''
+    """
+    """
 
-    '''
+    def __init__(self):
+        self.map_list = []
 
-    def __init__(self, map_list):
-        self.map_list = map_list
+    def read_map(self, map_name):
+        """
+        1 - обычный блок
+        2 - смертельный блок
+        :param map_name: имя файла, в котором записана карта
+        :return: массив строк, каждая из которых освечает за свою строку карты
+        """
+        with open(map_name) as file:
+            for line in file.readlines():
+                self.map_list.append(line.split())
+
+    def draw_map(self, block):
+        """
+        Рисуем карту
+        """
+        for i in range(len(self.map_list)):
+            for j in range(len(self.map_list[i])):
+                if self.map_list[i][j] == '1':
+                    block.draw(j, i, LIGHT_GREY)
+                if self.map_list[i][j] == '2':
+                    block.draw(j, i, DARK_GREY)
+                if self.map_list[i][j] == '3':
+                    block.draw(j, i, BROWN)
