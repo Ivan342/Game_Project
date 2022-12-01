@@ -5,6 +5,8 @@ from Personage import *
 from level_constructor import *
 from Falling_blocks import *
 
+FPS = 60
+clock = pg.time.Clock()
 map_name = "Типокарта.txt"
 time_scale = 1000
 pg.init()
@@ -59,4 +61,5 @@ while running:
                 pers.x = event.pos[0]
                 pers.y = event.pos[1]
     pg.display.update()
+    clock.tick(FPS)
 pg.quit()
