@@ -19,12 +19,42 @@ TIME_COLOR = GREY
 
 class Block:
     def __init__(self, screen):
+        '''
+        :param screen:
+        :param pic: берет картинку для блоков и вставляет ее на указанных координатах
+        self.grass открывает картинку травы
+        self.ground Открывает картинку земли
+        self.hill открывает картинку склона
+         '''
         self.length = 40
         self.screen = screen
         self.length = block_length
+        self.length = 40
+        self.screen = screen
+        self.grass = pg.image.load('землятрава.jpg').convert()
+        self.grass_box = self.grass.get_rect()
+        self.ground = pg.image.load('земля.jpg').convert()
+        self.ground_box = self.grass.get_rect()
+        self.hill_left = pg.image.load('склон_лево.png').convert_alpha()
+        self.hill_box = self.grass.get_rect()
 
-    def draw(self, x, y, color):
-        rect(self.screen, color, ((x * self.length, y * self.length), (self.length, self.length)))
+    def draw_block_grass(self, x, y):
+        '''
+        рисует блок с травой
+        '''
+        self.screen.blit(self.grass, (x * self.length, y * self.length))
+
+    def draw_block_under(self, x, y):
+        '''
+        рисует блок без травы (земля под травой)
+        '''
+        self.screen.blit(self.ground, (x * self.length, y * self.length))
+
+    def draw_block_hill_left(self, x, y):
+        '''
+        рисует блок склона(левого)
+        '''
+        self.screen.blit(self.hill_left, (x * self.length, y * self.length))
 
 
 
@@ -55,8 +85,8 @@ class MAP:
         for i in range(len(self.map_list)):
             for j in range(len(self.map_list[i])):
                 if self.map_list[i][j] == '1':
-                    block.draw(j, i, LIGHT_GREY)
+                    block.draw_block_grass(j, i)
                 if self.map_list[i][j] == '2':
-                    block.draw(j, i, DARK_GREY)
+                    block.draw_block_under(j, i)
                 if self.map_list[i][j] == '3':
-                    block.draw(j, i, BROWN)
+                    block.draw_block_hill_left(j, i)

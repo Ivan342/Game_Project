@@ -19,13 +19,14 @@ spawn_filled = False
 need_clean = False
 game_speed = 0.5
 start_time = time.get_ticks()
+field = pg.image.load('фон1.jpg').convert()
 
 '''
 Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
 Класс прописан level_constructor
 '''
 while running:
-    screen.fill(TIME_COLOR)
+    screen.blit(field,(0,0))
     for raw in raw_list:
         raw.fall()
         raw.draw()
