@@ -46,11 +46,11 @@ while running:
         need_clean = False
 
     game_speed += raw_list[0].accel
-    map.draw_map(block)
+    map.map_chase(block, pers.x)
 
     pers.draw()
-    pers.Collision_x(map.map_list)
-    pers.Collision_y(map.map_list)
+    #pers.Collision_x(map.map_list)
+    #pers.Collision_y(map.map_list)
     pers.move_personage()
     for event in pg.event.get():
         if event.type == pg.QUIT:

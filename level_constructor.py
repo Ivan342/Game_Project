@@ -1,7 +1,6 @@
 import pygame as pg
 from pygame.draw import *
 
-
 WIDTH = 1200
 HEIGHT = 600
 
@@ -14,7 +13,6 @@ GREEN = 0x00FF00
 block_length = 40
 
 TIME_COLOR = GREY
-
 
 
 class Block:
@@ -57,9 +55,6 @@ class Block:
         self.screen.blit(self.hill_left, (x * self.length, y * self.length))
 
 
-
-
-
 class MAP:
     """
     """
@@ -78,7 +73,7 @@ class MAP:
             for line in file.readlines():
                 self.map_list.append(line.split())
 
-    def draw_map(self, block):
+    def draw_map(self, block, x):
         """
         Рисуем карту
         """
@@ -90,3 +85,14 @@ class MAP:
                     block.draw_block_under(j, i)
                 if self.map_list[i][j] == '3':
                     block.draw_block_hill_left(j, i)
+
+    def map_chase(self, block, pers_x):
+        if pers_x >= WIDTH / 2 and pers_x <= len(self.map_list[0]) - WIDTH / 2:
+            self.draw_map(block, pers_x)
+            print(1)
+        elif pers_x < WIDTH / 2:
+            self.draw_map(block, WIDTH / 2)
+            print(2)
+        else:
+            self.draw_map(block, len(self.map_list[0]))
+            print(3)
