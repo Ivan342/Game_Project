@@ -7,7 +7,7 @@ from Falling_blocks import *
 
 FPS = 60
 clock = pg.time.Clock()
-map_name = "Типокарта.txt"
+map_name = "w"
 time_scale = 1000
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -15,6 +15,10 @@ running = True
 block = Block(screen)
 pers = Personage(screen)
 map = MAP()
+'''
+Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
+Класс прописан level_constructor
+'''
 map.read_map(map_name)
 fall_raw = Fall_block_raw(screen)
 spawn_filled = False
@@ -24,10 +28,7 @@ start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 
 
-'''
-Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
-Класс прописан level_constructor
-'''
+
 while running:
     screen.blit(field,(0,0))
     for raw in raw_list:
@@ -51,7 +52,7 @@ while running:
 
     game_speed += raw_list[0].accel
     map.map_chase(block, pers.x)
-    pers.draw()
+    pers.draw(block, map)
     pers.Collision_x(map.map_list)
     pers.Collision_y(map.map_list)
     pers.move_personage(map)

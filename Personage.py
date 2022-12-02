@@ -72,8 +72,14 @@ class Personage:
                 w = 0
 
 
-    def draw(self):
-        pg.draw.rect(self.screen, self.color, (int(self.x), int(self.y), self.width, self.height))
+    def draw(self, block, mapik):
+        if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            pg.draw.rect(self.screen, self.color, (WIDTH/2, self.y, self.width, self.height))
+        elif self.x < WIDTH / 2:
+            pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))
+        else:
+            pg.draw.rect(self.screen, self.color, (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, self.y, self.width, self.height))
+
 
     def Collision_x(self, map):
         '''
