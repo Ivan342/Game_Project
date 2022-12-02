@@ -54,9 +54,7 @@ while running:
     #map.map_chase(block, pers.x)
     map.draw_map(block, WIDTH / 2)
     pers.draw()
-    pers.Collision_x(map.map_list)
-    pers.Collision_y(map.map_list)
-    pers.move_personage()
+    pers.move_personage(map.map_list)
     #apers.Personage_animation_move_right(block, map)
     #pers.move_personage(block, map)
     dt = time.get_ticks() - start_time

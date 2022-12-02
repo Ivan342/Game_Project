@@ -29,7 +29,7 @@ class Personage:
         self.height = 60
         self.onGround = False
 
-    def move_personage(self):
+    def move_personage(self, map):
         g = 0.1
         if keyboard.is_pressed('w'):
             if self.onGround:
@@ -44,8 +44,11 @@ class Personage:
 
         self.x += self.Vx
 
+        self.Collision_x(map)
+
         if not self.onGround:
             self.y += self.Vy
+        self.Collision_y(map)
 
         print(self.onGround)
         if self.onGround == False:
@@ -110,7 +113,6 @@ class Personage:
                         self.y = i * 40 - self.height
                         #self.Vy = min(self.Vy, 0)
                         self.onGround = True
-                        self.y -= 3
                     if self.Vy < 0:
                         self.y = i * 40 + 40
                         #self.Vy = max(self.Vy, 0)
