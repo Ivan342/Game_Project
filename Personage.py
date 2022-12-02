@@ -3,17 +3,7 @@ from pygame import time, draw
 import pygame as pg
 import keyboard
 from level_constructor import *
-trace = ([])
 w=0
-
-
-def draw_point(m, color, screen):
-    for [i, j] in m:
-        draw.circle(screen, color, (i, j), 1)
-
-
-
-
 
 class Personage:
     def __init__(self, screen):
@@ -31,34 +21,33 @@ class Personage:
         self.Vx = 0.1
         self.Vy = 0.1
         self.color = "red"
-        self.Fy = 0
-        self.radius = 40
         self.screen = screen
         self.acceleration = 0.03
         self.width = 50
         self.height = 60
-        self.trace = trace
+        self.onGround = False
 
-    def move_personage(self, map):
-        g = 0.006
+    def move_personage(self):
+        g = 0.1
         if keyboard.is_pressed('w'):
-            self.Vy -= self.acceleration
-        elif keyboard.is_pressed('s'):
-            self.Vy += self.acceleration
+            if self.onGround:
+                self.Vy = -5
+                self.onGround = False
         elif keyboard.is_pressed('a'):
-            self.Vx -= self.acceleration
+            self.Vx = -5
         elif keyboard.is_pressed('d'):
-            self.Vx += self.acceleration
-
-        self.trace.append([self.x, self.y])
-        draw_point(trace, self.color, self.screen)
+            self.Vx = 5
+        elif (not keyboard.is_pressed('d')) & (not keyboard.is_pressed('d')):
+            self.Vx = 0
 
         self.x += self.Vx
 
-        if not self.on_ground(map):
-            self.Vy += g
+        if not self.onGround:
+            self.y += self.Vy
 
-        self.y += self.Vy
+        print(self.onGround)
+        if self.onGround == False:
+            self.Vy += g
         return 0
 
     def Personage_animation_move_right(self,block, mapik):
@@ -72,7 +61,6 @@ class Personage:
             else:
                 self.screen.blit(animation_set[w], (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-
             w += 1
             if w == 3:
                 w = 0
@@ -80,7 +68,7 @@ class Personage:
     def draw(self):
         pg.draw.rect(self.screen, self.color, (int(self.x), int(self.y), self.width, self.height))
 
-    def draw(self, block, mapik):
+    def draw_fancy(self, block, mapik):
         if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
             pg.draw.rect(self.screen, self.color, (WIDTH/2, self.y, self.width, self.height))
         elif self.x < WIDTH / 2:
@@ -100,11 +88,11 @@ class Personage:
             for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                 if map[i][j] == '1':
                     if self.Vx > 0:
-                        self.x = int(self.x) - ((int(self.x) + self.width) % 40)
-                        self.Vx = min(self.Vx, 0)
+                        self.x = j * 40 - self.width
+                        #self.Vx = min(self.Vx, 0)
                     if self.Vx < 0:
-                        self.x = int(self.x) + 40 - (int(self.x) % 40)
-                        self.Vx = max(self.Vx, 0)
+                        self.x = j * 40 + 40
+                        #self.Vx = max(self.Vx, 0)
 
     def Collision_y(self, map):
         '''
@@ -115,18 +103,14 @@ class Personage:
         for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
             for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                 if map[i][j] == '1':
+                    #print(i, j)
                     if self.Vy > 0:
-                        self.y = int(self.y) - ((int(self.y) + self.height) % 40)
-                        self.Vy = min(self.Vy, 0)
+                        self.y = i * 40 - self.height
+                        #self.Vy = min(self.Vy, 0)
+                        self.onGround = True
+                        self.y -= 3
                     if self.Vy < 0:
-                        self.y = int(self.y) + 40 - (int(self.y) % 40)
-                        self.Vy = max(self.Vy, 0)
+                        self.y = i * 40 + 40
+                        #self.Vy = max(self.Vy, 0)
 
-    def on_ground(self, map):
-        i = min((int(self.y) + self.height) // 40 + 1, 14)
-        for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
-            if (map.map_list[i][j] == '1' or map.map_list[i][j] == '2' or map.map_list[i][j] == '3') and (self.y % 40) < 2:
-                return True
-            else:
-                return False
 print(1)

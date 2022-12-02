@@ -7,7 +7,7 @@ from Falling_blocks import *
 
 FPS = 60
 clock = pg.time.Clock()
-map_name = "Map_2"
+map_name = "Типокарта.txt"
 time_scale = 1000
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -51,15 +51,16 @@ while running:
         need_clean = False
 
     game_speed += raw_list[0].accel
-    map.map_chase(block, pers.x)
-    pers.draw(block, map)
+    #map.map_chase(block, pers.x)
+    map.draw_map(block, WIDTH / 2)
+    pers.draw()
     pers.Collision_x(map.map_list)
     pers.Collision_y(map.map_list)
-    pers.move_personage(map)
-    pers.Personage_animation_move_right(block, map)
-    pers.move_personage(map)
+    pers.move_personage()
+    #apers.Personage_animation_move_right(block, map)
+    #pers.move_personage(block, map)
     dt = time.get_ticks() - start_time
-    print(dt)
+    #print(dt)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
@@ -69,5 +70,6 @@ while running:
                 pers.y = event.pos[1]
     pg.display.update()
     clock.tick(FPS)
+    #print(clock.get_time())
 pg.quit()
 print(1)
