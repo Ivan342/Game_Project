@@ -51,14 +51,14 @@ while running:
         need_clean = False
 
     game_speed += raw_list[0].accel
-    #map.map_chase(block, pers.x)
+    map.map_chase(block, pers.x)
     map.draw_map(block, WIDTH / 2)
     pers.draw()
     pers.move_personage(map.map_list)
-    #apers.Personage_animation_move_right(block, map)
-    #pers.move_personage(block, map)
+    pers.Personage_animation_move_right(block, map)
+    #pers.move_personage(map)
     dt = time.get_ticks() - start_time
-    #print(dt)
+    print(dt)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
@@ -68,6 +68,6 @@ while running:
                 pers.y = event.pos[1]
     pg.display.update()
     clock.tick(FPS)
-    #print(clock.get_time())
+    (clock.get_time())
 pg.quit()
 print(1)
