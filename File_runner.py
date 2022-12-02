@@ -28,7 +28,7 @@ field = pg.image.load('фон1.jpg').convert()
 Класс прописан level_constructor
 '''
 while running:
-    screen.blit(field,(0,0))
+    screen.blit(field, (0, 0))
     for raw in raw_list:
         raw.fall()
         raw.draw()
