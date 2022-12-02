@@ -130,3 +130,4 @@ class Personage:
                 return True
             else:
                 return False
+print(1)
