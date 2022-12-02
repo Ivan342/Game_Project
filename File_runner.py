@@ -70,3 +70,4 @@ while running:
     pg.display.update()
     clock.tick(FPS)
 pg.quit()
+print(1)
