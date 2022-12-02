@@ -1,7 +1,9 @@
 import pygame
 from pygame import time, draw
+
 import pygame as pg
 import keyboard
+
 from level_constructor import *
 w=0
 
@@ -22,7 +24,7 @@ class Personage:
         self.Vy = 0.1
         self.color = "red"
         self.screen = screen
-        self.acceleration = 0.03
+        self.acceleration = 0.05
         self.width = 50
         self.height = 60
         self.onGround = False
