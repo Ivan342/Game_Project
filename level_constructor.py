@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame.draw import *
 
+map_name = "Типокарта.txt"
 WIDTH = 1200
 HEIGHT = 600
 
@@ -76,6 +77,9 @@ class MAP:
     def draw_map(self, block, x):
         """
         Рисуем карту
+
+        :param block: вызываем функции класса block
+        :param x: Позиция игрока по оси x
         """
         for i in range(len(self.map_list)):
             for j in range(int((x - WIDTH/2)//block_length)-1, int((x + WIDTH/2)//block_length)+1):

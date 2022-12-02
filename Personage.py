@@ -27,20 +27,20 @@ class Personage:
         :param screen: экран, на который выводится персонаж
         '''
         self.screen = screen
-        self.x = 10
-        self.y = 10
+        self.x = 100
+        self.y = 300
         self.Vx = 0.1
         self.Vy = 0.1
         self.color = "red"
         self.Fy = 0
         self.radius = 40
         self.screen = screen
-        self.acceleration = 0.05
+        self.acceleration = 0.03
         self.width = 50
         self.height = 60
         self.trace = trace
 
-    def move_personage(self):
+    def move_personage(self, map):
         g = 0.006
         if keyboard.is_pressed('w'):
             self.Vy -= self.acceleration
@@ -55,7 +55,10 @@ class Personage:
         draw_point(trace, self.color, self.screen)
 
         self.x += self.Vx
-        self.Vy += g
+
+        if not self.on_ground(map):
+            self.Vy += g
+
         self.y += self.Vy
         return 0
 
@@ -78,6 +81,7 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
+
         for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
             for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                 if map[i][j] == '1':
@@ -103,3 +107,11 @@ class Personage:
                     if self.Vy < 0:
                         self.y = int(self.y) + 40 - (int(self.y) % 40)
                         self.Vy = max(self.Vy, 0)
+
+    def on_ground(self, map):
+        i = min((int(self.y) + self.height) // 40 + 1, 14)
+        for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
+            if (map.map_list[i][j] == '1' or map.map_list[i][j] == '2' or map.map_list[i][j] == '3') and (self.y % 40) < 2:
+                return True
+            else:
+                return False

@@ -56,6 +56,9 @@ while running:
     pers.Collision_y(map.map_list)
     pers.move_personage()
     pers.Personage_animation_move_right()
+    pers.move_personage(map)
+    dt = time.get_ticks() - start_time
+    print(dt)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
