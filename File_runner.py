@@ -52,7 +52,9 @@ while running:
     pers.draw()
     pers.Collision_x(map.map_list)
     pers.Collision_y(map.map_list)
-    pers.move_personage()
+    pers.move_personage(map)
+    dt = time.get_ticks() - start_time
+    print(dt)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False

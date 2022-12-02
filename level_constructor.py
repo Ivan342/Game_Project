@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame.draw import *
 
+map_name = "Типокарта.txt"
 WIDTH = 1200
 HEIGHT = 600
 
