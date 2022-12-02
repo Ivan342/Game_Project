@@ -7,7 +7,7 @@ from Falling_blocks import *
 
 FPS = 60
 clock = pg.time.Clock()
-map_name = "типокарта.txt"
+map_name = "Map_2"
 time_scale = 1000
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))

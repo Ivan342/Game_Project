@@ -81,8 +81,13 @@ class MAP:
         :param block: вызываем функции класса block
         :param x: Позиция игрока по оси x
         """
+        if int((x + WIDTH/2)//block_length) + 1 > len(self.map_list[0]):
+            draw_distance = int((x + WIDTH/2)//block_length) - 1
+        else:
+            draw_distance = int((x + WIDTH/2)//block_length)
+            print("sus")
         for i in range(len(self.map_list)):
-            for j in range(int((x - WIDTH/2)//block_length), int((x + WIDTH/2)//block_length) + 1):
+            for j in range(int((x - WIDTH/2)//block_length), draw_distance + 1):
                 if self.map_list[i][j] == '1':
                     block.draw_block_grass(j - (x - WIDTH/2)/block_length, i)
                 if self.map_list[i][j] == '2':
@@ -102,4 +107,4 @@ class MAP:
         elif pers_x < WIDTH / 2:
             self.draw_map(block, WIDTH/2)
         else:
-            self.draw_map(block, len(self.map_list[0]) - WIDTH/2 - block.length)
+            self.draw_map(block, len(self.map_list[0]) * block.length - WIDTH/2)
