@@ -53,7 +53,7 @@ while running:
     game_speed += raw_list[0].accel
     map.map_chase(block, pers.x)
     map.draw_map(block, WIDTH / 2)
-    pers.draw()
+    #pers.draw()
     pers.move_personage(map.map_list)
     pers.Personage_animation_move_right(block, map)
     #pers.move_personage(map)

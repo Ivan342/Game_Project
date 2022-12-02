@@ -62,6 +62,7 @@ class Personage:
         '''
         global w
         animation_set = [pygame.image.load(f"girl{w}.png").convert_alpha() for w in range(0, 9)]
+        animation_set_left = [pygame.image.load(f"girl_left{w}.png").convert_alpha() for w in range(0, 9)]
         if self.Vx>0:
             if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 self.screen.blit(animation_set[w], (WIDTH/2, int(self.y)))
@@ -70,12 +71,21 @@ class Personage:
             else:
                 self.screen.blit(animation_set[w], (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-            w += 1
-            if w == 8:
-                w = 0
+        if self.Vx < 0:
+            if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                    self.screen.blit(animation_set_left[w], (WIDTH / 2, int(self.y)))
+            elif self.x < WIDTH / 2:
+                    self.screen.blit(animation_set_left[w], (int(self.x), int(self.y)))
+            else:
+                    self.screen.blit(animation_set_left[w],(- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+        if self.Vx == 0:
+            self.screen.blit(self.img, (int(self.x), int(self.y)))
 
-    def draw(self):
-        self.screen.blit(self.img, (int(self.x),int(self.y)))
+        w += 1
+        if w == 8:
+            w = 0
+
+
 
 
 
