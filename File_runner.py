@@ -7,7 +7,7 @@ from Falling_blocks import *
 
 FPS = 60
 clock = pg.time.Clock()
-map_name = "w"
+map_name = "типокарта.txt"
 time_scale = 1000
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -56,7 +56,7 @@ while running:
     pers.Collision_x(map.map_list)
     pers.Collision_y(map.map_list)
     pers.move_personage(map)
-    pers.Personage_animation_move_right()
+    pers.Personage_animation_move_right(block, map)
     pers.move_personage(map)
     dt = time.get_ticks() - start_time
     print(dt)

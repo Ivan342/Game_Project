@@ -61,16 +61,24 @@ class Personage:
         self.y += self.Vy
         return 0
 
-    def Personage_animation_move_right(self):
+    def Personage_animation_move_right(self,block, mapik):
         global w
         animation_set = [pygame.image.load(f"stick{w}.png") for w in range(1, 4)]
         if self.Vx>0:
+            if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                self.screen.blit(animation_set[w], (WIDTH/2, int(self.y)))
+            elif self.x < WIDTH / 2:
+                self.screen.blit(animation_set[w], (int(self.x), int(self.y)))
+            else:
+                self.screen.blit(animation_set[w], (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-            self.screen.blit(animation_set[w], (int(self.x), int(self.y)))
+
             w += 1
             if w == 3:
                 w = 0
 
+    def draw(self):
+        pg.draw.rect(self.screen, self.color, (int(self.x), int(self.y), self.width, self.height))
 
     def draw(self, block, mapik):
         if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
