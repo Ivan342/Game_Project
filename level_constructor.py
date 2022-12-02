@@ -82,13 +82,13 @@ class MAP:
         :param x: Позиция игрока по оси x
         """
         for i in range(len(self.map_list)):
-            for j in range(int((x - WIDTH/2)//block_length)-1, int((x + WIDTH/2)//block_length)+1):
+            for j in range(int((x - WIDTH/2)//block_length), int((x + WIDTH/2)//block_length) + 1):
                 if self.map_list[i][j] == '1':
-                    block.draw_block_grass(j - (x - WIDTH/2)//block_length , i)
+                    block.draw_block_grass(j - (x - WIDTH/2)/block_length, i)
                 if self.map_list[i][j] == '2':
-                    block.draw_block_under(j, i)
+                    block.draw_block_under(j - (x - WIDTH/2)/block_length, i)
                 if self.map_list[i][j] == '3':
-                    block.draw_block_hill_left(j, i)
+                    block.draw_block_hill_left(j - (x - WIDTH/2)/block_length, i)
 
     def map_chase(self, block, pers_x):
         """
@@ -102,4 +102,4 @@ class MAP:
         elif pers_x < WIDTH / 2:
             self.draw_map(block, WIDTH/2)
         else:
-            self.draw_map(block, len(self.map_list[0]) - WIDTH/2)
+            self.draw_map(block, len(self.map_list[0]) - WIDTH/2 - block.length)
