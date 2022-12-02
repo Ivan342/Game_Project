@@ -1,7 +1,9 @@
 import pygame
 from pygame import time, draw
+
 import pygame as pg
 import keyboard
+
 from level_constructor import *
 trace = ([])
 w=0
@@ -34,12 +36,12 @@ class Personage:
         self.Fy = 0
         self.radius = 40
         self.screen = screen
-        self.acceleration = 0.03
+        self.acceleration = 0.05
         self.width = 50
         self.height = 60
         self.trace = trace
 
-    def move_personage(self, map):
+    def move_personage(self):
         g = 0.006
         if keyboard.is_pressed('w'):
             self.Vy -= self.acceleration
@@ -95,7 +97,6 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-
         for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
             for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                 if map[i][j] == '1':
