@@ -23,6 +23,7 @@ game_speed = 0.5
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 
+
 '''
 Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
 Класс прописан level_constructor
@@ -40,6 +41,7 @@ while running:
         else:
             spawn_filled = False
 
+
     if not spawn_filled:
         fall_raw.new_raw(screen, game_speed)
         spawn_filled = True
@@ -53,6 +55,7 @@ while running:
     pers.Collision_x(map.map_list)
     pers.Collision_y(map.map_list)
     pers.move_personage()
+    pers.Personage_animation_move_right()
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False

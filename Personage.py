@@ -1,17 +1,19 @@
 import pygame
 from pygame import time, draw
-
 import pygame as pg
 import keyboard
-
 from level_constructor import *
 
 trace = ([])
+animation_set = [pygame.image.load(f"stick{i}.png") for i in range(1, 4)]
 
 
 def draw_point(m, color, screen):
     for [i, j] in m:
         draw.circle(screen, color, (i, j), 1)
+
+
+
 
 
 class Personage:
@@ -56,6 +58,16 @@ class Personage:
         self.Vy += g
         self.y += self.Vy
         return 0
+
+    def Personage_animation_move_right(self):
+        i=0
+        if self.Vx>0:
+
+                self.screen.blit(animation_set[i], (int(self.x), int(self.y)))
+                i += 1
+                if i == 3:
+                    i = 0
+
 
     def draw(self):
         pg.draw.rect(self.screen, self.color, (int(self.x), int(self.y), self.width, self.height))
