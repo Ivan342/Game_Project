@@ -58,7 +58,7 @@ class Personage:
 
     def Personage_animation_move_right(self,block, mapik):
         '''
-        анимация бега вправо
+        анимация бега вправо и лево, стояния на месте
         '''
         global w
         animation_set = [pygame.image.load(f"girl{w}.png").convert_alpha() for w in range(0, 9)]
@@ -80,7 +80,9 @@ class Personage:
                     self.screen.blit(animation_set_left[w],(- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
         if self.Vx == 0:
             self.screen.blit(self.img, (int(self.x), int(self.y)))
-
+        '''
+        Почему у вас всегда скорость по игрикам больше нуля?
+        '''
         w += 1
         if w == 8:
             w = 0
