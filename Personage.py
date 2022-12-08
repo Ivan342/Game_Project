@@ -38,11 +38,13 @@ class Personage:
                 self.onGround = False
         elif keyboard.is_pressed('a'):
             self.Vx = -5
+
         elif keyboard.is_pressed('d'):
             self.Vx = 5
+
         elif (not keyboard.is_pressed('d')) & (not keyboard.is_pressed('d')):
             self.Vx = 0
-
+        self.Collision_x(map)
         self.x += self.Vx
 
         #self.Collision_x(map)
@@ -111,16 +113,19 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-
-        for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
-            for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
-                if map[i][j] == '1':
-                    if self.Vx > 0:
+        if self.Vx >= 0:
+            for j in range(int(self.x) // 40 + 1, (int(self.x) + self.height) // 40 + 1):
+                for i in range(int(self.y) // 40 , (int(self.y) + self.height) // 40):
+                    if map[i][j] == '1':
                         self.x = j * 40 - self.width
-                        #self.Vx = min(self.Vx, 0)
-                    if self.Vx < 0:
-                        self.x = j * 40 + 40
-                        #self.Vx = max(self.Vx, 0)
+                        self.Vx = 0
+
+        if self.Vx < 0:
+            for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40):
+                for i in range(int(self.y) // 40 , (int(self.y) + self.height) // 40):
+                    if map[i][j] == '1':
+                        self.x = (j+1) * 40
+                        self.Vx = 0
 
     def Collision_y(self, map):
         '''
