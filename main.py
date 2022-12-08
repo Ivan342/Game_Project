@@ -57,7 +57,7 @@ while running:
     pers.Personage_animation_move_right(block, map)
     #pers.move_personage(map)
     dt = time.get_ticks() - start_time
-    print(dt)
+
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
@@ -69,4 +69,4 @@ while running:
     clock.tick(FPS)
     (clock.get_time())
 pg.quit()
-print(1)
+
