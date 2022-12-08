@@ -172,4 +172,3 @@ class Personage:
                         self.y = i * 40 + 40
                         #self.Vy = max(self.Vy, 0)
 
-#
