@@ -56,8 +56,12 @@ while running:
 
     map.map_chase(block, pers_2.x)
     #pers.draw()
-    pers.move_personage(map.map_list)
-    pers.Personage_animation_move_right(block, map)
+
+    if pers.died==0:
+        pers.Personage_animation_move_right(block, map)
+        pers.move_personage(map.map_list)
+    if pers.died == 1:
+        pers.x=0
 
     pers_2.move_personage_2(map.map_list)
     pers_2.Personage_animation_move_right(block, map)

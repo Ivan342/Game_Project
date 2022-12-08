@@ -29,6 +29,7 @@ class Personage:
         self.height = 70
         self.onGround = False
         self.img = pg.image.load('girl0.png').convert_alpha()
+        self.died = 0
 
     def move_personage(self, map):
         g = 0.1
