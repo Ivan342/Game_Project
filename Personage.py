@@ -15,6 +15,7 @@ class Personage:
         self.radius - костыль для упррощения, потому что сейчас персонаж это шарик.
         self.width - ширина персонажа, для нормальной отрисовки и проверки касаний собъектами. Считается от левого вверхнего угла
         self.height - высота персонажа для проверки касаний. Считается от левого вверхнего угла
+        self.died - параметр смерти. 0-жив,1- мертв
         :param screen: экран, на который выводится персонаж
         '''
         self.screen = screen
@@ -29,6 +30,7 @@ class Personage:
         self.height = 70
         self.onGround = False
         self.img = pg.image.load('girl0.png').convert_alpha()
+        self.died = 0
 
     def move_personage(self, map):
         g = 0.1
@@ -58,6 +60,31 @@ class Personage:
             self.Vy += g
         return 0
 
+    def move_personage_2(self, map):
+        g = 0.1
+        if keyboard.is_pressed('up arrow'):
+            if self.onGround:
+                self.Vy = -5
+                self.onGround = False
+        elif keyboard.is_pressed('left arrow'):
+            self.Vx = -5
+        elif keyboard.is_pressed('right arrow'):
+            self.Vx = 5
+        elif (not keyboard.is_pressed('left arrow')) & (not keyboard.is_pressed('right arrow')):
+            self.Vx = 0
+
+        self.x += self.Vx
+
+        #self.Collision_x(map)
+
+        if not self.onGround:
+            self.y += self.Vy
+        self.Collision_y(map)
+
+        print(self.onGround)
+        if self.onGround == False:
+            self.Vy += g
+        return 0
     def Personage_animation_move_right(self,block, mapik):
         '''
         анимация бега вправо и лево, стояния на месте
