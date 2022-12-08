@@ -32,6 +32,7 @@ class Personage:
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.died = 0
 
+
     def move_personage(self, map):
         g = 0.1
         if keyboard.is_pressed('w'):
@@ -142,17 +143,19 @@ class Personage:
         '''
         if self.Vx >= 0:
             for j in range(int(self.x) // 40 + 1, (int(self.x) + self.height) // 40 + 1):
-                for i in range(int(self.y) // 40 , (int(self.y) + self.height) // 40):
-                    if map[i][j] == '1':
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+                    if map[i][j] != '0' and self.x + self.width + self.Vx >= j*40:
                         self.x = j * 40 - self.width
                         self.Vx = 0
+
 
         if self.Vx < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40):
                 for i in range(int(self.y) // 40 , (int(self.y) + self.height) // 40):
-                    if map[i][j] == '1':
+                    if map[i][j] != '0':
                         self.x = (j+1) * 40
                         self.Vx = 0
+
 
     def Collision_y(self, map):
         '''
@@ -160,15 +163,18 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-        for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
-            for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
-                if map[i][j] == '1':
-                    #print(i, j)
-                    if self.Vy > 0:
+        if self.Vy >= 0:
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+                    if map[i][j] != '0':
                         self.y = i * 40 - self.height
-                        #self.Vy = min(self.Vy, 0)
+                        self.Vy = 0
                         self.onGround = True
-                    if self.Vy < 0:
-                        self.y = i * 40 + 40
-                        #self.Vy = max(self.Vy, 0)
+                    else: self.onGround = False
 
+        if self.Vy < 0:
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+                    if map[i][j] != '0':
+                        self.y = (i + 1) * 40
+                        self.Vy = 0
