@@ -15,7 +15,6 @@ class Personage:
         self.radius - костыль для упррощения, потому что сейчас персонаж это шарик.
         self.width - ширина персонажа, для нормальной отрисовки и проверки касаний собъектами. Считается от левого вверхнего угла
         self.height - высота персонажа для проверки касаний. Считается от левого вверхнего угла
-        self.died - параметр смерти. 0-жив,1- мертв
         :param screen: экран, на который выводится персонаж
         '''
         self.screen = screen
@@ -25,29 +24,53 @@ class Personage:
         self.Vy = 0.1
         self.color = "red"
         self.screen = screen
-        self.acceleration = 0.05
+        self.acceleration = 0.3
         self.width = 60
         self.height = 70
         self.onGround = False
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.died = 0
 
-
+        self.power_up = 15
+        self.time_after_up = 0
     def move_personage(self, map):
-        g = 0.1
+        g = 0.15
+        '''
         if keyboard.is_pressed('w'):
-            if self.onGround:
-                self.Vy = -5
+            if self.onGround and self.power_up <= 37:
+                self.power_up += 1
+        if ( not keyboard.is_pressed('w') ) and self.power_up != 10 and self.onGround:
+            self.Vy = -1*12*(self.power_up / 60)
+            self.power_up = 0
+            self.onGround = False
+        '''
+        if self.Vy < 0 or self.onGround:
+            if keyboard.is_pressed('w') and self.time_after_up < 20:
+                self.Vy = -4
                 self.onGround = False
-        elif keyboard.is_pressed('a'):
-            self.Vx = -5
+                self.time_after_up += 1
 
-        elif keyboard.is_pressed('d'):
-            self.Vx = 5
+        if self.Vy >= 0:
+            self.time_after_up = 0
 
-        elif (not keyboard.is_pressed('d')) & (not keyboard.is_pressed('d')):
-            self.Vx = 0
-        self.Collision_x(map)
+        if keyboard.is_pressed('a') and self.Vx <= 5 and self.Vx >= -5:
+            self.Vx -= self.acceleration
+        if keyboard.is_pressed('d') and self.Vx <= 5 and self.Vx >= -5:
+            self.Vx += self.acceleration
+
+        #elif keyboard.is_pressed('d'):
+        #    self.Vx = 5
+        #elif (not keyboard.is_pressed('a')) & (not keyboard.is_pressed('d')):
+        if self.Vx > 0 and (not keyboard.is_pressed('d')):
+            self.Vx -= 2*self.acceleration
+            if self.Vx >= -0.5 and self.Vx <= 0.5:
+                self.Vx = 0
+
+        if self.Vx < 0 and (not keyboard.is_pressed('a')):
+            self.Vx += 2*self.acceleration
+            if self.Vx >= -0.5 and self.Vx <= 0.5:
+                self.Vx = 0
+
         self.x += self.Vx
 
         #self.Collision_x(map)
@@ -64,9 +87,13 @@ class Personage:
     def move_personage_2(self, map):
         g = 0.1
         if keyboard.is_pressed('up arrow'):
-            if self.onGround:
-                self.Vy = -5
-                self.onGround = False
+            if self.onGround and self.power_up <= 37:
+                self.power_up += 1
+
+        if ( not keyboard.is_pressed('up arrow') ) and self.power_up != 2 and self.onGround:
+            self.Vy = -1*10*(self.power_up / 60)
+            self.power_up = 0
+            self.onGround = False
         elif keyboard.is_pressed('left arrow'):
             self.Vx = -5
         elif keyboard.is_pressed('right arrow'):
