@@ -104,7 +104,12 @@ class Personage:
             else:
                     self.screen.blit(animation_set_left[w],(- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
         if self.Vx == 0:
-            self.screen.blit(self.img, (int(self.x), int(self.y)))
+            if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                self.screen.blit(self.img, (WIDTH / 2, int(self.y)))
+            elif self.x < WIDTH / 2:
+                self.screen.blit(self.img, (int(self.x), int(self.y)))
+            else:
+                self.screen.blit(self.img, (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
         '''
         Почему у вас всегда скорость по игрикам больше нуля?
         '''
