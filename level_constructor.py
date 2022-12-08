@@ -85,7 +85,6 @@ class MAP:
             draw_distance = int((x + WIDTH/2)//block_length) - 1
         else:
             draw_distance = int((x + WIDTH/2)//block_length)
-            #print("sus")
         for i in range(len(self.map_list)):
             for j in range(int((x - WIDTH/2)//block_length), draw_distance + 1):
                 if self.map_list[i][j] == '1':
