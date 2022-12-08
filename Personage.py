@@ -73,7 +73,7 @@ class Personage:
 
         self.x += self.Vx
 
-        #self.Collision_x(map)
+        self.Collision_x(map)
 
         if not self.onGround:
             self.y += self.Vy
@@ -103,7 +103,7 @@ class Personage:
 
         self.x += self.Vx
 
-        #self.Collision_x(map)
+        self.Collision_x(map)
 
         if not self.onGround:
             self.y += self.Vy
@@ -171,7 +171,7 @@ class Personage:
         if self.Vx >= 0:
             for j in range(int(self.x) // 40 + 1, (int(self.x) + self.height) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
-                    if map[i][j] != '0' and self.x + self.width + self.Vx >= j*40:
+                    if map[i][j] != '0':
                         self.x = j * 40 - self.width
                         self.Vx = 0
 
