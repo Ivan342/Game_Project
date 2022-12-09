@@ -33,7 +33,7 @@ class Personage:
         self.direction = False
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.img_left = pg.image.load('girl_left2.png').convert_alpha()
-        self.block_jump_speed = 3
+        self.block_jump_speed = 5
         self.died = 0
 
         self.power_up = 15
@@ -54,17 +54,23 @@ class Personage:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
                 self.Vy = -4
                 self.onGround = False
-        if keyboard.is_pressed('a'):
-            self.Vx = -5
-            self.direction = True
+                self.time_after_up += 1
 
-        if keyboard.is_pressed('d'):
-            self.Vx = 5
+        if self.Vy >= 0:
+            self.time_after_up = 0
+
+        if keyboard.is_pressed('a') and self.Vx <= 5 and self.Vx >= -5:
+            self.Vx -= self.acceleration
+            self.direction = True
+        if keyboard.is_pressed('d') and self.Vx <= 5 and self.Vx >= -5:
+            self.Vx += self.acceleration
             self.direction = False
 
-        # elif keyboard.is_pressed('d'):
+        #if keyboard.is_pressed('s'):
+        #    self.Vy += self.acceleration
+        #elif keyboard.is_pressed('d'):
         #    self.Vx = 5
-        # elif (not keyboard.is_pressed('a')) & (not keyboard.is_pressed('d')):
+        #elif (not keyboard.is_pressed('a')) & (not keyboard.is_pressed('d')):
         if self.Vx > 0 and (not keyboard.is_pressed('d')):
             self.Vx -= 2 * self.acceleration
             if self.Vx >= -0.5 and self.Vx <= 0.5:
@@ -97,13 +103,10 @@ class Personage:
             if self.onGround and self.power_up <= 37:
                 self.power_up += 1
 
-        if (not keyboard.is_pressed('up arrow')) and self.power_up != 2 and self.onGround:
-            self.Vy = -1 * 10 * (self.power_up / 60)
+        if ( not keyboard.is_pressed('up arrow') ) and self.power_up != 2 and self.onGround:
+            self.Vy = -1*10*(self.power_up / 60)
             self.power_up = 0
             self.onGround = False
-            if self.onGround:
-                self.Vy = - 5
-                self.onGround = False
         elif keyboard.is_pressed('left arrow'):
             self.Vx = -5
             self.direction = True
@@ -173,6 +176,10 @@ class Personage:
         if w == 8:
             w = 0
 
+
+
+
+
     def draw_fancy(self, block, mapik):
         if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
             pg.draw.rect(self.screen, self.color, (WIDTH / 2, self.y, self.width, self.height))
@@ -215,6 +222,10 @@ class Personage:
                         self.y = i * 40 - self.height
                         self.Vy = 0
                         self.onGround = True
+                        print(0)
+                        if map[i][j] == '4':
+                            print(1)
+                            self.Vy -= self.block_jump_speed
                     else:
                         self.onGround = False
 
@@ -225,5 +236,3 @@ class Personage:
                         self.y = (i+1) * 40
                         self.Vy = 0
                         # self.Vy = max(self.Vy, 0)
-                    if map[i][j] == '4':
-                        self.Vy -= self.block_jump_speed
