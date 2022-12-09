@@ -5,7 +5,9 @@ import pygame as pg
 import keyboard
 
 from level_constructor import *
-w=0
+
+w = 0
+
 
 class Personage:
     def __init__(self, screen):
@@ -28,11 +30,15 @@ class Personage:
         self.width = 60
         self.height = 70
         self.onGround = False
+        self.direction = False
         self.img = pg.image.load('girl0.png').convert_alpha()
+        self.img_left = pg.image.load('girl_left2.png').convert_alpha()
+        self.block_jump_speed = 3
         self.died = 0
 
         self.power_up = 15
         self.time_after_up = 0
+
     def move_personage(self, map):
         g = 0.15
         '''
@@ -55,27 +61,29 @@ class Personage:
 
         if keyboard.is_pressed('a') and self.Vx <= 5 and self.Vx >= -5:
             self.Vx -= self.acceleration
+            self.direction = True
         if keyboard.is_pressed('d') and self.Vx <= 5 and self.Vx >= -5:
             self.Vx += self.acceleration
+            self.direction = False
 
-        if keyboard.is_pressed('s'):
-            self.Vy += self.acceleration
+        #if keyboard.is_pressed('s'):
+        #    self.Vy += self.acceleration
         #elif keyboard.is_pressed('d'):
         #    self.Vx = 5
         #elif (not keyboard.is_pressed('a')) & (not keyboard.is_pressed('d')):
         if self.Vx > 0 and (not keyboard.is_pressed('d')):
-            self.Vx -= 2*self.acceleration
+            self.Vx -= 2 * self.acceleration
             if self.Vx >= -0.5 and self.Vx <= 0.5:
                 self.Vx = 0
 
         if self.Vx < 0 and (not keyboard.is_pressed('a')):
-            self.Vx += 2*self.acceleration
+            self.Vx += 2 * self.acceleration
             if self.Vx >= -0.5 and self.Vx <= 0.5:
                 self.Vx = 0
 
         self.x += self.Vx
 
-        #self.Collision_x(map)
+        self.Collision_x(map)
 
         if not self.onGround:
             self.y += self.Vy
@@ -98,14 +106,16 @@ class Personage:
             self.onGround = False
         elif keyboard.is_pressed('left arrow'):
             self.Vx = -5
+            self.direction = True
         elif keyboard.is_pressed('right arrow'):
             self.Vx = 5
+            self.direction = False
         elif (not keyboard.is_pressed('left arrow')) & (not keyboard.is_pressed('right arrow')):
             self.Vx = 0
 
         self.x += self.Vx
 
-        #self.Collision_x(map)
+        self.Collision_x(map)
 
         if not self.onGround:
             self.y += self.Vy
@@ -115,35 +125,47 @@ class Personage:
         if self.onGround == False:
             self.Vy += g
         return 0
-    def Personage_animation_move_right(self,block, mapik):
+
+    def Personage_animation_move_right(self, block, mapik):
         '''
         анимация бега вправо и лево, стояния на месте
         '''
         global w
         animation_set = [pygame.image.load(f"girl{w}.png").convert_alpha() for w in range(0, 9)]
         animation_set_left = [pygame.image.load(f"girl_left{w}.png").convert_alpha() for w in range(0, 9)]
-        if self.Vx>0:
+        if self.Vx > 0:
             if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-                self.screen.blit(animation_set[w], (WIDTH/2, int(self.y)))
+                self.screen.blit(animation_set[w], (WIDTH / 2, int(self.y)))
             elif self.x < WIDTH / 2:
                 self.screen.blit(animation_set[w], (int(self.x), int(self.y)))
             else:
-                self.screen.blit(animation_set[w], (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+                self.screen.blit(animation_set[w],
+                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
         if self.Vx < 0:
             if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-                    self.screen.blit(animation_set_left[w], (WIDTH / 2, int(self.y)))
+                self.screen.blit(animation_set_left[w], (WIDTH / 2, int(self.y)))
             elif self.x < WIDTH / 2:
-                    self.screen.blit(animation_set_left[w], (int(self.x), int(self.y)))
+                self.screen.blit(animation_set_left[w], (int(self.x), int(self.y)))
             else:
-                    self.screen.blit(animation_set_left[w],(- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+                self.screen.blit(animation_set_left[w],
+                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
         if self.Vx == 0:
-            if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-                self.screen.blit(self.img, (WIDTH / 2, int(self.y)))
-            elif self.x < WIDTH / 2:
-                self.screen.blit(self.img, (int(self.x), int(self.y)))
+            if self.direction:
+                if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                    self.screen.blit(self.img_left, (WIDTH / 2, int(self.y)))
+                elif self.x < WIDTH / 2:
+                    self.screen.blit(self.img_left, (int(self.x), int(self.y)))
+                else:
+                    self.screen.blit(self.img_left,
+                                     (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
             else:
-                self.screen.blit(self.img, (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+                if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                    self.screen.blit(self.img, (WIDTH / 2, int(self.y)))
+                elif self.x < WIDTH / 2:
+                    self.screen.blit(self.img, (int(self.x), int(self.y)))
+                else:
+                    self.screen.blit(self.img, (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
         '''
         Почему у вас всегда скорость по игрикам больше нуля?
         '''
@@ -157,12 +179,12 @@ class Personage:
 
     def draw_fancy(self, block, mapik):
         if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-            pg.draw.rect(self.screen, self.color, (WIDTH/2, self.y, self.width, self.height))
+            pg.draw.rect(self.screen, self.color, (WIDTH / 2, self.y, self.width, self.height))
         elif self.x < WIDTH / 2:
             pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))
         else:
-            pg.draw.rect(self.screen, self.color, (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, self.y, self.width, self.height))
-
+            pg.draw.rect(self.screen, self.color,
+                         (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, self.y, self.width, self.height))
 
     def Collision_x(self, map):
         '''
@@ -172,16 +194,16 @@ class Personage:
         '''
         if self.Vx >= 0:
             for j in range(int(self.x) // 40 + 1, (int(self.x) + self.height) // 40 + 1):
-                for i in range(int(self.y) // 40 , (int(self.y) + self.height) // 40):
-                    if map[i][j] == '1':
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+                    if map[i][j] != '0':
                         self.x = j * 40 - self.width
                         self.Vx = 0
 
         if self.Vx < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40):
-                for i in range(int(self.y) // 40 , (int(self.y) + self.height) // 40):
-                    if map[i][j] == '1':
-                        self.x = (j+1) * 40
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+                    if map[i][j] != '0':
+                        self.x = (j + 1) * 40
                         self.Vx = 0
 
     def Collision_y(self, map):
@@ -190,15 +212,22 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-        for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40 + 1):
-            for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
-                if map[i][j] == '1':
-                    #print(i, j)
-                    if self.Vy > 0:
+        if self.Vy >= 0:
+            for j in range(int(self.x) // 40 - 1, (int(self.x) + self.width) // 40 + 1):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+                    if map[i][j] != '0':
                         self.y = i * 40 - self.height
-                        #self.Vy = min(self.Vy, 0)
+                        self.Vy = 0
                         self.onGround = True
-                    if self.Vy < 0:
-                        self.y = i * 40 + 40
-                        #self.Vy = max(self.Vy, 0)
+                    else:
+                        self.onGround = False
 
+        if self.Vy < 0:
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+                    if map[i][j] != '0':
+                        self.y = (i + 1) * 40
+                        self.Vy = 0
+                        # self.Vy = max(self.Vy, 0)
+                    if map[i][j] == '4':
+                        self.Vy -= self.block_jump_speed

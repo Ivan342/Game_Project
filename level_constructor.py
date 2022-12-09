@@ -1,5 +1,5 @@
 import pygame as pg
-from pygame.draw import *
+from pygame import draw
 
 map_name = "Типокарта.txt"
 WIDTH = 1200
@@ -12,6 +12,7 @@ BROWN = (40, 20, 10)
 RED = (255, 0, 0)
 GREEN = 0x00FF00
 block_length = 40
+PURPLE = (154, 50, 205)
 
 TIME_COLOR = GREY
 
@@ -25,10 +26,8 @@ class Block:
         self.ground Открывает картинку земли
         self.hill открывает картинку склона
          '''
-        self.length = 40
         self.screen = screen
         self.length = block_length
-        self.length = 40
         self.screen = screen
         self.grass = pg.image.load('землятрава.jpg').convert()
         self.grass_box = self.grass.get_rect()
@@ -54,6 +53,9 @@ class Block:
         рисует блок склона(левого)
         '''
         self.screen.blit(self.hill_left, (x * self.length, y * self.length))
+
+    def draw_block_jump(self, x, y):
+        draw.rect(self.screen, PURPLE, (x * self.length, y * self.length, block_length, block_length))
 
 
 class MAP:
@@ -81,18 +83,20 @@ class MAP:
         :param block: вызываем функции класса block
         :param x: Позиция игрока по оси x
         """
-        if int((x + WIDTH/2)//block_length) + 1 > len(self.map_list[0]):
-            draw_distance = int((x + WIDTH/2)//block_length) - 1
+        if int((x + WIDTH / 2) // block_length) + 1 > len(self.map_list[0]):
+            draw_distance = int((x + WIDTH / 2) // block_length) - 1
         else:
-            draw_distance = int((x + WIDTH/2)//block_length)
+            draw_distance = int((x + WIDTH / 2) // block_length)
         for i in range(len(self.map_list)):
-            for j in range(int((x - WIDTH/2)//block_length), draw_distance + 1):
+            for j in range(int((x - WIDTH / 2) // block_length), draw_distance + 1):
                 if self.map_list[i][j] == '1':
-                    block.draw_block_grass(j - (x - WIDTH/2)/block_length, i)
+                    block.draw_block_grass(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '2':
-                    block.draw_block_under(j - (x - WIDTH/2)/block_length, i)
+                    block.draw_block_under(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '3':
-                    block.draw_block_hill_left(j - (x - WIDTH/2)/block_length, i)
+                    block.draw_block_hill_left(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '4':
+                    block.draw_block_jump(j - (x - WIDTH / 2) / block_length, i)
 
     def map_chase(self, block, pers_x):
         """
@@ -104,6 +108,6 @@ class MAP:
         if pers_x >= WIDTH / 2 and pers_x <= len(self.map_list[0]) * block.length - WIDTH / 2:
             self.draw_map(block, pers_x)
         elif pers_x < WIDTH / 2:
-            self.draw_map(block, WIDTH/2)
+            self.draw_map(block, WIDTH / 2)
         else:
-            self.draw_map(block, len(self.map_list[0]) * block.length - WIDTH/2)
+            self.draw_map(block, len(self.map_list[0]) * block.length - WIDTH / 2)
