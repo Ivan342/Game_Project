@@ -16,9 +16,12 @@ class Personage:
         self.x координата левого вверхнего угла по горизонтали
         self.y - координата левого вверхнего угла по вертикали
         self.radius - костыль для упррощения, потому что сейчас персонаж это шарик.
-        self.width - ширина персонажа, для нормальной отрисовки и проверки касаний собъектами. Считается от левого вверхнего угла
+        self.width - ширина персонажа, для нормальной отрисовки и проверки касаний собъектами.
+        Считается от левого вверхнего угла
         self.height - высота персонажа для проверки касаний. Считается от левого вверхнего угла
         :param screen: экран, на который выводится персонаж
+        self.died - показатель смерти. 0-жив, 1-мертв(от взрыва)(если будете добавлять другие источники смерти,
+        то обозначайте их другими цифрами, чтобы разделять анимаwии)
         '''
         self.screen = screen
         self.x = 100
@@ -104,16 +107,18 @@ class Personage:
         return 0
 
     def collusion_with_red_block(self):
-
+        '''
+        Функция проверяет пересечение Кима и персонажа
+        '''
         for raw in raw_list:
 
             #print(raw.y, self.y, list_pos_x)
             if (self.y >(raw.y-20) and self.y<(raw.y+40)) or (self.y+45 >(raw.y) and (self.y+45)<(raw.y+40))   :
-                print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
+                #print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
                 for i in range(len(raw.block_pos)):
                     if raw.block_pos[i]==0:
                         if (((self.x+30)>i*40) and (self.x+30)<(i*40+40)):
-                            print('huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
+                            #print(uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
                             self.died=1
 
 

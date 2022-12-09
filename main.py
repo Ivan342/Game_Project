@@ -75,7 +75,10 @@ while running:
         # map.map_chase(block, pers_2.x)
         # pers.draw()
 
-
+        '''
+        (если будете добавлять другие источники смерти,
+        то обозначайте их другими цифрами, чтобы разделять анимаwии)
+        '''
         if pers.died == 0:
             pers.collusion_with_red_block()
             pers.Personage_animation_move_right(block, map)
