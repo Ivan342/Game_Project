@@ -108,11 +108,12 @@ class Personage:
 
 
     def death_animations(self):
+        '''
+        Анимации смертей
+        '''
         global w
         animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
         self.screen.blit(animation_set_explosion[w], (int(self.x), int(self.y)))
-
-
 
 
     def collusion_with_red_block(self):
