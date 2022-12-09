@@ -85,7 +85,8 @@ while running:
             pers.move_personage(map.map_list)
             pers.collusion_with_red_block()
         if pers.died == 1:
-            pers.x=0
+            pers.death_animations()
+                #pers.x=0
 
     #pers_2.move_personage_2(map.map_list)
     #pers_2.Personage_animation_move_right(block, map)
