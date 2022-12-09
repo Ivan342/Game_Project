@@ -33,7 +33,7 @@ class Personage:
         self.direction = False
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.img_left = pg.image.load('girl_left2.png').convert_alpha()
-        self.block_jump_speed = 3
+        self.block_jump_speed = 5
         self.died = 0
 
         self.power_up = 15
@@ -219,6 +219,10 @@ class Personage:
                         self.y = i * 40 - self.height
                         self.Vy = 0
                         self.onGround = True
+                        print(0)
+                        if map[i][j] == '4':
+                            print(1)
+                            self.Vy -= self.block_jump_speed
                     else:
                         self.onGround = False
 
@@ -229,5 +233,3 @@ class Personage:
                         self.y = (i + 1) * 40
                         self.Vy = 0
                         # self.Vy = max(self.Vy, 0)
-                    if map[i][j] == '4':
-                        self.Vy -= self.block_jump_speed
