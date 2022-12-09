@@ -14,7 +14,7 @@ screen = pg.display.set_mode((WIDTH, HEIGHT))
 running = True
 block = Block(screen)
 pers = Personage(screen)
-#pers_2 = Personage(screen)
+# pers_2 = Personage(screen)
 map = MAP()
 '''
 Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
@@ -28,10 +28,8 @@ game_speed = 0.5
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 
-
-
 while running:
-    screen.blit(field,(0,0))
+    screen.blit(field, (0, 0))
     for raw in raw_list:
         raw.fall()
         raw.draw()
@@ -43,7 +41,6 @@ while running:
         else:
             spawn_filled = False
 
-
     if not spawn_filled:
         fall_raw.new_raw(screen, game_speed)
         spawn_filled = True
@@ -54,18 +51,18 @@ while running:
     game_speed += raw_list[0].accel
     map.map_chase(block, pers.x)
 
-    #map.map_chase(block, pers_2.x)
-    #pers.draw()
+    # map.map_chase(block, pers_2.x)
+    # pers.draw()
 
-    if pers.died==0:
+    if pers.died == 0:
         pers.Personage_animation_move_right(block, map)
         pers.move_personage(map.map_list)
     if pers.died == 1:
-        pers.x=0
+        pers.x = 0
 
-    #pers_2.move_personage_2(map.map_list)
-    #pers_2.Personage_animation_move_right(block, map)
-    #pers.move_personage(map)
+    # pers_2.move_personage_2(map.map_list)
+    # pers_2.Personage_animation_move_right(block, map)
+    # pers.move_personage(map)
     dt = time.get_ticks() - start_time
 
     for event in pg.event.get():
@@ -76,10 +73,9 @@ while running:
                 pers.x = event.pos[0]
                 pers.y = event.pos[1]
 
-                #pers_2.x = event.pos[0]
-                #pers_2.y = event.pos[1]
+                # pers_2.x = event.pos[0]
+                # pers_2.y = event.pos[1]
     pg.display.update()
     clock.tick(FPS)
     (clock.get_time())
 pg.quit()
-
