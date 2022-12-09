@@ -40,6 +40,10 @@ class Personage:
         self.power_up = 15
         self.time_after_up = 0
 
+    def start_game(self):
+        self.died=0
+
+
     def move_personage(self, map):
         g = 0.15
         '''
@@ -53,6 +57,7 @@ class Personage:
         '''
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
+
                 self.Vy = -4
                 self.onGround = False
                 self.time_after_up += 1
@@ -98,17 +103,18 @@ class Personage:
 
         return 0
 
-    def collusion_with_red_block(self, list_pos_x):
+    def collusion_with_red_block(self):
 
         for raw in raw_list:
-            print(raw.y, self.y, list_pos_x)
-            if (self.y >(raw.y) and self.y<(raw.y+40)):
-                print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
-                for i in range(len(list_pos_x)):
-                    #print(i)
-                    if ((self.x>list_pos_x[i]) and self.x<(list_pos_x[i]+40)):
-                        print('huuuuuuuuuuuuuuuuuuuuuuuuuy')
 
+            #print(raw.y, self.y, list_pos_x)
+            if (self.y >(raw.y-20) and self.y<(raw.y+40)) or (self.y+45 >(raw.y) and (self.y+45)<(raw.y+40))   :
+                print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
+                for i in range(len(raw.block_pos)):
+                    if raw.block_pos[i]==0:
+                        if (((self.x+30)>i*40) and (self.x+30)<(i*40+40)):
+                            print('huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
+                            self.died=1
 
 
 
@@ -238,9 +244,9 @@ class Personage:
                         self.y = i * 40 - self.height
                         self.Vy = 0
                         self.onGround = True
-                        print(0)
+                        #print(0)
                         if map[i][j] == '4':
-                            print(1)
+                            #print(1)
                             self.Vy -= self.block_jump_speed
                     else:
                         self.onGround = False

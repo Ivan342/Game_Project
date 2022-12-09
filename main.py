@@ -28,7 +28,10 @@ game_speed = 0.5
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 
+
+
 while running:
+    #pers.start_game()
     '''
     while menu_opened:
         for event in pg.event.get():
@@ -43,7 +46,7 @@ while running:
         box.set_topleft((0, 0))
         box.blit()
         box.update()'''
-        
+    pers.collusion_with_red_block()
     if True:
         screen.blit(field, (0, 0))
         for raw in raw_list:
@@ -74,11 +77,13 @@ while running:
 
 
         if pers.died == 0:
+            pers.collusion_with_red_block()
             pers.Personage_animation_move_right(block, map)
             pers.move_personage(map.map_list)
+            pers.collusion_with_red_block()
         if pers.died == 1:
             pers.x=0
-        pers.collusion_with_red_block(list_pos_x)
+
     #pers_2.move_personage_2(map.map_list)
     #pers_2.Personage_animation_move_right(block, map)
     #pers.move_personage(map)

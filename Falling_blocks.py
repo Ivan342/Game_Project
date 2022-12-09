@@ -31,10 +31,7 @@ class Fall_block_raw():
         new_raw = Fall_block_raw(screen)
         new_raw.vy = vely
         raw_list.append(new_raw)
-        for i in range(len(self.block_pos)):
 
-            if self.block_pos[i] == 0:
-                list_pos_x.append((i*40))
 
 
 
