@@ -2,11 +2,13 @@ import pygame as pg
 from pygame.draw import *
 from level_constructor import *
 from random import randint
+from Personage import*
 
 raw_list = []
-
+list_pos_x = []
 
 class Fall_block_raw():
+
     def __init__(self, screen):
         self.length = 40
         self.accel = 0.0005
@@ -15,6 +17,7 @@ class Fall_block_raw():
         self.block_pos = [randint(0, 10) for i in range(int(WIDTH / self.length))]
         self.y = -self.length
         self.vy = 0
+        self.bomb = pg.image.load('kimm.png').convert_alpha()
 
     def new_raw(self, screen, vely):
         """
@@ -23,10 +26,20 @@ class Fall_block_raw():
         :param vely: начальная скорость падения
         :return:
         """
-        global raw_list
+        global raw_list, list_pos_x
+
         new_raw = Fall_block_raw(screen)
         new_raw.vy = vely
         raw_list.append(new_raw)
+        for i in range(len(self.block_pos)):
+
+            if self.block_pos[i] == 0:
+                list_pos_x.append((i*40))
+
+
+
+
+
 
     def fall(self):
         """
@@ -41,9 +54,10 @@ class Fall_block_raw():
         Отрисовка блоков
         :return:
         """
+        #print(self.block_pos)
         for i in range(len(self.block_pos)):
             if self.block_pos[i] == 0:
-                rect(self.screen, RED, ((i * self.length, self.y), (self.length, self.length)))
+                self.screen.blit(self.bomb, ((i * self.length, self.y-20), (self.length, self.length)))
 
     def clear(self):
         """

@@ -4,7 +4,6 @@ from pygame.draw import *
 from Personage import *
 from level_constructor import *
 from Falling_blocks import *
-from Menu import *
 
 FPS = 60
 clock = pg.time.Clock()
@@ -13,11 +12,9 @@ time_scale = 1000
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 running = True
-
 block = Block(screen)
 pers = Personage(screen)
 # pers_2 = Personage(screen)
-menu = Menu()
 map = MAP()
 '''
 Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
@@ -32,6 +29,7 @@ start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 
 while running:
+    '''
     while menu_opened:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -44,8 +42,9 @@ while running:
             ])
         box.set_topleft((0, 0))
         box.blit()
-        box.update()
-    if level_chosen:
+        box.update()'''
+        
+    if True:
         screen.blit(field, (0, 0))
         for raw in raw_list:
             raw.fall()
@@ -57,6 +56,8 @@ while running:
 
             else:
                 spawn_filled = False
+
+
 
         if not spawn_filled:
             fall_raw.new_raw(screen, game_speed)
@@ -71,15 +72,19 @@ while running:
         # map.map_chase(block, pers_2.x)
         # pers.draw()
 
+
         if pers.died == 0:
             pers.Personage_animation_move_right(block, map)
             pers.move_personage(map.map_list)
         if pers.died == 1:
-            pers.x = 0
+            pers.x=0
+        pers.collusion_with_red_block(list_pos_x)
+    #pers_2.move_personage_2(map.map_list)
+    #pers_2.Personage_animation_move_right(block, map)
+    #pers.move_personage(map)
 
-        # pers_2.move_personage_2(map.map_list)
-        # pers_2.Personage_animation_move_right(block, map)
-        # pers.move_personage(map)
+
+
         dt = time.get_ticks() - start_time
 
         for event in pg.event.get():

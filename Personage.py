@@ -1,4 +1,5 @@
 import pygame
+from Falling_blocks import*
 from pygame import time, draw
 
 import pygame as pg
@@ -91,11 +92,26 @@ class Personage:
 
         self.Collision_y(map)
 
-        print(self.onGround)
+        #print(self.onGround)
         if self.onGround == False:
             self.Vy += g
 
         return 0
+
+    def collusion_with_red_block(self, list_pos_x):
+
+        for raw in raw_list:
+            print(raw.y, self.y, list_pos_x)
+            if (self.y >(raw.y) and self.y<(raw.y+40)):
+                print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
+                for i in range(len(list_pos_x)):
+                    #print(i)
+                    if ((self.x>list_pos_x[i]) and self.x<(list_pos_x[i]+40)):
+                        print('huuuuuuuuuuuuuuuuuuuuuuuuuy')
+
+
+
+
 
     def move_personage_2(self, map):
         g = 0.1
@@ -124,7 +140,7 @@ class Personage:
             self.y += self.Vy
         self.Collision_y(map)
 
-        print(self.onGround)
+        #print(self.onGround)
         if self.onGround == False:
             self.Vy += g
         return 0
