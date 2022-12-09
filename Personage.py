@@ -75,17 +75,20 @@ class Personage:
             if self.Vx >= -0.5 and self.Vx <= 0.5:
                 self.Vx = 0
 
-        self.x += self.Vx
 
+        self.x += self.Vx
         self.Collision_x(map)
 
+        self.Collision_y(map)
         if not self.onGround:
             self.y += self.Vy
+
         self.Collision_y(map)
 
         print(self.onGround)
         if self.onGround == False:
             self.Vy += g
+
         return 0
 
     def move_personage_2(self, map):
@@ -206,7 +209,7 @@ class Personage:
         :return: ничего не выводит, только двигает
         '''
         if self.Vy >= 0:
-            for j in range(int(self.x) // 40 - 1, (int(self.x) + self.width) // 40 + 1):
+            for j in range(int(self.x) // 40 , (int(self.x) + self.width) // 40 ):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                     if map[i][j] != '0':
                         self.y = i * 40 - self.height
@@ -219,7 +222,7 @@ class Personage:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
                     if map[i][j] != '0':
-                        self.y = (i + 1) * 40
+                        self.y = (i+1) * 40
                         self.Vy = 0
                         # self.Vy = max(self.Vy, 0)
                     if map[i][j] == '4':
