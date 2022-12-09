@@ -58,6 +58,8 @@ class Personage:
         if keyboard.is_pressed('d') and self.Vx <= 5 and self.Vx >= -5:
             self.Vx += self.acceleration
 
+        if keyboard.is_pressed('s'):
+            self.Vy += self.acceleration
         #elif keyboard.is_pressed('d'):
         #    self.Vx = 5
         #elif (not keyboard.is_pressed('a')) & (not keyboard.is_pressed('d')):
