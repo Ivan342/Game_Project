@@ -8,6 +8,8 @@ import keyboard
 from level_constructor import *
 
 w = 0
+FPS = 60
+clock = pg.time.Clock()
 
 
 class Personage:
@@ -113,7 +115,14 @@ class Personage:
         '''
         global w
         animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
-        self.screen.blit(animation_set_explosion[w], (int(self.x), int(self.y)))
+        for i in range(6):
+            self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
+            clock.tick(8)
+            pg.display.update()
+
+
+
+
 
 
     def collusion_with_red_block(self):
@@ -129,7 +138,10 @@ class Personage:
                     if raw.block_pos[i]==0:
                         if (((self.x+30)>i*40) and (self.x+30)<(i*40+40)):
                             #print(uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
-                            self.died=1
+                            if self.died == 0:
+                                self.died=1
+
+
 
 
 

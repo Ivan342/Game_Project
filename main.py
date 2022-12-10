@@ -24,7 +24,7 @@ map.read_map(map_name)
 fall_raw = Fall_block_raw(screen)
 spawn_filled = False
 need_clean = False
-game_speed = 0.5
+game_speed = 1
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 
@@ -86,6 +86,7 @@ while running:
             pers.collusion_with_red_block()
         if pers.died == 1:
             pers.death_animations()
+            pers.died=2
                 #pers.x=0
 
     #pers_2.move_personage_2(map.map_list)
