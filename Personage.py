@@ -6,11 +6,14 @@ import pygame as pg
 import keyboard
 
 from level_constructor import *
+my_time=0
+surf_wasted = pygame.Surface((1200,600))
+surf_wasted.set_alpha(20)
 
 w = 0
 FPS = 60
 clock = pg.time.Clock()
-
+prozrachost=0
 
 class Personage:
     def __init__(self, screen):
@@ -41,6 +44,7 @@ class Personage:
         self.img_left = pg.image.load('girl_left2.png').convert_alpha()
         self.block_jump_speed = 5
         self.died = 0
+        self.surf_wasted_img = pygame.image.load('wasted.png').convert_alpha()
 
         self.power_up = 15
         self.time_after_up = 0
@@ -113,12 +117,26 @@ class Personage:
         '''
         Анимации смертей
         '''
-        global w
+
+        global w,my_time,prozrachost
         animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
         for i in range(6):
             self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
             clock.tick(8)
             pg.display.update()
+        while True:
+            my_time+=1
+            clock.tick(30)
+            self.screen.blit(surf_wasted, (0,0))
+            pg.display.update()
+
+            if my_time>=25:
+                self.surf_wasted_img.set_alpha(prozrachost)
+                self.screen.blit(self.surf_wasted_img, (456,230))
+                pg.display.update()
+                clock.tick(30)
+                prozrachost+=8
+
 
 
 
