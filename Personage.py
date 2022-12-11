@@ -119,12 +119,17 @@ class Personage:
         '''
 
         global w,my_time,prozrachost
+        death_screen = True
         animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
         for i in range(6):
             self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
             clock.tick(8)
             pg.display.update()
-        while True:
+        while death_screen:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    death_screen = False
+
             my_time+=1
             clock.tick(30)
             self.screen.blit(surf_wasted, (0,0))
@@ -136,8 +141,6 @@ class Personage:
                 pg.display.update()
                 clock.tick(30)
                 prozrachost+=8
-
-
 
 
 
@@ -155,7 +158,7 @@ class Personage:
                 for i in range(len(raw.block_pos)):
                     if raw.block_pos[i]==0:
                         if (((self.x+30)>i*40) and (self.x+30)<(i*40+40)):
-                            #print(uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
+                            #print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
                             if self.died == 0:
                                 self.died=1
 
@@ -283,7 +286,7 @@ class Personage:
         :return: ничего не выводит, только двигает
         '''
         if self.Vy >= 0:
-            for j in range(int(self.x) // 40 , (int(self.x) + self.width) // 40 ):
+            for j in range(int(self.x) // 40 , (int(self.x) + self.width) // 40):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                     if map[i][j] != '0':
                         self.y = i * 40 - self.height

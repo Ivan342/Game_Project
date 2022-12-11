@@ -4,10 +4,10 @@ from pygame.draw import *
 from Personage import *
 from level_constructor import *
 from Falling_blocks import *
+from Menu import *
 
 FPS = 60
 clock = pg.time.Clock()
-map_name = "Типокарта.txt"
 time_scale = 1000
 pg.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -15,15 +15,21 @@ running = True
 block = Block(screen)
 pers = Personage(screen)
 # pers_2 = Personage(screen)
+menu = Menu()
+exit_button = Exit_button(10, 60, 100, 50, "pic1.png", "Exit", "Exit")
+fal_block_lvl_but = Fal_blocks_lvl_but(10, 10, 250, 50, "pic1.png", "Falling blocks", "F_b_lvl")
+menu.put_button(fal_block_lvl_but)
+menu.put_button(exit_button)
 map = MAP()
 '''
 Здесь создаем карту как объект отдельного класса карт, чтобы к нему можно было обращаться из любой программы.
 Класс прописан level_constructor
 '''
-map.read_map(map_name)
+
 fall_raw = Fall_block_raw(screen)
 spawn_filled = False
 need_clean = False
+level_chosen = False
 game_speed = 1
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
@@ -32,22 +38,26 @@ field = pg.image.load('фон1.jpg').convert()
 
 while running:
     #pers.start_game()
-    '''
     while menu_opened:
+        menu.draw_menu(screen)
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 menu_opened = False
                 running = False
-        button_stop = thorpy.make_button("Exit", func = menu.stop())
-        box = thorpy.Box(elements=[
+            elif event.type == pg.MOUSEBUTTONDOWN:
+                for butt in menu.buttons:
+                    if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[1] <= butt.y + butt.width:
+                        if butt.name == "Exit":
+                            running = False
+                        else:
+                            map.read_map(butt.push_me())
+                            level_chosen = True
+                        menu_opened = False
 
-            button_stop,
-            ])
-        box.set_topleft((0, 0))
-        box.blit()
-        box.update()'''
-    pers.collusion_with_red_block()
-    if True:
+        pg.display.update()
+
+    if level_chosen:
+        pers.collusion_with_red_block()
         screen.blit(field, (0, 0))
         for raw in raw_list:
             raw.fall()
@@ -86,6 +96,7 @@ while running:
             pers.collusion_with_red_block()
         if pers.died == 1:
             pers.death_animations()
+            running = False
             pers.died=2
                 #pers.x=0
 
