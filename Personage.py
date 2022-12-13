@@ -91,15 +91,16 @@ class Personage:
             if self.Vx >= -0.5 and self.Vx <= 0.5:
                 self.Vx = 0
 
+        self.y += self.Vy
+        if not self.onGround:
+            self.Vy += g
+        self.onGround = False
+        self.Collision_y(map)
+
         self.x += self.Vx
         self.Collision_x(map)
 
-        if not self.onGround:
-            self.Vy += g
-
-        self.y += self.Vy
-        self.onGround = False
-        self.Collision_y(map)
+        #pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
         return 0
 
@@ -244,18 +245,22 @@ class Personage:
         :return: ничего не выводит, только двигает
         '''
         if self.Vx > 0:
-            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40+1):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
+                for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
+                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.x = j * 40 - self.width
-                        #self.Vx = 0
+                        #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
+                        #print(i, j)
 
         if self.Vx < 0:
-            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40+1):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
+                for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
+                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.x = (j + 1) * 40
-                        #self.Vx = 0
+                        #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
+                        #print(i, j)
 
     def Collision_y(self, map):
         '''
@@ -265,7 +270,7 @@ class Personage:
         '''
         if self.Vy > 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40+1):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                     if map[i][j] == '1' or map[i][j] == '2' or map[i][j] == '3':
                         self.y = i * 40 - self.height
                         self.Vy = 0
@@ -273,14 +278,14 @@ class Personage:
                         # print(0)
                     else:
                         if map[i][j] == '4':
-                            print(1)
-                            print(self.Vy)
+                            #print(1)
+                            #print(self.Vy)
                             self.Vy -= self.block_jump_speed
                         self.onGround = False
 
         if self.Vy < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40+1):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
                     if map[i][j] != '0':
                         self.y = (i + 1) * 40
                         self.Vy = 0
