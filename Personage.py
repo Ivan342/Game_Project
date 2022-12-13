@@ -81,11 +81,6 @@ class Personage:
             self.Vx += self.acceleration
             self.direction = False
 
-        #if keyboard.is_pressed('s'):
-        #    self.Vy += self.acceleration
-        #elif keyboard.is_pressed('d'):
-        #    self.Vx = 5
-        #elif (not keyboard.is_pressed('a')) & (not keyboard.is_pressed('d')):
         if self.Vx > 0 and (not keyboard.is_pressed('d')):
             self.Vx -= 2 * self.acceleration
             if self.Vx >= -0.5 and self.Vx <= 0.5:
@@ -96,19 +91,15 @@ class Personage:
             if self.Vx >= -0.5 and self.Vx <= 0.5:
                 self.Vx = 0
 
-
         self.x += self.Vx
         self.Collision_x(map)
 
-        self.Collision_y(map)
         if not self.onGround:
-            self.y += self.Vy
-
-        self.Collision_y(map)
-
-        #print(self.onGround)
-        if self.onGround == False:
             self.Vy += g
+
+        self.y += self.Vy
+        self.onGround = False
+        self.Collision_y(map)
 
         return 0
 
@@ -142,10 +133,6 @@ class Personage:
                 clock.tick(30)
                 prozrachost+=8
 
-
-
-
-
     def collusion_with_red_block(self):
         '''
         Функция проверяет пересечение Кима и персонажа
@@ -161,11 +148,6 @@ class Personage:
                             #print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
                             if self.died == 0:
                                 self.died=1
-
-
-
-
-
 
     def move_personage_2(self, map):
         g = 0.1
@@ -246,10 +228,6 @@ class Personage:
         if w == 8:
             w = 0
 
-
-
-
-
     def draw_fancy(self, block, mapik):
         if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
             pg.draw.rect(self.screen, self.color, (WIDTH / 2, self.y, self.width, self.height))
@@ -265,19 +243,19 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-        if self.Vx >= 0:
-            for j in range(int(self.x) // 40 + 1, (int(self.x) + self.height) // 40 + 1):
+        if self.Vx > 0:
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40+1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
                     if map[i][j] != '0':
                         self.x = j * 40 - self.width
-                        self.Vx = 0
+                        #self.Vx = 0
 
         if self.Vx < 0:
-            for j in range(int(self.x) // 40, (int(self.x) + self.height) // 40):
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40+1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
                     if map[i][j] != '0':
                         self.x = (j + 1) * 40
-                        self.Vx = 0
+                        #self.Vx = 0
 
     def Collision_y(self, map):
         '''
@@ -285,9 +263,9 @@ class Personage:
         :param map: карта текущая
         :return: ничего не выводит, только двигает
         '''
-        if self.Vy >= 0:
-            for j in range(int(self.x) // 40 , (int(self.x) + self.width) // 40):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+        if self.Vy > 0:
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40+1):
                     if map[i][j] == '1' or map[i][j] == '2' or map[i][j] == '3':
                         self.y = i * 40 - self.height
                         self.Vy = 0
@@ -301,9 +279,9 @@ class Personage:
                         self.onGround = False
 
         if self.Vy < 0:
-            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40+1):
                     if map[i][j] != '0':
-                        self.y = (i+1) * 40
+                        self.y = (i + 1) * 40
                         self.Vy = 0
                         # self.Vy = max(self.Vy, 0)
