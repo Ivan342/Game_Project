@@ -42,7 +42,7 @@ class Personage:
         self.direction = False
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.img_left = pg.image.load('girl_left2.png').convert_alpha()
-        self.block_jump_speed = 5
+        self.block_jump_speed = 10
         self.died = 0
         self.surf_wasted_img = pygame.image.load('wasted.png').convert_alpha()
 
@@ -288,15 +288,16 @@ class Personage:
         if self.Vy >= 0:
             for j in range(int(self.x) // 40 , (int(self.x) + self.width) // 40):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
-                    if map[i][j] != '0':
+                    if map[i][j] == '1' or map[i][j] == '2' or map[i][j] == '3':
                         self.y = i * 40 - self.height
                         self.Vy = 0
                         self.onGround = True
-                        #print(0)
-                        if map[i][j] == '4':
-                            #print(1)
-                            self.Vy -= self.block_jump_speed
+                        # print(0)
                     else:
+                        if map[i][j] == '4':
+                            print(1)
+                            print(self.Vy)
+                            self.Vy -= self.block_jump_speed
                         self.onGround = False
 
         if self.Vy < 0:
