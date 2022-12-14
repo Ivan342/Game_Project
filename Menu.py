@@ -4,7 +4,7 @@ from pygame import draw
 menu_opened = True
 level_chosen = False
 surf_but = pg.Surface((230,60))
-surf_but.set_alpha(200)
+surf_but.set_alpha(180)
 '''
 тут создаются поверхности кнопок set_alpha-- прозрачность, pg.Surface--создание поверхности с размерами(...,...)
 '''
