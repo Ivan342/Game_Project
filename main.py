@@ -16,9 +16,11 @@ block = Block(screen)
 pers = Personage(screen)
 # pers_2 = Personage(screen)
 menu = Menu()
-exit_button = Exit_button(965, 80, 100, 50, "pic1.png", "Exit", "Exit")
-fal_block_lvl_but = Fal_blocks_lvl_but(965, 8, 250, 50, "pic1.png", "Falling blocks", "F_b_lvl")
+exit_button = Exit_button(980, 150, 100, 50, "pic1.png", "Exit", "Exit")
+fal_block_lvl_but = Fal_blocks_lvl_but(980, 10, 250, 50, "pic1.png", "Falling blocks", "F_b_lvl")
+racing_lvl_but = Racing_lvl_but(980, 80, 250, 50, "pic1.png", "Racing", "Racing_lvl")
 menu.put_button(fal_block_lvl_but)
+menu.put_button(racing_lvl_but)
 menu.put_button(exit_button)
 map = MAP()
 '''
@@ -30,7 +32,7 @@ fall_raw = Fall_block_raw(screen)
 spawn_filled = False
 need_clean = False
 level_chosen = False
-game_speed = 2
+game_speed = 1
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 

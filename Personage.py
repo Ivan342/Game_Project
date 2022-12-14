@@ -271,7 +271,7 @@ class Personage:
         if self.Vy > 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
-                    if map[i][j] == '1' or map[i][j] == '2' or map[i][j] == '3':
+                    if map[i][j] != '0':
                         self.y = i * 40 - self.height
                         self.Vy = 0
                         self.onGround = True
@@ -285,7 +285,7 @@ class Personage:
 
         if self.Vy < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40+1):
                     if map[i][j] != '0':
                         self.y = (i + 1) * 40
                         self.Vy = 0
