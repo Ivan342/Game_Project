@@ -14,7 +14,7 @@ screen = pg.display.set_mode((WIDTH, HEIGHT))
 running = True
 block = Block(screen)
 pers = Personage(screen)
-# pers_2 = Personage(screen)
+pers_2 = Personage(screen)
 menu = Menu()
 exit_button = Exit_button(980, 150, 100, 50, "pic1.png", "Exit", "Exit")
 fal_block_lvl_but = Fal_blocks_lvl_but(980, 10, 250, 50, "pic1.png", "Falling blocks", "F_b_lvl")
@@ -51,9 +51,14 @@ while running:
                     if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[1] <= butt.y + butt.width:
                         if butt.name == "Exit":
                             running = False
+                        elif butt.name == "F_b_lvl":
+                            map.read_map(butt.push_me())
+                            level_chosen = True
+                            Kim = True
                         else:
                             map.read_map(butt.push_me())
                             level_chosen = True
+                            Kim = False
                         menu_opened = False
 
         pg.display.update()
@@ -61,16 +66,18 @@ while running:
     if level_chosen:
         pers.collusion_with_red_block()
         screen.blit(field, (0, 0))
-        for raw in raw_list:
-            raw.fall()
-            raw.draw()
-            if raw.y > HEIGHT + raw.length:
-                need_clean = True
-            if raw_list[-1].y <= -raw.length + 100 + raw.length:
-                spawn_filled = True
+        if Kim:
+            for raw in raw_list:
+                raw.fall()
+                raw.draw()
+                if raw.y > HEIGHT + raw.length:
+                    need_clean = True
+                if raw_list[-1].y <= -raw.length + 100 + raw.length:
+                    spawn_filled = True
 
-            else:
-                spawn_filled = False
+                else:
+                    spawn_filled = False
+                    pass
 
 
 
@@ -82,7 +89,7 @@ while running:
             need_clean = False
 
         game_speed += raw_list[0].accel
-        map.map_chase(block, pers.x)
+        map.map_chase(block, max(pers.x, pers_2.x))
 
         # map.map_chase(block, pers_2.x)
         # pers.draw()
@@ -93,9 +100,15 @@ while running:
         '''
         if pers.died == 0:
             pers.collusion_with_red_block()
-            pers.Personage_animation_move_right(block, map)
             pers.move_personage(map.map_list)
+            pers_2.move_personage_2(map.map_list)
+            pers.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
+
             pers.collusion_with_red_block()
+            pers_2.collusion_with_red_block()
+            pers_2.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
+
+            pers_2.collusion_with_red_block()
         if pers.died == 1:
             pers.death_animations()
             running = False

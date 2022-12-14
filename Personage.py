@@ -151,38 +151,47 @@ class Personage:
                                 self.died=1
 
     def move_personage_2(self, map):
-        g = 0.1
-        if keyboard.is_pressed('up arrow'):
-            if self.onGround and self.power_up <= 37:
-                self.power_up += 1
+        g = 0.15
+        if self.Vy < 0 or self.onGround:
+            if keyboard.is_pressed('up_arrow') and self.time_after_up < 20:
+                self.Vy = -4
+                self.onGround = False
+                self.time_after_up += 1
 
-        if ( not keyboard.is_pressed('up arrow') ) and self.power_up != 2 and self.onGround:
-            self.Vy = -1*10*(self.power_up / 60)
-            self.power_up = 0
-            self.onGround = False
-        elif keyboard.is_pressed('left arrow'):
-            self.Vx = -5
+        if self.Vy >= 0:
+            self.time_after_up = 0
+
+        if keyboard.is_pressed('left_arrow') and self.Vx <= 5 and self.Vx >= -5:
+            self.Vx -= self.acceleration
             self.direction = True
-        elif keyboard.is_pressed('right arrow'):
-            self.Vx = 5
+        if keyboard.is_pressed('right_arrow') and self.Vx <= 5 and self.Vx >= -5:
+            self.Vx += self.acceleration
             self.direction = False
-        elif (not keyboard.is_pressed('left arrow')) & (not keyboard.is_pressed('right arrow')):
-            self.Vx = 0
 
-        self.x += self.Vx
+        if self.Vx > 0 and (not keyboard.is_pressed('right_arrow')):
+            self.Vx -= 2 * self.acceleration
+            if self.Vx >= -0.5 and self.Vx <= 0.5:
+                self.Vx = 0
 
-        self.Collision_x(map)
+        if self.Vx < 0 and (not keyboard.is_pressed('left_arrow')):
+            self.Vx += 2 * self.acceleration
+            if self.Vx >= -0.5 and self.Vx <= 0.5:
+                self.Vx = 0
 
+        self.y += self.Vy
         if not self.onGround:
-            self.y += self.Vy
+            self.Vy += g
+        self.onGround = False
         self.Collision_y(map)
 
-        #print(self.onGround)
-        if self.onGround == False:
-            self.Vy += g
+        self.x += self.Vx
+        self.Collision_x(map)
+
+        # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
+
         return 0
 
-    def Personage_animation_move_right(self, block, mapik):
+    def Personage_animation_moveemnt(self, block, mapik, max_pers_x):
         '''
         анимация бега вправо и лево, стояния на месте
         '''
@@ -190,38 +199,71 @@ class Personage:
         animation_set = [pygame.image.load(f"girl{w}.png").convert_alpha() for w in range(0, 9)]
         animation_set_left = [pygame.image.load(f"girl_left{w}.png").convert_alpha() for w in range(0, 9)]
         if self.Vx > 0:
-            if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-                self.screen.blit(animation_set[w], (WIDTH / 2, int(self.y)))
-            elif self.x < WIDTH / 2:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if self.x == max_pers_x:
+                    print()
+                    self.screen.blit(animation_set[w], (WIDTH / 2, int(self.y)))
+                else:
+                    print(23)
+                    self.screen.blit(animation_set[w], (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+            elif max_pers_x < WIDTH / 2:
+
                 self.screen.blit(animation_set[w], (int(self.x), int(self.y)))
+
             else:
+
                 self.screen.blit(animation_set[w],
                                  (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
+
         if self.Vx < 0:
-            if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-                self.screen.blit(animation_set_left[w], (WIDTH / 2, int(self.y)))
-            elif self.x < WIDTH / 2:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if self.x == max_pers_x:
+                    print(18)
+                    self.screen.blit(animation_set_left[w], (WIDTH / 2, int(self.y)))
+                else:
+                    print(17)
+                    self.screen.blit(animation_set_left[w], (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+            elif max_pers_x < WIDTH / 2:
+
                 self.screen.blit(animation_set_left[w], (int(self.x), int(self.y)))
             else:
+
                 self.screen.blit(animation_set_left[w],
-                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+                                     (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
         if self.Vx == 0:
             if self.direction:
-                if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-                    self.screen.blit(self.img_left, (WIDTH / 2, int(self.y)))
-                elif self.x < WIDTH / 2:
+                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                    if self.x == max_pers_x:
+                        print(1)
+                        self.screen.blit(self.img_left, (WIDTH / 2, int(self.y)))
+                    else:
+                        print(2)
+                        self.screen.blit(self.img_left, (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+                elif max_pers_x < WIDTH / 2:
+
                     self.screen.blit(self.img_left, (int(self.x), int(self.y)))
                 else:
+
                     self.screen.blit(self.img_left,
                                      (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
             else:
-                if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-                    self.screen.blit(self.img, (WIDTH / 2, int(self.y)))
-                elif self.x < WIDTH / 2:
+                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                    if self.x == max_pers_x:
+                        print(7)
+                        self.screen.blit(self.img, (WIDTH / 2, int(self.y)))
+                    else:
+                        print(8)
+                        self.screen.blit(self.img, (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+                elif max_pers_x < WIDTH / 2:
+
                     self.screen.blit(self.img, (int(self.x), int(self.y)))
                 else:
-                    self.screen.blit(self.img, (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+                    self.screen.blit(self.img,
+                                         (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
         '''
         Почему у вас всегда скорость по игрикам больше нуля?
         '''
@@ -229,14 +271,7 @@ class Personage:
         if w == 8:
             w = 0
 
-    def draw_fancy(self, block, mapik):
-        if self.x >= WIDTH / 2 and self.x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
-            pg.draw.rect(self.screen, self.color, (WIDTH / 2, self.y, self.width, self.height))
-        elif self.x < WIDTH / 2:
-            pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))
-        else:
-            pg.draw.rect(self.screen, self.color,
-                         (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, self.y, self.width, self.height))
+
 
     def Collision_x(self, map):
         '''

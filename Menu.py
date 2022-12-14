@@ -14,6 +14,9 @@ screen = pg.display.set_mode((WIDTH, HEIGHT))
 
 
 class Menu:
+    """
+    Создание меню и его отрисовка.
+    """
     def __init__(self):
         self.buttons = []
         self.menu_field =pg.image.load('фон меню.png').convert_alpha()
@@ -31,6 +34,9 @@ class Menu:
 
 class Fal_blocks_lvl_but:
     def __init__(self,  x, y, len, wid, pic, text, name):
+        """
+        Создание кнопки, отправляющей игрока/-ов на уровень с падающими блоками и её отрисовка
+        """
         self.x = x
         self.y = y
         self.length = len
@@ -52,6 +58,9 @@ class Fal_blocks_lvl_but:
 
 
 class Exit_button:
+    """
+    Создание кнопки выхода и её отрисовка
+    """
     def __init__(self, x, y, len, wid, pic, text, name):
         self.x = x
         self.y = y
@@ -69,6 +78,9 @@ class Exit_button:
         screen.blit(self.text, (self.x, self.y))
 
 class Racing_lvl_but:
+    """
+    Создание кнопки, отправляющей игрока/-ов на гонку и её отрисовка
+    """
     def __init__(self,  x, y, len, wid, pic, text, name):
         self.x = x
         self.y = y
