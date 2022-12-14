@@ -44,8 +44,8 @@ class Fal_blocks_lvl_but:
 
     def draw(self, screen):
 
-        self.screen.blit(surf_but, (965,5))
-        screen.blit(self.text, (self.x, self.y))
+        self.screen.blit(surf_but, (self.x,self.y))
+        screen.blit(self.text, (self.x, self.y+4))
 
     def push_me(self):
         return "Типокарта.txt"
@@ -65,6 +65,6 @@ class Exit_button:
         self.screen = screen
 
     def draw(self, screen):
-        self.screen.blit(surf_but, (965, 70))
-        screen.blit(self.text, (self.x, self.y))
+        self.screen.blit(surf_but, (self.x,self.y))
+        screen.blit(self.text, (self.x, self.y+4))
 
