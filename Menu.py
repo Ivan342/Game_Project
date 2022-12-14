@@ -3,20 +3,28 @@ from pygame import draw
 
 menu_opened = True
 level_chosen = False
+surf_but = pg.Surface((230,60))
+surf_but.set_alpha(200)
+'''
+тут создаются поверхности кнопок set_alpha-- прозрачность, pg.Surface--создание поверхности с размерами(...,...)
+'''
+WIDTH = 1200
+HEIGHT = 600
+screen = pg.display.set_mode((WIDTH, HEIGHT))
 
 
 class Menu:
     def __init__(self):
         self.buttons = []
+        self.menu_field =pg.image.load('фон меню.png').convert_alpha()
 
     def put_button(self, button):
         self.buttons.append(button)
 
     def draw_menu(self, screen):
-        screen.fill((150, 150, 0))
-        """ 
-        FIXME: надо добавить тесктуры заднему фону меню
-        """
+        screen.blit(self.menu_field,(0,0))
+
+
         for butt in self.buttons:
             butt.draw(screen)
 
@@ -30,15 +38,15 @@ class Fal_blocks_lvl_but:
         self.sprite = pic
         self.name = name
         self.pressed = False
-        self.font = pg.font.Font(None, 50)
-        self.text = self.font.render(text, True, (255, 255, 255))
+        self.font = pg.font.Font(None, 45)
+        self.text = self.font.render(text, True, (200, 200, 200))
+        self.screen = screen
 
     def draw(self, screen):
-        pg.draw.rect(screen, (255, 0, 0), (self.x, self.y, self.length, self.width))
+
+        self.screen.blit(surf_but, (965,5))
         screen.blit(self.text, (self.x, self.y))
-        """ 
-        FIXME: надо добавить тесктуры кнопке
-        """
+
     def push_me(self):
         return "Типокарта.txt"
 
@@ -52,12 +60,11 @@ class Exit_button:
         self.sprite = pic
         self.name = name
         self.pressed = False
-        self.font = pg.font.Font(None, 50)
-        self.text = self.font.render(text, True, (255, 255, 255))
+        self.font = pg.font.Font(None, 45)
+        self.text = self.font.render(text, True, (200, 200, 200))
+        self.screen = screen
 
     def draw(self, screen):
-        pg.draw.rect(screen, (255, 0, 0), (self.x, self.y, self.length, self.width))
+        self.screen.blit(surf_but, (965, 70))
         screen.blit(self.text, (self.x, self.y))
-        """ 
-        FIXME: надо добавить тесктуры кнопке
-        """
+
