@@ -9,7 +9,8 @@ from level_constructor import *
 my_time=0
 surf_wasted = pygame.Surface((1200,600))
 surf_wasted.set_alpha(20)
-
+HP=240
+max_HP=HP
 w = 0
 FPS = 60
 clock = pg.time.Clock()
@@ -25,8 +26,8 @@ class Personage:
         Считается от левого вверхнего угла
         self.height - высота персонажа для проверки касаний. Считается от левого вверхнего угла
         :param screen: экран, на который выводится персонаж
-        self.died - показатель смерти. 0-жив, 1-мертв(от взрыва)(если будете добавлять другие источники смерти,
-        то обозначайте их другими цифрами, чтобы разделять анимаwии)
+        self.died - показатель смерти. 0-жив, 1-мертв(от взрыва),2-ни жив, ни мертв, 3-умерла из-за времени
+        (если будете добавлять другие источники смерти,то обозначайте их другими цифрами, чтобы разделять анимаwии)
         '''
         self.screen = screen
         self.x = 100
@@ -45,12 +46,43 @@ class Personage:
         self.block_jump_speed = 10
         self.died = 0
         self.surf_wasted_img = pygame.image.load('wasted.png').convert_alpha()
-
         self.power_up = 15
         self.time_after_up = 0
+        self.bar =pg.image.load('голова.png').convert_alpha()
 
     def start_game(self):
         self.died=0
+
+    def HP(self):
+        '''
+        показатель жизней. уменьшается при стоянии
+        '''
+        global HP
+        if self.Vx==0:
+            HP-=0.6
+        else:
+            if self.Vx>0 and self.Vx<=1:
+                HP+=1.1
+            if self.Vx<0 and self.Vx>=-1:
+                HP+=1.1
+            if self.Vx>0 and self.Vx>1:
+                HP+=1.1*self.Vx
+            if self.Vx<0 and self.Vx<(-1):
+                HP+=1.1*(-self.Vx)
+        if HP >max_HP:
+            HP=max_HP
+        if HP<0:
+            self.died=3
+
+        print(HP)
+        self.screen.blit(self.bar,(25, 500))
+
+
+    def draw_HP(self):
+        '''
+        рисуем жизни
+        '''
+        rect(self.screen,(120,100,255),(118,530,HP//1.87,40))
 
 
     def move_personage(self, map):
@@ -107,32 +139,57 @@ class Personage:
 
     def death_animations(self):
         '''
-        Анимации смертей
+        Анимации смертей. Два типа:со взрывом и без него
         '''
 
         global w,my_time,prozrachost
         death_screen = True
-        animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
-        for i in range(6):
-            self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
-            clock.tick(8)
-            pg.display.update()
-        while death_screen:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    death_screen = False
-
-            my_time+=1
-            clock.tick(30)
-            self.screen.blit(surf_wasted, (0,0))
-            pg.display.update()
-
-            if my_time>=25:
-                self.surf_wasted_img.set_alpha(prozrachost)
-                self.screen.blit(self.surf_wasted_img, (456,230))
+        if self.died!=3:
+            death_screen = True
+            animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
+            for i in range(6):
+                self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
+                clock.tick(8)
                 pg.display.update()
+            while death_screen:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        death_screen = False
+                '''отрисовка конечной заставки'''
+                my_time+=1
                 clock.tick(30)
-                prozrachost+=8
+                self.screen.blit(surf_wasted, (0,0))
+                pg.display.update()
+
+                if my_time>=25:
+                    self.surf_wasted_img.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img, (456,230))
+                    pg.display.update()
+                    clock.tick(30)
+                    prozrachost+=8
+        else:
+            death_screen = True
+            while death_screen:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        death_screen = False
+                my_time += 1
+                clock.tick(30)
+                self.screen.blit(surf_wasted, (0, 0))
+                pg.display.update()
+
+                if my_time >= 25:
+                    self.surf_wasted_img.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    pg.display.update()
+                    clock.tick(30)
+                    prozrachost += 8
+                    '''
+                    FIXME
+                    При смерти от "недвижения" игра зависает.Я не додумался как это исправить.
+                    Еще у меня анимка движения сломалась, После того, как Саша что-то изменил.Глянь координаты отрисовки
+                    анимаций пж. Причем сломался только перс, который управляется wsda
+                    '''
 
     def collusion_with_red_block(self):
         '''
@@ -264,9 +321,7 @@ class Personage:
                     self.screen.blit(self.img,
                                          (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-        '''
-        Почему у вас всегда скорость по игрикам больше нуля?
-        '''
+
         w += 1
         if w == 8:
             w = 0

@@ -33,7 +33,7 @@ class Menu:
 
 
 class Fal_blocks_lvl_but:
-    def __init__(self,  x, y, len, wid, pic, text, name):
+    def __init__(self, x, y, len, wid, pic, text, name):
         """
         Создание кнопки, отправляющей игрока/-ов на уровень с падающими блоками и её отрисовка
         """

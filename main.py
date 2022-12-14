@@ -100,18 +100,27 @@ while running:
         '''
         if pers.died == 0:
             pers.collusion_with_red_block()
+            pers.Personage_animation_moveemnt(block, map,max(pers.x,pers_2.x))
             pers.move_personage(map.map_list)
             pers_2.move_personage_2(map.map_list)
             pers.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
 
             pers.collusion_with_red_block()
+
             pers_2.collusion_with_red_block()
             pers_2.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
+
+            pers.draw_HP()
+            pers.HP()
+
 
             pers_2.collusion_with_red_block()
         if pers.died == 1:
             pers.death_animations()
             running = False
+            pers.died=2
+        if pers.died==3:
+            pers.death_animations()
             pers.died=2
                 #pers.x=0
 
