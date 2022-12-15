@@ -44,7 +44,7 @@ class GUN():
             else:
 
                 self.screen.blit(self.img_right,
-                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(self.pers.width * 0.6),
+                                 (- len(mapik[0]) * block.length + self.x + WIDTH + int(self.pers.width * 0.6),
                                   int(self.y + self.pers.height / 2)))
 
         if self.napr:
@@ -66,7 +66,7 @@ class GUN():
             else:
 
                 self.screen.blit(self.img_left,
-                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(
+                                 (- len(mapik[0]) * block.length + self.x + WIDTH + int(
                                      self.pers.width * 0.55 - self.width), int(self.y + self.pers.height / 2)))
 
     def move_gun(self):
