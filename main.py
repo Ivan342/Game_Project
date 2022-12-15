@@ -2,10 +2,12 @@ import pygame as pg
 from pygame import time
 from pygame.draw import *
 from Personage import *
+from bullet import *
 from level_constructor import *
 from Falling_blocks import *
 from Menu import *
 from GUNS import *
+import time as TIME
 
 FPS = 60
 clock = pg.time.Clock()
@@ -37,10 +39,15 @@ fall_raw = Fall_block_raw(screen)
 spawn_filled = False
 need_clean = False
 level_chosen = False
+flag = False
 game_speed = 1
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 gun = GUN(screen, pers)
+
+t = 0
+
+bullets = []
 color_time=500
 
 while running:
@@ -89,6 +96,7 @@ while running:
                     need_clean = True
                 if fall_raw.raw_list[-1].y <= -raw.length + 100 + raw.length:
                     spawn_filled = True
+
                 else:
                     spawn_filled = False
                     pass
@@ -152,7 +160,7 @@ while running:
 
             game_speed = 1
 
-        if pers.died1==3:
+        if pers.died1 == 3:
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
@@ -180,7 +188,7 @@ while running:
                 map.map_list = []
                 map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
-        if pers_2.died2==3:
+        if pers_2.died2 == 3:
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
@@ -203,6 +211,19 @@ while running:
 
 
         dt = time.get_ticks() - start_time
+
+
+        if TIME.time() - t >= 1:
+            if keyboard.is_pressed('q'):
+                bullet = Bullet(screen, gun, pers)
+                bullets.append(bullet)
+                t = TIME.time()
+                print('-------------')
+        for i in bullets:
+            i.move_bullet()
+            i.draw_bullet()
+            print('===================')
+
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
