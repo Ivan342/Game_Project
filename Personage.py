@@ -11,14 +11,14 @@ from level_constructor import *
 my_time = 0
 surf_wasted = pygame.Surface((1200, 600))
 surf_wasted.set_alpha(20)
-HP1 = 240
-max_HP1 = HP1
-HP2 = 240
-max_HP2 = HP1
+
+max_HP1=240
+
+max_HP2=240
 w = 0
 FPS = 60
 clock = pg.time.Clock()
-prozrachost = 0
+prozrachost=0
 
 
 class Personage:
@@ -51,7 +51,8 @@ class Personage:
         self.block_jump_speed = 10
         self.died1 = 0
         self.died2 = 0
-        self.surf_wasted_img = pygame.image.load('wasted.png').convert_alpha()
+        self.surf_wasted_img1 = pygame.image.load('wasted1.png').convert_alpha()
+        self.surf_wasted_img2 = pygame.image.load('wasted2.png').convert_alpha()
 
         self.power_up = 15
         self.time_after_up = 0
@@ -81,8 +82,9 @@ class Personage:
         if self.Hp1 < 0:
             self.died1 = 3
 
-        print(HP1)
+        #print(HP1)
         self.screen.blit(self.bar, (25, 500))
+
 
     def draw_HP1(self):
         '''
@@ -110,8 +112,9 @@ class Personage:
         if self.Hp2 < 0:
             self.died2 = 3
 
-        print(HP2)
+        #print(HP2)
         self.screen.blit(self.bar, (25, 500))
+
 
     def draw_HP2(self):
         '''
@@ -132,6 +135,7 @@ class Personage:
         '''
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
+
                 self.Vy = -4
                 self.onGround = False
                 self.time_after_up += 1
@@ -169,6 +173,7 @@ class Personage:
         # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
         return 0
+
 
     def death_animations1(self):
         '''
@@ -221,8 +226,8 @@ class Personage:
                 pg.display.update()
 
                 if my_time >= 25:
-                    self.surf_wasted_img.set_alpha(prozrachost)
-                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    self.surf_wasted_img2.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img2, (456, 230))
                     pg.display.update()
                     clock.tick(30)
                     prozrachost += 8
@@ -256,8 +261,8 @@ class Personage:
                 pg.display.update()
 
                 if my_time >= 25:
-                    self.surf_wasted_img.set_alpha(prozrachost)
-                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    self.surf_wasted_img2.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img2, (456, 230))
                     pg.display.update()
                     clock.tick(30)
                     prozrachost += 8
@@ -314,8 +319,8 @@ class Personage:
                 pg.display.update()
 
                 if my_time >= 25:
-                    self.surf_wasted_img.set_alpha(prozrachost)
-                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    self.surf_wasted_img1.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img1, (456, 230))
                     pg.display.update()
                     clock.tick(30)
                     prozrachost += 8
@@ -349,8 +354,8 @@ class Personage:
                 pg.display.update()
 
                 if my_time >= 25:
-                    self.surf_wasted_img.set_alpha(prozrachost)
-                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    self.surf_wasted_img1.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img1, (456, 230))
                     pg.display.update()
                     clock.tick(30)
                     prozrachost += 8
@@ -453,6 +458,7 @@ class Personage:
                 self.screen.blit(animation_set[w],
                                  (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
+
         if self.Vx < 0:
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
@@ -501,9 +507,12 @@ class Personage:
                     self.screen.blit(self.img,
                                      (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
+
         w += 1
         if w == 8:
             w = 0
+
+
 
     def Collision_x(self, map, Painting):
         '''
@@ -562,6 +571,7 @@ class Personage:
                         # print(1)
                         # print(self.Vy)
                         self.Vy -= self.block_jump_speed
+
 
         if self.Vy < 0:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):

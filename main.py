@@ -120,8 +120,6 @@ while running:
             pers.collusion_with_red_block1(fall_raw.raw_list)
             pers.draw_HP1()
             pers.HP1()
-
-            #pers.Personage_animation_move_right(block, map)
             gun.move_gun()
             gun.draw_gun()
         if pers_2.died2 == 0:
