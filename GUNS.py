@@ -27,7 +27,7 @@ class GUN():
         self.y = self.pers.y
         self.napr = self.pers.direction
         if not self.napr:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(self.img_right,
@@ -48,7 +48,7 @@ class GUN():
                                   int(self.y + self.pers.height / 2)))
 
         if self.napr:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(self.img_left, (
