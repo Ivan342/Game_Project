@@ -140,8 +140,10 @@ while running:
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
-            fall_raw.raw_list = []
-            fall_raw.new_raw(screen, game_speed)
+            if Kim:
+                fall_raw.raw_list = []
+                fall_raw.new_raw(screen, game_speed)
+                spawn_filled = False
 
             game_speed = 1
 
@@ -149,9 +151,10 @@ while running:
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
-            fall_raw.raw_list = []
-            fall_raw.new_raw(screen, game_speed)
-            spawn_filled = False
+            if Kim:
+                fall_raw.raw_list = []
+                fall_raw.new_raw(screen, game_speed)
+                spawn_filled = False
             game_speed = 1
 
         if pers_2.died2 == 1:
@@ -161,17 +164,19 @@ while running:
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
-            fall_raw.raw_list = []
-            fall_raw.new_raw(screen, game_speed)
-            spawn_filled = False
+            if Kim:
+                fall_raw.raw_list = []
+                fall_raw.new_raw(screen, game_speed)
+                spawn_filled = False
             game_speed = 1
         if pers_2.died2==3:
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
-            fall_raw.raw_list = []
-            fall_raw.new_raw(screen, game_speed)
-            spawn_filled = False
+            if Kim:
+                fall_raw.raw_list = []
+                fall_raw.new_raw(screen, game_speed)
+                spawn_filled = False
             game_speed = 1
 
 
