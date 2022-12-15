@@ -56,7 +56,8 @@ class Personage:
 
         self.power_up = 15
         self.time_after_up = 0
-        self.bar = pg.image.load('голова.png').convert_alpha()
+        self.bar1 = pg.image.load('голова.png').convert_alpha()
+        self.bar2 = pg.image.load('голова2.png').convert_alpha()
         self.num = num
         self.Hp1 = 240
         self.Hp2 = 240
@@ -83,7 +84,7 @@ class Personage:
             self.died1 = 3
 
         #print(HP1)
-        self.screen.blit(self.bar, (25, 500))
+        self.screen.blit(self.bar1, (25, 500))
 
 
     def draw_HP1(self):
@@ -113,14 +114,14 @@ class Personage:
             self.died2 = 3
 
         #print(HP2)
-        self.screen.blit(self.bar, (25, 500))
+        self.screen.blit(self.bar2, (1200-255, 500))
 
 
     def draw_HP2(self):
         '''
         рисуем жизни
         '''
-        rect(self.screen, (120, 100, 255), (418, 530, self.Hp2 // 1.87, 40))
+        rect(self.screen, (120, 100, 255), (1200 - 118 - self.Hp2 // 1.87, 530,self.Hp2 // 1.87, 40))
 
     def move_personage(self, map, Painting):
         g = 0.15
