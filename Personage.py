@@ -86,7 +86,7 @@ class Personage:
         rect(self.screen,(120,100,255),(118,530,HP//1.87,40))
 
 
-    def move_personage(self, map):
+    def move_personage(self, map, Painting):
         g = 0.15
         '''
         if keyboard.is_pressed('w'):
@@ -128,10 +128,10 @@ class Personage:
         if not self.onGround:
             self.Vy += g
         self.onGround = False
-        self.Collision_y(map)
+        self.Collision_y(map, Painting)
 
         self.x += self.Vx
-        self.Collision_x(map)
+        self.Collision_x(map, Painting)
 
         #pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
@@ -208,7 +208,7 @@ class Personage:
                             if self.died == 0:
                                 self.died=1
 
-    def move_personage_2(self, map):
+    def move_personage_2(self, map, Painting):
         g = 0.15
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('up_arrow') and self.time_after_up < 20:
@@ -240,10 +240,10 @@ class Personage:
         if not self.onGround:
             self.Vy += g
         self.onGround = False
-        self.Collision_y(map)
+        self.Collision_y(map, Painting)
 
         self.x += self.Vx
-        self.Collision_x(map)
+        self.Collision_x(map, Painting)
 
         # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
@@ -329,7 +329,7 @@ class Personage:
 
 
 
-    def Collision_x(self, map):
+    def Collision_x(self, map, Painting):
         '''
         функция проверяет касание с блоками по x и выталкивает при касании
         :param map: карта текущая
@@ -343,10 +343,11 @@ class Personage:
                         self.x = j * 40 - self.width
                         #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         #print(i, j)
-                        if self.num == 1:
-                            map[i][j] = '6'
-                        else:
-                            map[i][j] = '7'
+                        if Painting:
+                            if self.num == 1:
+                                map[i][j] = '6'
+                            else:
+                                map[i][j] = '7'
 
         if self.Vx < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
@@ -354,14 +355,15 @@ class Personage:
                     #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.x = (j + 1) * 40
-                        if self.num == 1:
-                            map[i][j] = '6'
-                        else:
-                            map[i][j] = '7'
+                        if Painting:
+                            if self.num == 1:
+                                map[i][j] = '6'
+                            else:
+                                map[i][j] = '7'
                         #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         #print(i, j)
 
-    def Collision_y(self, map):
+    def Collision_y(self, map, Painting):
         '''
         функция проверяет касание с блоками по y и выталкивает при касании
         :param map: карта текущая
@@ -374,10 +376,11 @@ class Personage:
                         self.y = i * 40 - self.height
                         self.Vy = 0
                         self.onGround = True
-                        if self.num == 1:
-                            map[i][j] = '6'
-                        else:
-                            map[i][j] = '7'
+                        if Painting:
+                            if self.num == 1:
+                                map[i][j] = '6'
+                            else:
+                                map[i][j] = '7'
                     else:
                         if map[i][j] == '4':
                             #print(1)
@@ -392,7 +395,8 @@ class Personage:
                     if map[i][j] != '0':
                         self.y = (i + 1) * 40
                         self.Vy = 0
-                        if self.num == 1:
-                            map[i][j] = '6'
-                        else:
-                            map[i][j] = '7'
+                        if Painting:
+                            if self.num == 1:
+                                map[i][j] = '6'
+                            else:
+                                map[i][j] = '7'

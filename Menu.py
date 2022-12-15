@@ -99,3 +99,27 @@ class Racing_lvl_but:
 
     def push_me(self):
         return "Map_2"
+
+class Color_battle_lvl_but:
+    def __init__(self, x, y, len, wid, pic, text, name):
+        """
+        Создание кнопки, отправляющей игрока/-ов на уровень с падающими блоками и её отрисовка
+        """
+        self.x = x
+        self.y = y
+        self.length = len
+        self.width = wid
+        self.sprite = pic
+        self.name = name
+        self.pressed = False
+        self.font = pg.font.Font(None, 45)
+        self.text = self.font.render(text, True, (200, 200, 200))
+        self.screen = screen
+
+    def draw(self, screen):
+
+        self.screen.blit(surf_but, (self.x,self.y))
+        screen.blit(self.text, (self.x, self.y+4))
+
+    def push_me(self):
+        return "Color_battle"

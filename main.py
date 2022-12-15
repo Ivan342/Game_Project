@@ -16,11 +16,13 @@ block = Block(screen)
 pers = Personage(screen, 1)
 pers_2 = Personage(screen, 2)
 menu = Menu()
-exit_button = Exit_button(980, 150, 100, 50, "pic1.png", "Exit", "Exit")
+exit_button = Exit_button(980, 230, 100, 50, "pic1.png", "Exit", "Exit")
 fal_block_lvl_but = Fal_blocks_lvl_but(980, 10, 250, 50, "pic1.png", "Falling blocks", "F_b_lvl")
 racing_lvl_but = Racing_lvl_but(980, 80, 250, 50, "pic1.png", "Racing", "Racing_lvl")
+color_battle_lvl_but = Color_battle_lvl_but(980, 150, 250, 50, "pic1.png", "Color battle", "Color_battle_lvl")
 menu.put_button(fal_block_lvl_but)
 menu.put_button(racing_lvl_but)
+menu.put_button(color_battle_lvl_but)
 menu.put_button(exit_button)
 map = MAP()
 '''
@@ -55,10 +57,17 @@ while running:
                             map.read_map(butt.push_me())
                             level_chosen = True
                             Kim = True
+                            Color = False
+                        elif butt.name == "Racing_lvl":
+                            map.read_map(butt.push_me())
+                            level_chosen = True
+                            Kim = False
+                            Color = False
                         else:
                             map.read_map(butt.push_me())
                             level_chosen = True
                             Kim = False
+                            Color = True
                         menu_opened = False
 
         pg.display.update()
@@ -101,8 +110,8 @@ while running:
         if pers.died == 0:
             pers.collusion_with_red_block()
 
-            pers.move_personage(map.map_list)
-            pers_2.move_personage_2(map.map_list)
+            pers.move_personage(map.map_list, Color)
+            pers_2.move_personage_2(map.map_list, Color)
             pers.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
 
             pers.collusion_with_red_block()
