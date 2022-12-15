@@ -133,6 +133,7 @@ class Personage:
         self.x += self.Vx
         self.Collision_x(map, Painting)
 
+        #print(self.onGround)
         #pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
         return 0
@@ -370,28 +371,28 @@ class Personage:
         :return: ничего не выводит, только двигает
         '''
         if self.Vy > 0:
-            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
+            for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 20, 20))  # отладка
                     if map[i][j] != '0':
                         self.y = i * 40 - self.height
-                        self.Vy = 0
+                        #self.Vy = 0
                         self.onGround = True
                         if Painting:
                             if self.num == 1:
                                 map[i][j] = '6'
                             else:
                                 map[i][j] = '7'
-                    else:
-                        if map[i][j] == '4':
-                            #print(1)
-                            #print(self.Vy)
-                            self.Vy -= self.block_jump_speed
-                        self.onGround = False
+                    if map[i][j] == '4':
+                        #print(1)
+                        #print(self.Vy)
+                        self.Vy -= self.block_jump_speed
 
 
         if self.Vy < 0:
-            for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
-                for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40+1):
+            for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
+                for i in range(int(self.y) // 40, (int(self.y) + self.height - 1) // 40 + 1):
+                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.y = (i + 1) * 40
                         self.Vy = 0
