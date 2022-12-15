@@ -518,16 +518,17 @@ class Personage:
             w = 0
 
     def Collision_with_death_block(self, map):
-        for j in range(int(self.x + 10) // 40, (int(self.x) + self.width - 10) // 40 + 1):
-            for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+        # по вертикали
+        for j in range(int(self.x + 22) // 40, (int(self.x) + self.width - 22) // 40 + 1):
+            for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
                 #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                 if map[i][j] == '5':
                     if self.num == 1:
                         self.died1 = 3
                     else:
                         self.died2 = 3
-
-        for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
+        # по горизонтали
+        for j in range(int(self.x + 2) // 40, (int(self.x) + self.width - 2) // 40 + 1):
             for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
                 #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                 if map[i][j] == '5':
