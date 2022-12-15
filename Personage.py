@@ -444,10 +444,10 @@ class Personage:
         if self.Vx > 0:
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
-                    print()
+
                     self.screen.blit(animation_set[w], (WIDTH / 2, int(self.y)))
                 else:
-                    print(23)
+
                     self.screen.blit(animation_set[w], (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
             elif max_pers_x < WIDTH / 2:
 
@@ -462,10 +462,10 @@ class Personage:
         if self.Vx < 0:
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
-                    print(18)
+
                     self.screen.blit(animation_set_left[w], (WIDTH / 2, int(self.y)))
                 else:
-                    print(17)
+
                     self.screen.blit(animation_set_left[w], (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
             elif max_pers_x < WIDTH / 2:
 
@@ -479,10 +479,10 @@ class Personage:
             if self.direction:
                 if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                     if self.x == max_pers_x:
-                        print(1)
+
                         self.screen.blit(self.img_left, (WIDTH / 2, int(self.y)))
                     else:
-                        print(2)
+
                         self.screen.blit(self.img_left, (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
                 elif max_pers_x < WIDTH / 2:
 
@@ -495,10 +495,10 @@ class Personage:
             else:
                 if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                     if self.x == max_pers_x:
-                        print(7)
+
                         self.screen.blit(self.img, (WIDTH / 2, int(self.y)))
                     else:
-                        print(8)
+
                         self.screen.blit(self.img, (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
                 elif max_pers_x < WIDTH / 2:
 

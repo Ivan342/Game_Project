@@ -146,6 +146,9 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
+            if Color:
+                map.map_list = []
+                map.read_map(color_battle_lvl_but.push_me())
 
             game_speed = 1
 
@@ -157,6 +160,9 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
+            if Color:
+                map.map_list = []
+                map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
 
         if pers_2.died2 == 1:
@@ -170,6 +176,9 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
+            if Color:
+                map.map_list = []
+                map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
         if pers_2.died2==3:
             running, map_chosen, menu_opened = pers_2.death_animations2()
@@ -179,6 +188,9 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
+            if Color:
+                map.map_list = []
+                map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
 
 
