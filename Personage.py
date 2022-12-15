@@ -524,10 +524,17 @@ class Personage:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+
+                    if map[i + 1][j] == '5' and self.onGround:
+                        if self.num == 1:
+                            self.died1 = 3
+                        else:
+                            self.died2 = 3
                     if map[i][j] != '0':
                         self.x = j * 40 - self.width
                         # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         # print(i, j)
+
                         if Painting:
                             if self.num == 1:
                                 map[i][j] = '6'
@@ -538,6 +545,11 @@ class Personage:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                    if map[i + 1][j] == '5' and self.onGround:
+                        if self.num == 2:
+                            self.died1 = 3
+                        else:
+                            self.died2 = 3
                     if map[i][j] != '0':
                         self.x = (j + 1) * 40
                         if Painting:

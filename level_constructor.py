@@ -65,6 +65,8 @@ class Block:
     def draw_pers2(self, x, y):
         draw.rect(self.screen, BLUE, (x * self.length, y * self.length, block_length, block_length))
 
+    def draw_deadly_block(self, x, y):
+        draw.rect(self.screen, RED, (x * self.length, y * self.length, block_length, block_length))
 
 class MAP:
     """
@@ -109,6 +111,9 @@ class MAP:
                     block.draw_pers1(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '7':
                     block.draw_pers2(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '5':
+                    block.draw_deadly_block(j - (x - WIDTH / 2) / block_length, i)
+
 
     def map_chase(self, block, pers_x):
         """

@@ -146,7 +146,6 @@ class Retry_but:
         self.screen = screen
 
     def draw(self, screen):
-        self.surf
         self.screen.blit(surf_but_retry, (self.x,self.y))
         screen.blit(self.text, (self.x, self.y+4))
 
