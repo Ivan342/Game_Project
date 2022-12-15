@@ -115,18 +115,17 @@ while running:
 
                 else:
                     spawn_filled = False
-                    pass
 
 
 
-        if not spawn_filled:
-            fall_raw.new_raw(screen, game_speed)
-            spawn_filled = True
-        if need_clean:
-            fall_raw.raw_list = raw.clear()
-            need_clean = False
+            if not spawn_filled:
+                fall_raw.new_raw(screen, game_speed)
+                spawn_filled = True
+            if need_clean:
+                raw.clear()
+                need_clean = False
 
-        game_speed += fall_raw.raw_list[0].accel
+            game_speed += fall_raw.raw_list[0].accel
         map.map_chase(block, max(pers.x, pers_2.x))
 
         # map.map_chase(block, pers_2.x)

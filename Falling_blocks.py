@@ -60,4 +60,4 @@ class Fall_block_raw():
         Удаление строки
         :return:
         """
-        return raw_list[0:]
+        self.raw_list = self.raw_list[1:]
