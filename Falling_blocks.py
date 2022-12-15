@@ -26,11 +26,10 @@ class Fall_block_raw():
         :param vely: начальная скорость падения
         :return:
         """
-        global raw_list, list_pos_x
 
         new_raw = Fall_block_raw(screen)
         new_raw.vy = vely
-        raw_list.append(new_raw)
+        self.raw_list.append(new_raw)
 
 
 

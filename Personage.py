@@ -1,22 +1,25 @@
 import pygame
-from Falling_blocks import*
+from Falling_blocks import *
+from Menu import *
 from pygame import time, draw
 
 import pygame as pg
 import keyboard
 from Falling_blocks import *
 from level_constructor import *
-my_time=0
-surf_wasted = pygame.Surface((1200,600))
+
+my_time = 0
+surf_wasted = pygame.Surface((1200, 600))
 surf_wasted.set_alpha(20)
-HP1=240
-max_HP1=HP1
-HP2=240
-max_HP2=HP1
+HP1 = 240
+max_HP1 = HP1
+HP2 = 240
+max_HP2 = HP1
 w = 0
 FPS = 60
 clock = pg.time.Clock()
-prozrachost=0
+prozrachost = 0
+
 
 class Personage:
     def __init__(self, screen, num):
@@ -52,73 +55,69 @@ class Personage:
 
         self.power_up = 15
         self.time_after_up = 0
-        self.bar =pg.image.load('голова.png').convert_alpha()
+        self.bar = pg.image.load('голова.png').convert_alpha()
         self.num = num
-
-    def start_game(self):
-        self.died=0
+        self.Hp1 = 240
+        self.Hp2 = 240
 
     def HP1(self):
         '''
         показатель жизней. уменьшается при стоянии
         '''
-        global HP1
-        if self.Vx==0:
-            HP1-=0.6
+
+        if self.Vx == 0:
+            self.Hp1 -= 0.6
         else:
-            if self.Vx>0 and self.Vx<=1:
-                HP1+=1.1
-            if self.Vx<0 and self.Vx>=-1:
-                HP1+=1.1
-            if self.Vx>0 and self.Vx>1:
-                HP1+=1.1*self.Vx
-            if self.Vx<0 and self.Vx<(-1):
-                HP1+=1.1*(-self.Vx)
-        if HP1 >max_HP1:
-            HP1=max_HP1
-        if HP1<0:
-            self.died1=3
+            if self.Vx > 0 and self.Vx <= 1:
+                self.Hp1 += 1.1
+            if self.Vx < 0 and self.Vx >= -1:
+                self.Hp1 += 1.1
+            if self.Vx > 0 and self.Vx > 1:
+                self.Hp1 += 1.1 * self.Vx
+            if self.Vx < 0 and self.Vx < (-1):
+                self.Hp1 += 1.1 * (-self.Vx)
+        if self.Hp1 > max_HP1:
+            self.Hp1 = max_HP1
+        if self.Hp1 < 0:
+            self.died1 = 3
 
         print(HP1)
-        self.screen.blit(self.bar,(25, 500))
-
+        self.screen.blit(self.bar, (25, 500))
 
     def draw_HP1(self):
         '''
         рисуем жизни
         '''
-        rect(self.screen,(120,100,255),(118,530,HP1//1.87,40))
+        rect(self.screen, (120, 100, 255), (118, 530, self.Hp1 // 1.87, 40))
 
     def HP2(self):
         '''
         показатель жизней. уменьшается при стоянии
         '''
-        global HP2
-        if self.Vx==0:
-            HP2-=0.6
+        if self.Vx == 0:
+            self.Hp2 -= 0.6
         else:
-            if self.Vx>0 and self.Vx<=1:
-                HP2+=1.1
-            if self.Vx<0 and self.Vx>=-1:
-                HP2+=1.1
-            if self.Vx>0 and self.Vx>1:
-                HP2+=1.1*self.Vx
-            if self.Vx<0 and self.Vx<(-1):
-                HP2+=1.1*(-self.Vx)
-        if HP2 >max_HP2:
-            HP2=max_HP2
-        if HP2<0:
-            self.died2=3
+            if self.Vx > 0 and self.Vx <= 1:
+                self.Hp2 += 1.1
+            if self.Vx < 0 and self.Vx >= -1:
+                self.Hp2 += 1.1
+            if self.Vx > 0 and self.Vx > 1:
+                self.Hp2 += 1.1 * self.Vx
+            if self.Vx < 0 and self.Vx < (-1):
+                self.Hp2 += 1.1 * (-self.Vx)
+        if self.Hp2 > max_HP2:
+            self.Hp2 = max_HP2
+        if self.Hp2 < 0:
+            self.died2 = 3
 
         print(HP2)
-        self.screen.blit(self.bar,(25, 500))
-
+        self.screen.blit(self.bar, (25, 500))
 
     def draw_HP2(self):
         '''
         рисуем жизни
         '''
-        rect(self.screen,(120,100,255),(418,530,HP2//1.87,40))
+        rect(self.screen, (120, 100, 255), (418, 530, self.Hp2 // 1.87, 40))
 
     def move_personage(self, map, Painting):
         g = 0.15
@@ -133,7 +132,6 @@ class Personage:
         '''
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
-
                 self.Vy = -4
                 self.onGround = False
                 self.time_after_up += 1
@@ -167,20 +165,27 @@ class Personage:
         self.x += self.Vx
         self.Collision_x(map, Painting)
 
-        #print(self.onGround)
-        #pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
+        # print(self.onGround)
+        # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
         return 0
-
 
     def death_animations1(self):
         '''
         Анимации смертей. Два типа:со взрывом и без него
         '''
 
-        global w,my_time,prozrachost
+        global w, my_time, prozrachost
         death_screen = True
-        if self.died1!=3:
+        death_menu = Menu()
+        retry_but = Retry_but(WIDTH / 2 - 50, 450, 100, 50, "pic1.png", "Retry", "Retry")
+        back_but = Back_to_menu_but(WIDTH / 2 - 50, 520, 100, 50, "pic1.png", "Back to menu", "Back_to_menu")
+        death_menu.put_button(retry_but)
+        death_menu.put_button(back_but)
+        running = False
+        map_chosen = False
+        menu_opened = False
+        if self.died1 != 3:
             death_screen = True
             animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
             for i in range(6):
@@ -191,27 +196,28 @@ class Personage:
                 for event in pg.event.get():
                     if event.type == pg.QUIT:
                         death_screen = False
+                    elif event.type == pg.MOUSEBUTTONDOWN:
+                        for butt in death_menu.buttons:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
+                                1] <= butt.y + butt.width:
+                                if butt.name == "Retry":
+                                    running = True
+                                    map_chosen = True
+                                    menu_opened = False
+                                    death_screen = False
+                                    self.died1 = 0
+                                else:
+                                    running = True
+                                    map_chosen = False
+                                    menu_opened = True
+                                    death_screen = False
+                                    self.died1 = 0
                 '''отрисовка конечной заставки'''
-                my_time+=1
-                clock.tick(30)
-                self.screen.blit(surf_wasted, (0,0))
-                pg.display.update()
-
-                if my_time>=25:
-                    self.surf_wasted_img.set_alpha(prozrachost)
-                    self.screen.blit(self.surf_wasted_img, (456,230))
-                    pg.display.update()
-                    clock.tick(30)
-                    prozrachost+=8
-        else:
-            death_screen = True
-            while death_screen:
-                for event in pg.event.get():
-                    if event.type == pg.QUIT:
-                        death_screen = False
                 my_time += 1
                 clock.tick(30)
                 self.screen.blit(surf_wasted, (0, 0))
+                for butt in death_menu.buttons:
+                    butt.draw(self.screen)
                 pg.display.update()
 
                 if my_time >= 25:
@@ -220,15 +226,59 @@ class Personage:
                     pg.display.update()
                     clock.tick(30)
                     prozrachost += 8
+        else:
+            death_screen = True
+            while death_screen:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        death_screen = False
+                    elif event.type == pg.MOUSEBUTTONDOWN:
+                        for butt in death_menu.buttons:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
+                                1] <= butt.y + butt.width:
+                                if butt.name == "Retry":
+                                    running = True
+                                    map_chosen = True
+                                    menu_opened = False
+                                    death_screen = False
+                                    self.died1 = 0
+                                else:
+                                    running = True
+                                    map_chosen = False
+                                    menu_opened = True
+                                    death_screen = False
+                                    self.died1 = 0
+                my_time += 1
+                clock.tick(30)
+                self.screen.blit(surf_wasted, (0, 0))
+                for butt in death_menu.buttons:
+                    butt.draw(self.screen)
+                pg.display.update()
+
+                if my_time >= 25:
+                    self.surf_wasted_img.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    pg.display.update()
+                    clock.tick(30)
+                    prozrachost += 8
+        return running, map_chosen, menu_opened
 
     def death_animations2(self):
         '''
         Анимации смертей. Два типа:со взрывом и без него
         '''
-
-        global w,my_time,prozrachost
+        global w, my_time, prozrachost
+        self.Hp2 = 240
         death_screen = True
-        if self.died2!=3:
+        death_menu = Menu()
+        retry_but = Retry_but(WIDTH / 2 - 50, 450, 100, 50, "pic1.png", "Retry", "Retry")
+        back_but = Back_to_menu_but(WIDTH / 2 - 50, 520, 100, 50, "pic1.png", "Back to menu", "Back_to_menu")
+        death_menu.put_button(retry_but)
+        death_menu.put_button(back_but)
+        running = False
+        map_chosen = False
+        menu_opened = False
+        if self.died2 != 3:
             death_screen = True
             animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
             for i in range(6):
@@ -239,28 +289,28 @@ class Personage:
                 for event in pg.event.get():
                     if event.type == pg.QUIT:
                         death_screen = False
-                        '''njgdrgrhjkn'''
+                    elif event.type == pg.MOUSEBUTTONDOWN:
+                        for butt in death_menu.buttons:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
+                                1] <= butt.y + butt.width:
+                                if butt.name == "Retry":
+                                    running = True
+                                    map_chosen = True
+                                    menu_opened = False
+                                    death_screen = False
+                                    self.died2 = 0
+                                else:
+                                    running = True
+                                    map_chosen = False
+                                    menu_opened = True
+                                    death_screen = False
+                                    self.died2 = 0
                 '''отрисовка конечной заставки'''
-                my_time+=1
-                clock.tick(30)
-                self.screen.blit(surf_wasted, (0,0))
-                pg.display.update()
-
-                if my_time>=25:
-                    self.surf_wasted_img.set_alpha(prozrachost)
-                    self.screen.blit(self.surf_wasted_img, (456,230))
-                    pg.display.update()
-                    clock.tick(30)
-                    prozrachost+=8
-        else:
-            death_screen = True
-            while death_screen:
-                for event in pg.event.get():
-                    if event.type == pg.QUIT:
-                        death_screen = False
                 my_time += 1
                 clock.tick(30)
                 self.screen.blit(surf_wasted, (0, 0))
+                for butt in death_menu.buttons:
+                    butt.draw(self.screen)
                 pg.display.update()
 
                 if my_time >= 25:
@@ -269,26 +319,64 @@ class Personage:
                     pg.display.update()
                     clock.tick(30)
                     prozrachost += 8
-    def collusion_with_red_block1(self):
+        else:
+            death_screen = True
+            while death_screen:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        death_screen = False
+                    elif event.type == pg.MOUSEBUTTONDOWN:
+                        for butt in death_menu.buttons:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
+                                1] <= butt.y + butt.width:
+                                if butt.name == "Retry":
+                                    running = True
+                                    map_chosen = True
+                                    menu_opened = False
+                                    death_screen = False
+                                    self.died2 = 0
+                                else:
+                                    running = True
+                                    map_chosen = False
+                                    menu_opened = True
+                                    death_screen = False
+                                    self.died2 = 0
+                my_time += 1
+                clock.tick(30)
+                self.screen.blit(surf_wasted, (0, 0))
+                for butt in death_menu.buttons:
+                    butt.draw(self.screen)
+                pg.display.update()
+
+                if my_time >= 25:
+                    self.surf_wasted_img.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    pg.display.update()
+                    clock.tick(30)
+                    prozrachost += 8
+        return running, map_chosen, menu_opened
+
+    def collusion_with_red_block1(self, raw_listik):
         '''
         Функция проверяет пересечение Кима и персонажа для 1го перса
         '''
-        for raw in raw_list:
-            #print(raw.y, self.y, list_pos_x)
-            if (self.y >(raw.y-20) and self.y<(raw.y+40)) or (self.y+45 >(raw.y) and (self.y+45)<(raw.y+40)):
-                #print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
+        for raw in raw_listik:
+            # print(raw.y, self.y, list_pos_x)
+            if (self.y > (raw.y - 20) and self.y < (raw.y + 40)) or (
+                    self.y + 45 > (raw.y) and (self.y + 45) < (raw.y + 40)):
+                # print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
                 for i in range(len(raw.block_pos)):
-                    if raw.block_pos[i]==0:
-                        if (((self.x+30)>i*40) and (self.x+30)<(i*40+40)):
-                            #print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
+                    if raw.block_pos[i] == 0:
+                        if (((self.x + 30) > i * 40) and (self.x + 30) < (i * 40 + 40)):
+                            # print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
                             if self.died1 == 0:
-                                self.died1=1
+                                self.died1 = 1
 
-    def collusion_with_red_block2(self):
+    def collusion_with_red_block2(self, raw_listik):
         '''
         Функция проверяет пересечение Кима и персонажа для 2го перса
         '''
-        for raw in raw_list:
+        for raw in raw_listik:
             # print(raw.y, self.y, list_pos_x)
             if (self.y > (raw.y - 20) and self.y < (raw.y + 40)) or (
                     self.y + 45 > (raw.y) and (self.y + 45) < (raw.y + 40)):
@@ -299,6 +387,7 @@ class Personage:
                             # print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
                             if self.died2 == 0:
                                 self.died2 = 1
+
     def move_personage_2(self, map, Painting):
         g = 0.15
         if self.Vy < 0 or self.onGround:
@@ -364,7 +453,6 @@ class Personage:
                 self.screen.blit(animation_set[w],
                                  (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-
         if self.Vx < 0:
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
@@ -379,7 +467,7 @@ class Personage:
             else:
 
                 self.screen.blit(animation_set_left[w],
-                                     (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
         if self.Vx == 0:
             if self.direction:
@@ -411,14 +499,11 @@ class Personage:
                     self.screen.blit(self.img, (int(self.x), int(self.y)))
                 else:
                     self.screen.blit(self.img,
-                                         (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
-
+                                     (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
         w += 1
         if w == 8:
             w = 0
-
-
 
     def Collision_x(self, map, Painting):
         '''
@@ -429,11 +514,11 @@ class Personage:
         if self.Vx > 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
-                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.x = j * 40 - self.width
-                        #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
-                        #print(i, j)
+                        # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
+                        # print(i, j)
                         if Painting:
                             if self.num == 1:
                                 map[i][j] = '6'
@@ -443,7 +528,7 @@ class Personage:
         if self.Vx < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
-                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.x = (j + 1) * 40
                         if Painting:
@@ -451,8 +536,8 @@ class Personage:
                                 map[i][j] = '6'
                             else:
                                 map[i][j] = '7'
-                        #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
-                        #print(i, j)
+                        # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
+                        # print(i, j)
 
     def Collision_y(self, map, Painting):
         '''
@@ -463,10 +548,10 @@ class Personage:
         if self.Vy > 0:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
-                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 20, 20))  # отладка
+                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 20, 20))  # отладка
                     if map[i][j] != '0':
                         self.y = i * 40 - self.height
-                        #self.Vy = 0
+                        # self.Vy = 0
                         self.onGround = True
                         if Painting:
                             if self.num == 1:
@@ -474,15 +559,14 @@ class Personage:
                             else:
                                 map[i][j] = '7'
                     if map[i][j] == '4':
-                        #print(1)
-                        #print(self.Vy)
+                        # print(1)
+                        # print(self.Vy)
                         self.Vy -= self.block_jump_speed
-
 
         if self.Vy < 0:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height - 1) // 40 + 1):
-                    #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.y = (i + 1) * 40
                         self.Vy = 0

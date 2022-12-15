@@ -11,6 +11,8 @@ FPS = 60
 clock = pg.time.Clock()
 time_scale = 1000
 pg.init()
+WIDTH = 1200
+HEIGHT = 600
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 running = True
 block = Block(screen)
@@ -42,7 +44,7 @@ gun = GUN(screen, pers)
 
 
 while running:
-    #pers.start_game()
+
     while menu_opened:
         menu.draw_menu(screen)
         for event in pg.event.get():
@@ -77,12 +79,12 @@ while running:
 
         screen.blit(field, (0, 0))
         if Kim:
-            for raw in raw_list:
+            for raw in fall_raw.raw_list:
                 raw.fall()
                 raw.draw()
                 if raw.y > HEIGHT + raw.length:
                     need_clean = True
-                if raw_list[-1].y <= -raw.length + 100 + raw.length:
+                if fall_raw.raw_list[-1].y <= -raw.length + 100 + raw.length:
                     spawn_filled = True
 
                 else:
@@ -95,10 +97,10 @@ while running:
             fall_raw.new_raw(screen, game_speed)
             spawn_filled = True
         if need_clean:
-            raw_list = raw.clear()
+            fall_raw.raw_list = raw.clear()
             need_clean = False
 
-        game_speed += raw_list[0].accel
+        game_speed += fall_raw.raw_list[0].accel
         map.map_chase(block, max(pers.x, pers_2.x))
 
         # map.map_chase(block, pers_2.x)
@@ -112,10 +114,10 @@ while running:
             '''
             жизнь 1го перса
             '''
-            pers.collusion_with_red_block1()
+            pers.collusion_with_red_block1(fall_raw.raw_list)
             pers.move_personage(map.map_list,Color)
             pers.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
-            pers.collusion_with_red_block1()
+            pers.collusion_with_red_block1(fall_raw.raw_list)
             pers.draw_HP1()
             pers.HP1()
 
@@ -126,10 +128,10 @@ while running:
             '''
             Жизнь 2го перса
             '''
-            pers_2.collusion_with_red_block2()
+            pers_2.collusion_with_red_block2(fall_raw.raw_list)
             pers_2.move_personage_2(map.map_list,Color)
             pers_2.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
-            pers_2.collusion_with_red_block2()
+            pers_2.collusion_with_red_block2(fall_raw.raw_list)
             pers_2.draw_HP2()
             pers_2.HP2()
 
@@ -137,27 +139,42 @@ while running:
             '''
             смерть 1го перса
             '''
-            pers.death_animations1()
-            running = False
-            pers.died1=2
+            running, map_chosen, menu_opened = pers.death_animations1()
+            pers = Personage(screen, 1)
+            pers_2 = Personage(screen, 2)
+            fall_raw.raw_list = []
+            fall_raw.new_raw(screen, game_speed)
+
+            game_speed = 1
+
         if pers.died1==3:
-            pers.death_animations1()
-            pers.died1=2
-            running = False
-            pers.x=0
+            running, map_chosen, menu_opened = pers.death_animations1()
+            pers = Personage(screen, 1)
+            pers_2 = Personage(screen, 2)
+            fall_raw.raw_list = []
+            fall_raw.new_raw(screen, game_speed)
+            spawn_filled = False
+            game_speed = 1
 
         if pers_2.died2 == 1:
             '''
             Смерть 2го перса
             '''
-            pers_2.death_animations2()
-            running = False
-            pers_2.died2=2
+            running, map_chosen, menu_opened = pers_2.death_animations2()
+            pers = Personage(screen, 1)
+            pers_2 = Personage(screen, 2)
+            fall_raw.raw_list = []
+            fall_raw.new_raw(screen, game_speed)
+            spawn_filled = False
+            game_speed = 1
         if pers_2.died2==3:
-            pers_2.death_animations2()
-            pers_2.died2=2
-            running = False
-            pers_2.x=0
+            running, map_chosen, menu_opened = pers_2.death_animations2()
+            pers = Personage(screen, 1)
+            pers_2 = Personage(screen, 2)
+            fall_raw.raw_list = []
+            fall_raw.new_raw(screen, game_speed)
+            spawn_filled = False
+            game_speed = 1
 
 
 

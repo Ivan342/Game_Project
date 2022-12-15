@@ -3,7 +3,7 @@ from pygame import draw
 
 
 WIDTH = 1200
-HEIGHT = 600
+HEIGHT = 900
 
 GREY = (100, 100, 100)
 LIGHT_GREY = (150, 150, 150)
