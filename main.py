@@ -150,6 +150,7 @@ while running:
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
+            gun = GUN(screen, pers)
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -164,6 +165,7 @@ while running:
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
+            gun = GUN(screen, pers)
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -183,6 +185,7 @@ while running:
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
+            gun = GUN(screen, pers)
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -195,6 +198,7 @@ while running:
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
+            gun = GUN(screen, pers)
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -221,11 +225,11 @@ while running:
                 bullet = Bullet(screen, gun, pers)
                 bullets.append(bullet)
                 t = TIME.time()
-                print('-------------')
+
         for i in bullets:
             i.move_bullet()
             i.draw_bullet()
-            print('===================')
+
 
 
         for event in pg.event.get():
