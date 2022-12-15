@@ -17,7 +17,7 @@ clock = pg.time.Clock()
 prozrachost=0
 
 class Personage:
-    def __init__(self, screen):
+    def __init__(self, screen, num):
         '''
         self.x координата левого вверхнего угла по горизонтали
         self.y - координата левого вверхнего угла по вертикали
@@ -49,6 +49,7 @@ class Personage:
         self.power_up = 15
         self.time_after_up = 0
         self.bar =pg.image.load('голова.png').convert_alpha()
+        self.num = num
 
     def start_game(self):
         self.died=0
@@ -342,6 +343,10 @@ class Personage:
                         self.x = j * 40 - self.width
                         #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         #print(i, j)
+                        if self.num == 1:
+                            map[i][j] = '6'
+                        else:
+                            map[i][j] = '7'
 
         if self.Vx < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
@@ -349,6 +354,10 @@ class Personage:
                     #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                     if map[i][j] != '0':
                         self.x = (j + 1) * 40
+                        if self.num == 1:
+                            map[i][j] = '6'
+                        else:
+                            map[i][j] = '7'
                         #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         #print(i, j)
 
@@ -365,7 +374,10 @@ class Personage:
                         self.y = i * 40 - self.height
                         self.Vy = 0
                         self.onGround = True
-                        # print(0)
+                        if self.num == 1:
+                            map[i][j] = '6'
+                        else:
+                            map[i][j] = '7'
                     else:
                         if map[i][j] == '4':
                             #print(1)
@@ -373,10 +385,14 @@ class Personage:
                             self.Vy -= self.block_jump_speed
                         self.onGround = False
 
+
         if self.Vy < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40+1):
                     if map[i][j] != '0':
                         self.y = (i + 1) * 40
                         self.Vy = 0
-                        # self.Vy = max(self.Vy, 0)
+                        if self.num == 1:
+                            map[i][j] = '6'
+                        else:
+                            map[i][j] = '7'

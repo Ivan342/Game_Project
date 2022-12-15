@@ -13,6 +13,8 @@ RED = (255, 0, 0)
 GREEN = 0x00FF00
 block_length = 40
 PURPLE = (154, 50, 205)
+YELLOW = (200, 200, 0)
+BLUE = (0, 0, 200)
 
 TIME_COLOR = GREY
 
@@ -57,6 +59,12 @@ class Block:
     def draw_block_jump(self, x, y):
         draw.rect(self.screen, PURPLE, (x * self.length, y * self.length, block_length, block_length))
 
+    def draw_pers1(self, x, y):
+        draw.rect(self.screen, YELLOW, (x * self.length, y * self.length, block_length, block_length))
+
+    def draw_pers2(self, x, y):
+        draw.rect(self.screen, BLUE, (x * self.length, y * self.length, block_length, block_length))
+
 
 class MAP:
     """
@@ -97,6 +105,10 @@ class MAP:
                     block.draw_block_hill_left(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '4':
                     block.draw_block_jump(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '6':
+                    block.draw_pers1(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '7':
+                    block.draw_pers2(j - (x - WIDTH / 2) / block_length, i)
 
     def map_chase(self, block, pers_x):
         """
