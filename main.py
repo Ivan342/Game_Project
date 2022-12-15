@@ -9,6 +9,9 @@ from Menu import *
 from GUNS import *
 import time as TIME
 
+WIDTH = 1200
+HEIGHT = 600
+
 FPS = 60
 clock = pg.time.Clock()
 time_scale = 1000

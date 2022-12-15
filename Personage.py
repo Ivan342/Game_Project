@@ -48,7 +48,7 @@ class Personage:
         self.direction = False
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.img_left = pg.image.load('girl_left2.png').convert_alpha()
-        self.block_jump_speed = 10
+        self.block_jump_speed = 16.3
         self.died1 = 0
         self.died2 = 0
         self.surf_wasted_img1 = pygame.image.load('wasted1.png').convert_alpha()

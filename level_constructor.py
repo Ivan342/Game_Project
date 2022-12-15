@@ -92,6 +92,15 @@ class MAP:
 
         :param block: вызываем функции класса block
         :param x: Позиция игрока по оси x
+
+        Типы блоков:
+        1 - блок с травой
+        2 - земля без травы
+        3 - левый склон (удалить)
+        4 - пружинный блок
+        5 - ...
+        6 - цвет 1 игрока
+        7 - цвет 2 игрока
         """
         if int((x + WIDTH / 2) // block_length) + 1 > len(self.map_list[0]):
             draw_distance = int((x + WIDTH / 2) // block_length) - 1
