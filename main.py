@@ -250,8 +250,8 @@ while running:
 
         if TIME.time() - t_2 >= 1:
             if keyboard.is_pressed('m'):
-                bullet_2 = Bullet(screen, gun, pers_2)
-                bullets_2.append(bullet_2)
+                bullet = Bullet(screen, gun, pers_2)
+                bullets.append(bullet)
                 t_2 = TIME.time()
 
         for i in bullets:
@@ -261,6 +261,17 @@ while running:
         for j in bullets_2:
             j.move_bullet()
             j.draw_bullet()
+
+
+
+        for i in bullets:
+            if (i.x >= pers.x and i.x <= pers.x + pers.width) and (i.y >= pers.y and i.y <= pers.y + pers.height):
+                #print('huuuuuuuuuuuuuuuuuuuuy')
+                bullets.remove(i)
+
+            if (i.x >= pers_2.x and i.x <= pers_2.x + pers_2.width) and (i.y >= pers_2.y and i.y <= pers_2.y + pers_2.height):
+                #print('huuuuuuuuuuuuuuuuuuuuy')
+                bullets.remove(i)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:

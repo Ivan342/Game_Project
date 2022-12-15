@@ -27,7 +27,7 @@ class GUN():
         self.y = self.pers.y
         self.napr = self.pers.direction
         if not self.napr:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(self.img_right,
@@ -44,11 +44,11 @@ class GUN():
             else:
 
                 self.screen.blit(self.img_right,
-                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(self.pers.width * 0.6),
+                                 (- len(mapik[0]) * block.length + self.x + WIDTH + int(self.pers.width * 0.6),
                                   int(self.y + self.pers.height / 2)))
 
         if self.napr:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(self.img_left, (
@@ -66,7 +66,7 @@ class GUN():
             else:
 
                 self.screen.blit(self.img_left,
-                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(
+                                 (- len(mapik[0]) * block.length + self.x + WIDTH + int(
                                      self.pers.width * 0.55 - self.width), int(self.y + self.pers.height / 2)))
 
     def move_gun(self):
