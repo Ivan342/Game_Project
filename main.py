@@ -98,7 +98,7 @@ while running:
                     pers_2.died2 = 3
                 else:
                     pers.died1 = 3
-                color_time = 500 йц
+                color_time = 500
 
         screen.blit(field, (0, 0))
         if Kim:
