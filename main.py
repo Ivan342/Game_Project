@@ -74,7 +74,7 @@ while running:
         pg.display.update()
 
     if level_chosen:
-        pers.collusion_with_red_block()
+
         screen.blit(field, (0, 0))
         if Kim:
             for raw in raw_list:
@@ -108,35 +108,59 @@ while running:
         (если будете добавлять другие источники смерти,
         то обозначайте их другими цифрами, чтобы разделять анимаwии)
         '''
-        if pers.died == 0:
-            pers.collusion_with_red_block()
-
-            pers.move_personage(map.map_list, Color)
-            pers_2.move_personage_2(map.map_list, Color)
+        if pers.died1 == 0:
+            '''
+            жизнь 1го перса
+            '''
+            pers.collusion_with_red_block1()
+            pers.move_personage(map.map_list,Color)
             pers.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
+            pers.collusion_with_red_block1()
+            pers.draw_HP1()
+            pers.HP1()
 
             #pers.Personage_animation_move_right(block, map)
             gun.move_gun()
             gun.draw_gun()
-            pers.collusion_with_red_block()
-
-            pers_2.collusion_with_red_block()
+        if pers_2.died2 == 0:
+            '''
+            Жизнь 2го перса
+            '''
+            pers_2.collusion_with_red_block2()
+            pers_2.move_personage_2(map.map_list,Color)
             pers_2.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
+            pers_2.collusion_with_red_block2()
+            pers_2.draw_HP2()
+            pers_2.HP2()
 
-            pers.draw_HP()
-            pers.HP()
-
-
-            pers_2.collusion_with_red_block()
-        if pers.died == 1:
-            pers.death_animations()
+        if pers.died1 == 1:
+            '''
+            смерть 1го перса
+            '''
+            pers.death_animations1()
             running = False
-            pers.died=2
-        if pers.died==3:
-            pers.death_animations()
-            pers.died=2
+            pers.died1=2
+        if pers.died1==3:
+            pers.death_animations1()
+            pers.died1=2
             running = False
-                #pers.x=0
+            pers.x=0
+
+        if pers_2.died2 == 1:
+            '''
+            Смерть 2го перса
+            '''
+            pers_2.death_animations2()
+            running = False
+            pers_2.died2=2
+        if pers_2.died2==3:
+            pers_2.death_animations2()
+            pers_2.died2=2
+            running = False
+            pers_2.x=0
+
+
+
 
     #pers_2.move_personage_2(map.map_list)
     #pers_2.Personage_animation_move_right(block, map)

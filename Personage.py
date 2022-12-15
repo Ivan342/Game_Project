@@ -9,8 +9,10 @@ from level_constructor import *
 my_time=0
 surf_wasted = pygame.Surface((1200,600))
 surf_wasted.set_alpha(20)
-HP=240
-max_HP=HP
+HP1=240
+max_HP1=HP1
+HP2=240
+max_HP2=HP1
 w = 0
 FPS = 60
 clock = pg.time.Clock()
@@ -44,7 +46,8 @@ class Personage:
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.img_left = pg.image.load('girl_left2.png').convert_alpha()
         self.block_jump_speed = 10
-        self.died = 0
+        self.died1 = 0
+        self.died2 = 0
         self.surf_wasted_img = pygame.image.load('wasted.png').convert_alpha()
 
         self.power_up = 15
@@ -55,37 +58,67 @@ class Personage:
     def start_game(self):
         self.died=0
 
-    def HP(self):
+    def HP1(self):
         '''
         показатель жизней. уменьшается при стоянии
         '''
-        global HP
+        global HP1
         if self.Vx==0:
-            HP-=0.6
+            HP1-=0.6
         else:
             if self.Vx>0 and self.Vx<=1:
-                HP+=1.1
+                HP1+=1.1
             if self.Vx<0 and self.Vx>=-1:
-                HP+=1.1
+                HP1+=1.1
             if self.Vx>0 and self.Vx>1:
-                HP+=1.1*self.Vx
+                HP1+=1.1*self.Vx
             if self.Vx<0 and self.Vx<(-1):
-                HP+=1.1*(-self.Vx)
-        if HP >max_HP:
-            HP=max_HP
-        if HP<0:
-            self.died=3
+                HP1+=1.1*(-self.Vx)
+        if HP1 >max_HP1:
+            HP1=max_HP1
+        if HP1<0:
+            self.died1=3
 
-        print(HP)
+        print(HP1)
         self.screen.blit(self.bar,(25, 500))
 
 
-    def draw_HP(self):
+    def draw_HP1(self):
         '''
         рисуем жизни
         '''
-        rect(self.screen,(120,100,255),(118,530,HP//1.87,40))
+        rect(self.screen,(120,100,255),(118,530,HP1//1.87,40))
 
+    def HP2(self):
+        '''
+        показатель жизней. уменьшается при стоянии
+        '''
+        global HP2
+        if self.Vx==0:
+            HP2-=0.6
+        else:
+            if self.Vx>0 and self.Vx<=1:
+                HP2+=1.1
+            if self.Vx<0 and self.Vx>=-1:
+                HP2+=1.1
+            if self.Vx>0 and self.Vx>1:
+                HP2+=1.1*self.Vx
+            if self.Vx<0 and self.Vx<(-1):
+                HP2+=1.1*(-self.Vx)
+        if HP2 >max_HP2:
+            HP2=max_HP2
+        if HP2<0:
+            self.died2=3
+
+        print(HP2)
+        self.screen.blit(self.bar,(25, 500))
+
+
+    def draw_HP2(self):
+        '''
+        рисуем жизни
+        '''
+        rect(self.screen,(120,100,255),(418,530,HP2//1.87,40))
 
     def move_personage(self, map, Painting):
         g = 0.15
@@ -140,14 +173,14 @@ class Personage:
         return 0
 
 
-    def death_animations(self):
+    def death_animations1(self):
         '''
         Анимации смертей. Два типа:со взрывом и без него
         '''
 
         global w,my_time,prozrachost
         death_screen = True
-        if self.died!=3:
+        if self.died1!=3:
             death_screen = True
             animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
             for i in range(6):
@@ -187,29 +220,84 @@ class Personage:
                     pg.display.update()
                     clock.tick(30)
                     prozrachost += 8
-                    '''
-                    FIXME
-                    При смерти от "недвижения" игра зависает.Я не додумался как это исправить.
-                    Еще у меня анимка движения сломалась, После того, как Саша что-то изменил.Глянь координаты отрисовки
-                    анимаций пж. Причем сломался только перс, который управляется wsda
-                    '''
 
-    def collusion_with_red_block(self):
+    def death_animations2(self):
         '''
-        Функция проверяет пересечение Кима и персонажа
+        Анимации смертей. Два типа:со взрывом и без него
+        '''
+
+        global w,my_time,prozrachost
+        death_screen = True
+        if self.died2!=3:
+            death_screen = True
+            animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
+            for i in range(6):
+                self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
+                clock.tick(8)
+                pg.display.update()
+            while death_screen:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        death_screen = False
+                '''отрисовка конечной заставки'''
+                my_time+=1
+                clock.tick(30)
+                self.screen.blit(surf_wasted, (0,0))
+                pg.display.update()
+
+                if my_time>=25:
+                    self.surf_wasted_img.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img, (456,230))
+                    pg.display.update()
+                    clock.tick(30)
+                    prozrachost+=8
+        else:
+            death_screen = True
+            while death_screen:
+                for event in pg.event.get():
+                    if event.type == pg.QUIT:
+                        death_screen = False
+                my_time += 1
+                clock.tick(30)
+                self.screen.blit(surf_wasted, (0, 0))
+                pg.display.update()
+
+                if my_time >= 25:
+                    self.surf_wasted_img.set_alpha(prozrachost)
+                    self.screen.blit(self.surf_wasted_img, (456, 230))
+                    pg.display.update()
+                    clock.tick(30)
+                    prozrachost += 8
+    def collusion_with_red_block1(self):
+        '''
+        Функция проверяет пересечение Кима и персонажа для 1го перса
         '''
         for raw in raw_list:
-
             #print(raw.y, self.y, list_pos_x)
-            if (self.y >(raw.y-20) and self.y<(raw.y+40)) or (self.y+45 >(raw.y) and (self.y+45)<(raw.y+40))   :
+            if (self.y >(raw.y-20) and self.y<(raw.y+40)) or (self.y+45 >(raw.y) and (self.y+45)<(raw.y+40)):
                 #print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
                 for i in range(len(raw.block_pos)):
                     if raw.block_pos[i]==0:
                         if (((self.x+30)>i*40) and (self.x+30)<(i*40+40)):
                             #print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
-                            if self.died == 0:
-                                self.died=1
+                            if self.died1 == 0:
+                                self.died1=1
 
+    def collusion_with_red_block2(self):
+        '''
+        Функция проверяет пересечение Кима и персонажа для 2го перса
+        '''
+        for raw in raw_list:
+            # print(raw.y, self.y, list_pos_x)
+            if (self.y > (raw.y - 20) and self.y < (raw.y + 40)) or (
+                    self.y + 45 > (raw.y) and (self.y + 45) < (raw.y + 40)):
+                # print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
+                for i in range(len(raw.block_pos)):
+                    if raw.block_pos[i] == 0:
+                        if (((self.x + 30) > i * 40) and (self.x + 30) < (i * 40 + 40)):
+                            # print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
+                            if self.died2 == 0:
+                                self.died2 = 1
     def move_personage_2(self, map, Painting):
         g = 0.15
         if self.Vy < 0 or self.onGround:
