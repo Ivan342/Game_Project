@@ -170,6 +170,8 @@ class Personage:
         self.x += self.Vx
         self.Collision_x(map, Painting)
 
+        self.Collision_with_death_block(map)
+
         # print(self.onGround)
         # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
@@ -431,6 +433,8 @@ class Personage:
         self.x += self.Vx
         self.Collision_x(map, Painting)
 
+        self.Collision_with_death_block(map)
+
         # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
         return 0
@@ -513,8 +517,24 @@ class Personage:
         if w == 8:
             w = 0
 
+    def Collision_with_death_block(self, map):
+        for j in range(int(self.x + 10) // 40, (int(self.x) + self.width - 10) // 40 + 1):
+            for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
+                #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                if map[i][j] == '5':
+                    if self.num == 1:
+                        self.died1 = 3
+                    else:
+                        self.died2 = 3
 
-
+        for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
+            for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
+                #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                if map[i][j] == '5':
+                    if self.num == 1:
+                        self.died1 = 3
+                    else:
+                        self.died2 = 3
     def Collision_x(self, map, Painting):
         '''
         функция проверяет касание с блоками по x и выталкивает при касании
@@ -526,12 +546,7 @@ class Personage:
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
 
-                    if map[i + 1][j] == '5' and self.onGround:
-                        if self.num == 1:
-                            self.died1 = 3
-                        else:
-                            self.died2 = 3
-                    if map[i][j] != '0':
+                    if (map[i][j] != '0') and (map[i][j] != '5'):
                         self.x = j * 40 - self.width
                         # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         # print(i, j)
@@ -546,12 +561,7 @@ class Personage:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if map[i + 1][j] == '5' and self.onGround:
-                        if self.num == 2:
-                            self.died1 = 3
-                        else:
-                            self.died2 = 3
-                    if map[i][j] != '0':
+                    if (map[i][j] != '0') and (map[i][j] != '5'):
                         self.x = (j + 1) * 40
                         if Painting:
                             if self.num == 1:
@@ -571,13 +581,7 @@ class Personage:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 20, 20))  # отладка
-                    if map[i - 1][j + 1] == '5':
-                        print(2)
-                        if self.num == 2:
-                            self.died1 = 3
-                        else:
-                            self.died2 = 3
-                    if map[i][j] != '0':
+                    if (map[i][j] != '0') and (map[i][j] != '5'):
                         self.y = i * 40 - self.height
                         # self.Vy = 0
                         self.onGround = True
@@ -591,17 +595,11 @@ class Personage:
                         # print(self.Vy)
                         self.Vy -= self.block_jump_speed
 
-
         if self.Vy < 0:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height - 1) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if map[i - 1][j - 1] == '5':
-                        if self.num == 2:
-                            self.died1 = 3
-                        else:
-                            self.died2 = 3
-                    if map[i][j] != '0':
+                    if (map[i][j] != '0') and (map[i][j] != '5'):
                         self.y = (i + 1) * 40
                         self.Vy = 0
                         if Painting:
