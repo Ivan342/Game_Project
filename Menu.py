@@ -5,6 +5,10 @@ menu_opened = True
 level_chosen = False
 surf_but = pg.Surface((230,60))
 surf_but.set_alpha(180)
+surf_but_retry = pg.Surface((230,60))
+
+
+
 '''
 тут создаются поверхности кнопок set_alpha-- прозрачность, pg.Surface--создание поверхности с размерами(...,...)
 '''
@@ -52,6 +56,7 @@ class Fal_blocks_lvl_but:
 
         self.screen.blit(surf_but, (self.x,self.y))
         screen.blit(self.text, (self.x, self.y+4))
+
 
     def push_me(self):
         return "Типокарта.txt"
@@ -141,8 +146,8 @@ class Retry_but:
         self.screen = screen
 
     def draw(self, screen):
-
-        self.screen.blit(surf_but, (self.x,self.y))
+        self.surf
+        self.screen.blit(surf_but_retry, (self.x,self.y))
         screen.blit(self.text, (self.x, self.y+4))
 
 class Back_to_menu_but:

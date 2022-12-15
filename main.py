@@ -41,7 +41,7 @@ game_speed = 1
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 gun = GUN(screen, pers)
-
+color_time=500
 
 while running:
 
@@ -76,6 +76,9 @@ while running:
         pg.display.update()
 
     if level_chosen:
+        if Color:
+            color_time-=1
+            print(color_time)
 
         screen.blit(field, (0, 0))
         if Kim:
@@ -86,7 +89,6 @@ while running:
                     need_clean = True
                 if fall_raw.raw_list[-1].y <= -raw.length + 100 + raw.length:
                     spawn_filled = True
-
                 else:
                     spawn_filled = False
                     pass
@@ -200,6 +202,10 @@ while running:
 
                     # pers_2.x = event.pos[0]
                     # pers_2.y = event.pos[1]
+        if Color:
+
+            rect(screen, (40, 120, 0), (500, 30, color_time // 2, 40))
+            pg.display.update()
         pg.display.update()
         clock.tick(FPS)
         (clock.get_time())

@@ -31,7 +31,7 @@ class GUN():
     def move_gun(self):
         self.napr = self.pers.direction
 
-        print(self.napr)
+        #print(self.napr)
         if not self.napr:
             self.x = self.pers.x + self.pers.width * 0.35
             self.y = self.pers.y + self.pers.height / 2
