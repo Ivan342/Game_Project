@@ -70,16 +70,19 @@ while running:
                         if butt.name == "Exit":
                             running = False
                         elif butt.name == "F_b_lvl":
+                            map.map_list = []
                             map.read_map(butt.push_me())
                             level_chosen = True
                             Kim = True
                             Color = False
                         elif butt.name == "Racing_lvl":
+                            map.map_list = []
                             map.read_map(butt.push_me())
                             level_chosen = True
                             Kim = False
                             Color = False
                         else:
+                            map.map_list = []
                             map.read_map(butt.push_me())
                             level_chosen = True
                             Kim = False
@@ -175,8 +178,11 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
-            if Color:
+                map.read_map(fal_block_lvl_but.push_me())
+            elif Color:
                 map.read_map(color_battle_lvl_but.push_me())
+            else:
+                map.read_map(racing_lvl_but.push_me())
 
             game_speed = 1
 
@@ -191,8 +197,11 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
-            if Color:
+                map.read_map(fal_block_lvl_but.push_me())
+            elif Color:
                 map.read_map(color_battle_lvl_but.push_me())
+            else:
+                map.read_map(racing_lvl_but.push_me())
             game_speed = 1
 
 
@@ -212,8 +221,11 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
-            if Color:
+                map.read_map(fal_block_lvl_but.push_me())
+            elif Color:
                 map.read_map(color_battle_lvl_but.push_me())
+            else:
+                map.read_map(racing_lvl_but.push_me())
             game_speed = 1
         if pers_2.died2 == 3:
             running, map_chosen, menu_opened = pers_2.death_animations2()
@@ -226,8 +238,11 @@ while running:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
-            if Color:
+                map.read_map(fal_block_lvl_but.push_me())
+            elif Color:
                 map.read_map(color_battle_lvl_but.push_me())
+            else:
+                map.read_map(racing_lvl_but.push_me())
             game_speed = 1
 
 
