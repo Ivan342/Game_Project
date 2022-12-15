@@ -47,11 +47,14 @@ game_speed = 1
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 gun = GUN(screen, pers)
+gun_2 = GUN(screen, pers_2)
 
 t = 0
+t_2 = 0
 
 bullets = []
-color_time=500
+bullets_2 = []
+color_time = 500
 
 while running:
 
@@ -87,8 +90,7 @@ while running:
 
     if level_chosen:
         if Color:
-            color_time-=1
-            print(color_time)
+            color_time -= 1
 
         screen.blit(field, (0, 0))
         if Kim:
@@ -103,8 +105,6 @@ while running:
                 else:
                     spawn_filled = False
                     pass
-
-
 
         if not spawn_filled:
             fall_raw.new_raw(screen, game_speed)
@@ -128,13 +128,15 @@ while running:
             жизнь 1го перса
             '''
             pers.collusion_with_red_block1(fall_raw.raw_list)
-            pers.move_personage(map.map_list,Color)
+            pers.move_personage(map.map_list, Color)
             pers.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
             pers.collusion_with_red_block1(fall_raw.raw_list)
             pers.draw_HP1()
             pers.HP1()
-            #gun.move_gun()
-            gun.draw_gun(block, map, max(pers.x, pers_2.x))
+            gun.move_gun()
+            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+
+
         if pers_2.died2 == 0:
             '''
             Жизнь 2го перса
@@ -145,6 +147,8 @@ while running:
             pers_2.collusion_with_red_block2(fall_raw.raw_list)
             pers_2.draw_HP2()
             pers_2.HP2()
+            gun_2.move_gun()
+            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
 
         if pers.died1 == 1:
             '''
@@ -154,6 +158,8 @@ while running:
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
+            gun_2 = GUN(screen, pers_2)
+
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -169,6 +175,7 @@ while running:
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
+            gun_2 = GUN(screen, pers_2)
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -178,9 +185,6 @@ while running:
                 map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
 
-
-
-
         if pers_2.died2 == 1:
             '''
             Смерть 2го перса
@@ -189,6 +193,7 @@ while running:
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
+            gun_2 = GUN(screen, pers_2)
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -202,6 +207,7 @@ while running:
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
+            gun = GUN(screen, pers_2)
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
@@ -211,17 +217,7 @@ while running:
                 map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
 
-
-
-
-    #pers_2.move_personage_2(map.map_list)
-    #pers_2.Personage_animation_move_right(block, map)
-    #pers.move_personage(map)
-
-
-
         dt = time.get_ticks() - start_time
-
 
         if TIME.time() - t >= 1:
             if keyboard.is_pressed('q'):
@@ -229,30 +225,27 @@ while running:
                 bullets.append(bullet)
                 t = TIME.time()
 
+        if TIME.time() - t_2 >= 1:
+            if keyboard.is_pressed('m'):
+                bullet_2 = Bullet(screen, gun, pers_2)
+                bullets_2.append(bullet_2)
+                t_2 = TIME.time()
+
         for i in bullets:
             i.move_bullet()
             i.draw_bullet()
 
-
+        for j in bullets_2:
+            j.move_bullet()
+            j.draw_bullet()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
-            elif event.type == pg.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    pers.x = event.pos[0]
-                    pers.y = event.pos[1]
-
-                    # pers_2.x = event.pos[0]
-                    # pers_2.y = event.pos[1]
         if Color:
-
             rect(screen, (40, 120, 0), (500, 30, color_time // 2, 40))
             pg.display.update()
         pg.display.update()
         clock.tick(FPS)
         (clock.get_time())
 pg.quit()
-
-
-##
