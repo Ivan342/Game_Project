@@ -239,6 +239,7 @@ class Personage:
                 for event in pg.event.get():
                     if event.type == pg.QUIT:
                         death_screen = False
+                        '''njgdrgrhjkn'''
                 '''отрисовка конечной заставки'''
                 my_time+=1
                 clock.tick(30)
