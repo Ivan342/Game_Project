@@ -169,13 +169,13 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
+            map.map_list = []
 
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
             if Color:
-                map.map_list = []
                 map.read_map(color_battle_lvl_but.push_me())
 
             game_speed = 1
@@ -186,12 +186,12 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
+            map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
             if Color:
-                map.map_list = []
                 map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
 
@@ -207,12 +207,12 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
+            map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
             if Color:
-                map.map_list = []
                 map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
         if pers_2.died2 == 3:
@@ -220,13 +220,13 @@ while running:
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
-            gun = GUN(screen, pers_2)
+            gun_2 = GUN(screen, pers_2)
+            map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
                 fall_raw.new_raw(screen, game_speed)
                 spawn_filled = False
             if Color:
-                map.map_list = []
                 map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
 

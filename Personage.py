@@ -280,7 +280,7 @@ class Personage:
         death_screen = True
         death_menu = Menu()
         retry_but = Retry_but(WIDTH / 2 - 50, 450, 100, 50, "pic1.png", "Retry", "Retry")
-        back_but = Back_to_menu_but(WIDTH / 2 - 50, 520, 100, 50, "pic1.png", "Back to menu", "Back_to_menu")
+        back_but = Back_to_menu_but(WIDTH / 2 - 50, 520, 200, 50, "pic1.png", "Back to menu", "Back_to_menu")
         death_menu.put_button(retry_but)
         death_menu.put_button(back_but)
         running = False
