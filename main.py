@@ -173,6 +173,9 @@ while running:
                 map.read_map(color_battle_lvl_but.push_me())
             game_speed = 1
 
+
+
+
         if pers_2.died2 == 1:
             '''
             Смерть 2го перса

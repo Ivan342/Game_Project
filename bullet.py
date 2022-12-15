@@ -42,6 +42,10 @@ class Bullet:
             self.x += self.Vx
             self.y += self.Vy
 
+
+
+
+
     def draw_bullet(self):
         #self.bullet_img.convert()
         self.bullet_img = pg.transform.scale(self.bullet_img, (self.width_img, self.height_img))
