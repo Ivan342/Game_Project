@@ -8,6 +8,7 @@ from Falling_blocks import *
 from Menu import *
 from GUNS import *
 import time as TIME
+import numpy as np
 
 WIDTH = 1200
 HEIGHT = 600
@@ -89,6 +90,13 @@ while running:
         if Color:
             color_time-=1
             print(color_time)
+            if color_time == 0:
+                str_map_list = str(map.map_list)
+                if str_map_list.count('6') > str_map_list.count('7'):
+                    pers_2.died2 = 3
+                else:
+                    pers.died1 = 3
+                color_time = 500
 
         screen.blit(field, (0, 0))
         if Kim:
