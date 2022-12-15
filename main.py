@@ -133,14 +133,14 @@ while running:
             pers.collusion_with_red_block1(fall_raw.raw_list)
             pers.draw_HP1()
             pers.HP1()
-            gun.move_gun()
-            gun.draw_gun()
+            #gun.move_gun()
+            gun.draw_gun(block, map, max(pers.x, pers_2.x))
         if pers_2.died2 == 0:
             '''
             Жизнь 2го перса
             '''
             pers_2.collusion_with_red_block2(fall_raw.raw_list)
-            pers_2.move_personage_2(map.map_list,Color)
+            pers_2.move_personage_2(map.map_list, Color)
             pers_2.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
             pers_2.collusion_with_red_block2(fall_raw.raw_list)
             pers_2.draw_HP2()
