@@ -5,6 +5,7 @@ from Personage import *
 from level_constructor import *
 from Falling_blocks import *
 from Menu import *
+from GUNS import *
 
 FPS = 60
 clock = pg.time.Clock()
@@ -37,7 +38,7 @@ level_chosen = False
 game_speed = 1
 start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
-
+gun = GUN(screen, pers)
 
 
 while running:
@@ -114,6 +115,9 @@ while running:
             pers_2.move_personage_2(map.map_list, Color)
             pers.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
 
+            #pers.Personage_animation_move_right(block, map)
+            gun.move_gun()
+            gun.draw_gun()
             pers.collusion_with_red_block()
 
             pers_2.collusion_with_red_block()

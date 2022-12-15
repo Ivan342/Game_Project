@@ -4,7 +4,7 @@ from pygame import time, draw
 
 import pygame as pg
 import keyboard
-
+from Falling_blocks import *
 from level_constructor import *
 my_time=0
 surf_wasted = pygame.Surface((1200,600))
@@ -46,6 +46,7 @@ class Personage:
         self.block_jump_speed = 10
         self.died = 0
         self.surf_wasted_img = pygame.image.load('wasted.png').convert_alpha()
+
         self.power_up = 15
         self.time_after_up = 0
         self.bar =pg.image.load('голова.png').convert_alpha()
