@@ -1,5 +1,6 @@
 import pygame as pg
 from pygame import draw
+from random import randint
 
 menu_opened = True
 level_chosen = False
@@ -59,7 +60,8 @@ class Fal_blocks_lvl_but:
 
 
     def push_me(self):
-        return "Типокарта.txt"
+        names = ["Falling_Blocks_1", "Falling_Blocks_2"]
+        return names[randint(0, 1)]
 
 
 class Exit_button:
@@ -127,7 +129,8 @@ class Color_battle_lvl_but:
         screen.blit(self.text, (self.x, self.y+4))
 
     def push_me(self):
-        return "Color_battle"
+        names = ["Color_Battle_1", "Color_Battle_2"]
+        return names[randint(0, 1)]
 
 class Retry_but:
     def __init__(self, x, y, len, wid, pic, text, name):

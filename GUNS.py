@@ -30,40 +30,49 @@ class GUN():
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
-                    self.screen.blit(self.img_right, (WIDTH / 2 + self.pers.width*0.6, int(self.y + self.pers.height/2)))
+                    self.screen.blit(self.img_right,
+                                     (WIDTH / 2 + self.pers.width * 0.6, int(self.y + self.pers.height / 2)))
                 else:
 
-                    self.screen.blit(self.img_right, (WIDTH / 2 - max_pers_x + self.x + self.pers.width*0.6, int(self.y + self.pers.height/2)))
+                    self.screen.blit(self.img_right, (
+                        WIDTH / 2 - max_pers_x + self.x + self.pers.width * 0.6, int(self.y + self.pers.height / 2)))
             elif max_pers_x < WIDTH / 2:
 
-                self.screen.blit(self.img_right, (int(self.x + self.pers.width*0.6), int(self.y + self.pers.height/2)))
+                self.screen.blit(self.img_right,
+                                 (int(self.x + self.pers.width * 0.6), int(self.y + self.pers.height / 2)))
 
             else:
 
                 self.screen.blit(self.img_right,
-                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(self.pers.width*0.6), int(self.y + self.pers.height/2)))
+                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(self.pers.width * 0.6),
+                                  int(self.y + self.pers.height / 2)))
 
         if self.napr:
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
-                    self.screen.blit(self.img_left, (WIDTH / 2 + int(self.pers.width*0.55 - self.width), int(self.y + self.pers.height/2)))
+                    self.screen.blit(self.img_left, (
+                        WIDTH / 2 + int(self.pers.width * 0.55 - self.width), int(self.y + self.pers.height / 2)))
                 else:
 
-                    self.screen.blit(self.img_left, (WIDTH / 2 - max_pers_x + self.x + int(self.pers.width*0.55 - self.width), int(self.y + self.pers.height/2)))
+                    self.screen.blit(self.img_left, (
+                        WIDTH / 2 - max_pers_x + self.x + int(self.pers.width * 0.55 - self.width),
+                        int(self.y + self.pers.height / 2)))
             elif max_pers_x < WIDTH / 2:
 
-                self.screen.blit(self.img_left, (int(self.x) + int(self.pers.width*0.55 - self.width), int(self.y + self.pers.height/2)))
+                self.screen.blit(self.img_left, (
+                    int(self.x) + int(self.pers.width * 0.55 - self.width), int(self.y + self.pers.height / 2)))
 
             else:
 
                 self.screen.blit(self.img_left,
-                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(self.pers.width*0.55 - self.width), int(self.y + self.pers.height/2)))
+                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH + int(
+                                     self.pers.width * 0.55 - self.width), int(self.y + self.pers.height / 2)))
 
     def move_gun(self):
         self.napr = self.pers.direction
 
-        #print(self.napr)
+        # print(self.napr)
         if not self.napr:
             self.x = self.pers.x + self.pers.width * 0.35
             self.y = self.pers.y + self.pers.height / 2
