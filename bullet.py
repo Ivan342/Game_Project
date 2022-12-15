@@ -16,12 +16,12 @@ class Bullet:
         self.Vx = 0
         self.Vy = 0
         self.direction = self.pers.direction
-        if self.direction:
-            self.x = self.pers.x + self.pers.width / 3 + self.gun.width - 60
-            self.y = self.pers.y + self.pers.height / 2 - 25
+        if not self.direction:
+            self.x = self.pers.x + self.gun.width - 10
+            self.y = self.pers.y
         else:
-            self.x = self.pers.x - self.gun.width / 2
-            self.y = self.pers.y + self.pers.height / 2 - 25
+            self.x = self.pers.x - self.gun.width
+            self.y = self.pers.y
         self.color = GREY
         self.width_img = 80
         self.height_img = 80

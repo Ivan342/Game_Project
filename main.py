@@ -135,6 +135,7 @@ while running:
             pers.HP1()
             #gun.move_gun()
             gun.draw_gun(block, map, max(pers.x, pers_2.x))
+
         if pers_2.died2 == 0:
             '''
             Жизнь 2го перса
@@ -233,6 +234,14 @@ while running:
             i.move_bullet()
             i.draw_bullet()
 
+        for i in bullets:
+            if (i.x >= pers.x and i.x <= pers.x + pers.width) and (i.y >= pers.y and i.y <= pers.y + pers.height):
+                #print('huuuuuuuuuuuuuuuuuuuuy')
+                bullets.remove(i)
+
+            if (i.x >= pers_2.x and i.x <= pers_2.x + pers_2.width) and (i.y >= pers_2.y and i.y <= pers_2.y + pers_2.height):
+                #print('huuuuuuuuuuuuuuuuuuuuy')
+                bullets.remove(i)
 
 
         for event in pg.event.get():
