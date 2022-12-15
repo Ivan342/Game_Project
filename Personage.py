@@ -48,11 +48,14 @@ class Personage:
         self.direction = False
         self.img = pg.image.load('girl0.png').convert_alpha()
         self.img_left = pg.image.load('girl_left2.png').convert_alpha()
+        self.img2 = pg.image.load('2_pers0.png').convert_alpha()
+        self.img_left2 = pg.image.load('2_pers_left0.png').convert_alpha()
         self.block_jump_speed = 16.3
         self.died1 = 0
         self.died2 = 0
         self.surf_wasted_img1 = pygame.image.load('wasted1.png').convert_alpha()
         self.surf_wasted_img2 = pygame.image.load('wasted2.png').convert_alpha()
+        self.surf_wasted_draw = pygame.image.load('draw.png').convert_alpha()
 
         self.power_up = 15
         self.time_after_up = 0
@@ -177,6 +180,51 @@ class Personage:
 
         return 0
 
+    def draw_animations(self):
+        global w, my_time, prozrachost
+        death_screen = True
+        death_menu = Menu()
+        retry_but = Retry_but(WIDTH / 2 - 50, 450, 100, 50, "pic1.png", "Retry", "Retry")
+        back_but = Back_to_menu_but(WIDTH / 2 - 50, 520, 100, 50, "pic1.png", "Back to menu", "Back_to_menu")
+        death_menu.put_button(retry_but)
+        death_menu.put_button(back_but)
+        running = False
+        map_chosen = False
+        menu_opened = False
+        while death_screen:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    death_screen = False
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    for butt in death_menu.buttons:
+                        if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
+                            1] <= butt.y + butt.width:
+                            if butt.name == "Retry":
+                                running = True
+                                map_chosen = True
+                                menu_opened = False
+                                death_screen = False
+                                self.died1 = 0
+                            else:
+                                running = True
+                                map_chosen = False
+                                menu_opened = True
+                                death_screen = False
+                                self.died1 = 0
+            '''отрисовка конечной заставки'''
+            my_time += 1
+            clock.tick(30)
+            self.screen.blit(surf_wasted, (0, 0))
+            for butt in death_menu.buttons:
+                butt.draw(self.screen)
+            pg.display.update()
+
+            if my_time >= 25:
+                self.surf_wasted_img2.set_alpha(prozrachost)
+                self.screen.blit(self.surf_wasted_draw, (456, 230))
+                pg.display.update()
+                clock.tick(30)
+                prozrachost += 8
 
     def death_animations1(self):
         '''
@@ -370,7 +418,7 @@ class Personage:
         '''
         for raw in raw_listik:
             # print(raw.y, self.y, list_pos_x)
-            if (self.y > (raw.y - 20) and self.y < (raw.y + 40)) or (
+            if (self.y > (raw.y - 20) and self.y < (raw.y + 30)) or (
                     self.y + 45 > (raw.y) and (self.y + 45) < (raw.y + 40)):
                 # print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
                 for i in range(len(raw.block_pos)):
@@ -386,7 +434,7 @@ class Personage:
         '''
         for raw in raw_listik:
             # print(raw.y, self.y, list_pos_x)
-            if (self.y > (raw.y - 20) and self.y < (raw.y + 40)) or (
+            if (self.y > (raw.y - 20) and self.y < (raw.y + 30)) or (
                     self.y + 45 > (raw.y) and (self.y + 45) < (raw.y + 40)):
                 # print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
                 for i in range(len(raw.block_pos)):
@@ -511,7 +559,83 @@ class Personage:
                 else:
                     self.screen.blit(self.img,
                                      (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+    def Personage_animation_moveemnt2(self, block, mapik, max_pers_x):
+        '''
+        анимация бега вправо и лево, стояния на месте
+        '''
+        global w
+        animation_set2 = [pygame.image.load(f"2_pers{w}.png").convert_alpha() for w in range(0, 8)]
+        animation_set_left2 = [pygame.image.load(f"2_pers_left{w}.png").convert_alpha() for w in range(0, 8)]
+        if self.Vx > 0:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if self.x == max_pers_x:
 
+                    self.screen.blit(animation_set2[w], (WIDTH / 2, int(self.y)))
+                else:
+
+                    self.screen.blit(animation_set2[w], (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+            elif max_pers_x < WIDTH / 2:
+
+                self.screen.blit(animation_set2[w], (int(self.x), int(self.y)))
+
+            else:
+
+                self.screen.blit(animation_set2[w],
+                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
+
+        if self.Vx < 0:
+            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if self.x == max_pers_x:
+
+                    self.screen.blit(animation_set_left2[w], (WIDTH / 2, int(self.y)))
+                else:
+
+                    self.screen.blit(animation_set_left2[w], (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+            elif max_pers_x < WIDTH / 2:
+
+                self.screen.blit(animation_set_left2[w], (int(self.x), int(self.y)))
+            else:
+
+                self.screen.blit(animation_set_left2[w],
+                                 (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
+        if self.Vx == 0:
+            if self.direction:
+                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                    if self.x == max_pers_x:
+
+                        self.screen.blit(self.img_left2, (WIDTH / 2, int(self.y)))
+                    else:
+
+                        self.screen.blit(self.img_left2, (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+                elif max_pers_x < WIDTH / 2:
+
+                    self.screen.blit(self.img_left2, (int(self.x), int(self.y)))
+                else:
+
+                    self.screen.blit(self.img_left2,
+                                     (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
+            else:
+                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                    if self.x == max_pers_x:
+
+                        self.screen.blit(self.img2, (WIDTH / 2, int(self.y)))
+                    else:
+
+                        self.screen.blit(self.img2, (WIDTH / 2 - max_pers_x + self.x, int(self.y)))
+                elif max_pers_x < WIDTH / 2:
+
+                    self.screen.blit(self.img2, (int(self.x), int(self.y)))
+                else:
+                    self.screen.blit(self.img2,
+                                     (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
+
+        w += 1
+        if w == 8:
+            w = 0
 
         w += 1
         if w == 8:

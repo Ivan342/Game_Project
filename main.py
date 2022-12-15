@@ -155,7 +155,7 @@ while running:
             '''
             pers_2.collusion_with_red_block2(fall_raw.raw_list)
             pers_2.move_personage_2(map.map_list, Color)
-            pers_2.Personage_animation_moveemnt(block, map, max(pers.x, pers_2.x))
+            pers_2.Personage_animation_moveemnt2(block, map, max(pers.x, pers_2.x))
             pers_2.collusion_with_red_block2(fall_raw.raw_list)
             pers_2.draw_HP2()
             pers_2.HP2()

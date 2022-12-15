@@ -74,8 +74,8 @@ class GUN():
 
         # print(self.napr)
         if not self.napr:
-            self.x = self.pers.x + self.pers.width * 0.35
+            self.x = self.pers.x + self.pers.width * 0.15
             self.y = self.pers.y + self.pers.height / 2
         if self.napr:
-            self.x = self.pers.x - self.width + self.pers.width * 0.75
+            self.x = self.pers.x - self.width + self.pers.width * 0.95
             self.y = self.pers.y + self.pers.height / 2
