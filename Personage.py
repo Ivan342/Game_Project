@@ -12,13 +12,13 @@ my_time = 0
 surf_wasted = pygame.Surface((1200, 600))
 surf_wasted.set_alpha(20)
 
-max_HP1=240
+max_HP1 = 240
 
-max_HP2=240
+max_HP2 = 240
 w = 0
 FPS = 60
 clock = pg.time.Clock()
-prozrachost=0
+prozrachost = 0
 
 
 class Personage:
@@ -73,9 +73,9 @@ class Personage:
         if self.Vx == 0:
             self.Hp1 -= 0.6
         else:
-            if self.Vx > 0 and self.Vx <= 1:
+            if 0 < self.Vx <= 1:
                 self.Hp1 += 1.1
-            if self.Vx < 0 and self.Vx >= -1:
+            if 0 > self.Vx >= -1:
                 self.Hp1 += 1.1
             if self.Vx > 0 and self.Vx > 1:
                 self.Hp1 += 1.1 * self.Vx
@@ -85,10 +85,7 @@ class Personage:
             self.Hp1 = max_HP1
         if self.Hp1 < 0:
             self.died1 = 3
-
-        #print(HP1)
         self.screen.blit(self.bar1, (25, 500))
-
 
     def draw_HP1(self):
         '''
@@ -103,9 +100,9 @@ class Personage:
         if self.Vx == 0:
             self.Hp2 -= 0.6
         else:
-            if self.Vx > 0 and self.Vx <= 1:
+            if 0 < self.Vx <= 1:
                 self.Hp2 += 1.1
-            if self.Vx < 0 and self.Vx >= -1:
+            if 0 > self.Vx >= -1:
                 self.Hp2 += 1.1
             if self.Vx > 0 and self.Vx > 1:
                 self.Hp2 += 1.1 * self.Vx
@@ -116,14 +113,14 @@ class Personage:
         if self.Hp2 < 0:
             self.died2 = 3
 
-        #print(HP2)
-        self.screen.blit(self.bar2, (1200-255, 500))
+        # print(HP2)
+        self.screen.blit(self.bar2, (1200 - 255, 500))
 
     def draw_HP2(self):
         '''
         рисуем жизни
         '''
-        rect(self.screen, (200, 100, 200), (1200 - 118 - self.Hp2 // 1.87, 530,self.Hp2 // 1.87, 40))
+        rect(self.screen, (200, 100, 200), (1200 - 118 - self.Hp2 // 1.87, 530, self.Hp2 // 1.87, 40))
 
     def move_personage(self, map, Painting):
         g = 0.3
@@ -138,7 +135,6 @@ class Personage:
         '''
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
-
                 self.Vy = -5
                 self.onGround = False
                 self.time_after_up += 1
@@ -146,21 +142,21 @@ class Personage:
         if self.Vy >= 0:
             self.time_after_up = 0
 
-        if keyboard.is_pressed('a') and self.Vx <= 5 and self.Vx >= -5:
+        if keyboard.is_pressed('a') and -5 <= self.Vx <= 5:
             self.Vx -= self.acceleration
             self.direction = True
-        if keyboard.is_pressed('d') and self.Vx <= 5 and self.Vx >= -5:
+        if keyboard.is_pressed('d') and -5 <= self.Vx <= 5:
             self.Vx += self.acceleration
             self.direction = False
 
         if self.Vx > 0 and (not keyboard.is_pressed('d')):
             self.Vx -= 2 * self.acceleration
-            if self.Vx >= -0.5 and self.Vx <= 0.5:
+            if -0.5 <= self.Vx <= 0.5:
                 self.Vx = 0
 
         if self.Vx < 0 and (not keyboard.is_pressed('a')):
             self.Vx += 2 * self.acceleration
-            if self.Vx >= -0.5 and self.Vx <= 0.5:
+            if -0.5 <= self.Vx <= 0.5:
                 self.Vx = 0
 
         self.y += self.Vy
@@ -174,9 +170,6 @@ class Personage:
 
         self.Collision_with_death_block(map)
         self.Collision_with_finish_block(map)
-
-        # print(self.onGround)
-        # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
         return 0
 
@@ -197,8 +190,7 @@ class Personage:
                     death_screen = False
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     for butt in death_menu.buttons:
-                        if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
-                            1] <= butt.y + butt.width:
+                        if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[1] <= butt.y + butt.width:
                             if butt.name == "Retry":
                                 running = True
                                 map_chosen = True
@@ -243,7 +235,8 @@ class Personage:
         menu_opened = False
         if self.died1 != 3:
             death_screen = True
-            animation_set_explosion = [pygame.image.load(f"графика/explosion{w}.png").convert_alpha() for w in range(0, 8)]
+            animation_set_explosion = [pygame.image.load(f"графика/explosion{w}.png").convert_alpha() for w in
+                                       range(0, 8)]
             for i in range(6):
                 self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
                 clock.tick(8)
@@ -254,8 +247,7 @@ class Personage:
                         death_screen = False
                     elif event.type == pg.MOUSEBUTTONDOWN:
                         for butt in death_menu.buttons:
-                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
-                                1] <= butt.y + butt.width:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[1] <= butt.y + butt.width:
                                 if butt.name == "Retry":
                                     running = True
                                     map_chosen = True
@@ -290,8 +282,7 @@ class Personage:
                         death_screen = False
                     elif event.type == pg.MOUSEBUTTONDOWN:
                         for butt in death_menu.buttons:
-                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
-                                1] <= butt.y + butt.width:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[1] <= butt.y + butt.width:
                                 if butt.name == "Retry":
                                     running = True
                                     map_chosen = True
@@ -336,7 +327,8 @@ class Personage:
         menu_opened = False
         if self.died2 != 3:
             death_screen = True
-            animation_set_explosion = [pygame.image.load(f"графика/explosion{w}.png").convert_alpha() for w in range(0, 8)]
+            animation_set_explosion = [pygame.image.load(f"графика/explosion{w}.png").convert_alpha() for w in
+                                       range(0, 8)]
             for i in range(6):
                 self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
                 clock.tick(8)
@@ -347,8 +339,7 @@ class Personage:
                         death_screen = False
                     elif event.type == pg.MOUSEBUTTONDOWN:
                         for butt in death_menu.buttons:
-                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
-                                1] <= butt.y + butt.width:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[1] <= butt.y + butt.width:
                                 if butt.name == "Retry":
                                     running = True
                                     map_chosen = True
@@ -383,8 +374,7 @@ class Personage:
                         death_screen = False
                     elif event.type == pg.MOUSEBUTTONDOWN:
                         for butt in death_menu.buttons:
-                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[
-                                1] <= butt.y + butt.width:
+                            if butt.x <= event.pos[0] <= butt.x + butt.length and butt.y <= event.pos[1] <= butt.y + butt.width:
                                 if butt.name == "Retry":
                                     running = True
                                     map_chosen = True
@@ -417,13 +407,10 @@ class Personage:
         Функция проверяет пересечение Кима и персонажа для 1го перса
         '''
         for raw in raw_listik:
-            # print(raw.y, self.y, list_pos_x)
-            if (self.y > (raw.y - 20) and self.y < (raw.y + 30)) or (
-                    self.y + 45 > (raw.y) and (self.y + 45) < (raw.y + 40)):
-                # print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
+            if (raw.y - 20) < self.y < (raw.y + 30) or raw.y < (self.y + 45) < (raw.y + 40):
                 for i in range(len(raw.block_pos)):
                     if raw.block_pos[i] == 0:
-                        if (((self.x + 30) > i * 40) and (self.x + 30) < (i * 40 + 40)):
+                        if i * 40 < (self.x + 30) < (i * 40 + 40):
                             # print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
                             if self.died1 == 0:
                                 self.died1 = 1
@@ -433,13 +420,10 @@ class Personage:
         Функция проверяет пересечение Кима и персонажа для 2го перса
         '''
         for raw in raw_listik:
-            # print(raw.y, self.y, list_pos_x)
-            if (self.y > (raw.y - 20) and self.y < (raw.y + 30)) or (
-                    self.y + 45 > (raw.y) and (self.y + 45) < (raw.y + 40)):
-                # print('gbjkdfbsdkjf gshjkbhjsbgmnbjgkbdrdkjgerjkngkjrengjkrngjklenfljnweilgnljwebglirgjrbgjberkjberkgberbgj')
+            if (raw.y - 20) < self.y < (raw.y + 30) or raw.y < (self.y + 45) < (raw.y + 40):
                 for i in range(len(raw.block_pos)):
                     if raw.block_pos[i] == 0:
-                        if (((self.x + 30) > i * 40) and (self.x + 30) < (i * 40 + 40)):
+                        if i * 40 < (self.x + 30) < (i * 40 + 40):
                             # print(Huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuy')
                             if self.died2 == 0:
                                 self.died2 = 1
@@ -455,21 +439,21 @@ class Personage:
         if self.Vy >= 0:
             self.time_after_up = 0
 
-        if keyboard.is_pressed('left_arrow') and self.Vx <= 5 and self.Vx >= -5:
+        if keyboard.is_pressed('left_arrow') and -5 <= self.Vx <= 5:
             self.Vx -= self.acceleration
             self.direction = True
-        if keyboard.is_pressed('right_arrow') and self.Vx <= 5 and self.Vx >= -5:
+        if keyboard.is_pressed('right_arrow') and -5 <= self.Vx <= 5:
             self.Vx += self.acceleration
             self.direction = False
 
         if self.Vx > 0 and (not keyboard.is_pressed('right_arrow')):
             self.Vx -= 2 * self.acceleration
-            if self.Vx >= -0.5 and self.Vx <= 0.5:
+            if -0.5 <= self.Vx <= 0.5:
                 self.Vx = 0
 
         if self.Vx < 0 and (not keyboard.is_pressed('left_arrow')):
             self.Vx += 2 * self.acceleration
-            if self.Vx >= -0.5 and self.Vx <= 0.5:
+            if -0.5 <= self.Vx <= 0.5:
                 self.Vx = 0
 
         self.y += self.Vy
@@ -484,8 +468,6 @@ class Personage:
         self.Collision_with_death_block(map)
         self.Collision_with_finish_block(map)
 
-        # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
-
         return 0
 
     def Personage_animation_moveemnt(self, block, mapik, max_pers_x):
@@ -496,7 +478,7 @@ class Personage:
         animation_set = [pygame.image.load(f"графика/girl{w}.png").convert_alpha() for w in range(0, 9)]
         animation_set_left = [pygame.image.load(f"графика/girl_left{w}.png").convert_alpha() for w in range(0, 9)]
         if self.Vx > 0:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(animation_set[w], (WIDTH / 2, int(self.y)))
@@ -512,9 +494,8 @@ class Personage:
                 self.screen.blit(animation_set[w],
                                  (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-
         if self.Vx < 0:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(animation_set_left[w], (WIDTH / 2, int(self.y)))
@@ -531,7 +512,7 @@ class Personage:
 
         if self.Vx == 0:
             if self.direction:
-                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                     if self.x == max_pers_x:
 
                         self.screen.blit(self.img_left, (WIDTH / 2, int(self.y)))
@@ -547,7 +528,7 @@ class Personage:
                                      (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
             else:
-                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                     if self.x == max_pers_x:
 
                         self.screen.blit(self.img, (WIDTH / 2, int(self.y)))
@@ -560,6 +541,7 @@ class Personage:
                 else:
                     self.screen.blit(self.img,
                                      (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
+
     def Personage_animation_moveemnt2(self, block, mapik, max_pers_x):
         '''
         анимация бега вправо и лево, стояния на месте
@@ -568,7 +550,7 @@ class Personage:
         animation_set2 = [pygame.image.load(f"графика/2_pers{w}.png").convert_alpha() for w in range(0, 8)]
         animation_set_left2 = [pygame.image.load(f"графика/2_pers_left{w}.png").convert_alpha() for w in range(0, 8)]
         if self.Vx > 0:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(animation_set2[w], (WIDTH / 2, int(self.y)))
@@ -584,9 +566,8 @@ class Personage:
                 self.screen.blit(animation_set2[w],
                                  (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-
         if self.Vx < 0:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+            if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(animation_set_left2[w], (WIDTH / 2, int(self.y)))
@@ -603,7 +584,7 @@ class Personage:
 
         if self.Vx == 0:
             if self.direction:
-                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                     if self.x == max_pers_x:
 
                         self.screen.blit(self.img_left2, (WIDTH / 2, int(self.y)))
@@ -619,7 +600,7 @@ class Personage:
                                      (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
             else:
-                if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
+                if WIDTH / 2 <= max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                     if self.x == max_pers_x:
 
                         self.screen.blit(self.img2, (WIDTH / 2, int(self.y)))
@@ -633,7 +614,6 @@ class Personage:
                     self.screen.blit(self.img2,
                                      (- len(mapik.map_list[0]) * block.length + self.x + WIDTH, int(self.y)))
 
-
         w += 1
         if w == 8:
             w = 0
@@ -643,45 +623,37 @@ class Personage:
             w = 0
 
     def Collision_with_death_block(self, map):
-        # по вертикали
         for j in range(int(self.x + 22) // 40, (int(self.x) + self.width - 22) // 40 + 1):
             for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
-                #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                if map[i][j] == '5':
+                    if self.num == 1:
+                        self.died1 = 3
+                    else:
+                        self.died2 = 3
+        for j in range(int(self.x + 2) // 40, (int(self.x) + self.width - 2) // 40 + 1):
+            for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
                 if map[i][j] == '5':
                     if self.num == 1:
                         self.died1 = 3
                     else:
                         self.died2 = 3
 
-        # по горизонтали
-        for j in range(int(self.x + 2) // 40, (int(self.x) + self.width - 2) // 40 + 1):
-            for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
-                #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                if map[i][j] == '5':
-                    if self.num == 1:
+    def Collision_with_finish_block(self, map):
+        for j in range(int(self.x + 22) // 40, (int(self.x) + self.width - 22) // 40 + 1):
+            for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
+                if map[i][j] == '3':
+                    if self.num == 2:
                         self.died1 = 3
                     else:
                         self.died2 = 3
-    def Collision_with_finish_block(self,map):
-        # по вертикали
-        for j in range(int(self.x + 22) // 40, (int(self.x) + self.width - 22) // 40 + 1):
-            for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
-                # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+        for j in range(int(self.x + 2) // 40, (int(self.x) + self.width - 2) // 40 + 1):
+            for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
                 if map[i][j] == '3':
                     if self.num == 2:
                         self.died1 = 3
                     else:
                         self.died2 = 3
 
-        # по горизонтали
-        for j in range(int(self.x + 2) // 40, (int(self.x) + self.width - 2) // 40 + 1):
-            for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
-                # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                if map[i][j] == '3':
-                    if self.num == 2:
-                        self.died1 = 3
-                    else:
-                        self.died2 = 3
     def Collision_x(self, map, Painting):
         '''
         функция проверяет касание с блоками по x и выталкивает при касании
@@ -691,13 +663,8 @@ class Personage:
         if self.Vx > 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
-                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
-                    #if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
+                    if map[i][j] not in ["0", "5", "3", "8", "9", "10"]:
                         self.x = j * 40 - self.width
-                        # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
-                        # print(i, j)
-
                         if Painting:
                             if self.num == 1:
                                 map[i][j] = '6'
@@ -707,16 +674,13 @@ class Personage:
         if self.Vx < 0:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
-                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
+                    if map[i][j] not in ["0", "5", "3", "8", "9", "10"]:
                         self.x = (j + 1) * 40
                         if Painting:
                             if self.num == 1:
                                 map[i][j] = '6'
                             else:
                                 map[i][j] = '7'
-                        # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
-                        # print(i, j)
 
     def Collision_y(self, map, Painting):
         '''
@@ -727,10 +691,8 @@ class Personage:
         if self.Vy > 0:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
-                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 20, 20))  # отладка
-                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
+                    if map[i][j] not in ["0", "5", "3", "8", "9", "10"]:
                         self.y = i * 40 - self.height
-                        # self.Vy = 0
                         self.onGround = True
                         if Painting:
                             if self.num == 1:
@@ -738,15 +700,12 @@ class Personage:
                             else:
                                 map[i][j] = '7'
                     if map[i][j] == '4':
-                        # print(1)
-                        # print(self.Vy)
                         self.Vy -= self.block_jump_speed
 
         if self.Vy < 0:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height - 1) // 40 + 1):
-                    # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
+                    if map[i][j] not in ["0", "5", "3", "8", "9", "10"]:
                         self.y = (i + 1) * 40
                         self.Vy = 0
                         if Painting:

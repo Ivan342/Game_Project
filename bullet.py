@@ -52,7 +52,7 @@ class Bullet:
     def draw_bullet(self):
         """
         Отрисовка пули
-        """"
+        """
         self.screen.blit(self.bullet_img, (self.x, self.y))
 
     def direction_of_the_shot(self):
