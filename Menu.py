@@ -60,6 +60,9 @@ class Fal_blocks_lvl_but:
 
 
     def push_me(self):
+        """
+        Возвращаем название карты при нажатии
+        """
         names = ["Falling_Blocks_1", "Falling_Blocks_2"]
         return names[randint(0, 1)]
 
@@ -105,12 +108,15 @@ class Racing_lvl_but:
         screen.blit(self.text, (self.x, self.y + 4))
 
     def push_me(self):
+        """
+        Возвращаем название карты при нажатии
+        """
         return "Map_2"
 
 class Color_battle_lvl_but:
     def __init__(self, x, y, len, wid, pic, text, name):
         """
-        Создание кнопки, отправляющей игрока/-ов на уровень с падающими блоками и её отрисовка
+        Возвращаем название карты при нажатии
         """
         self.x = x
         self.y = y
@@ -124,11 +130,16 @@ class Color_battle_lvl_but:
         self.screen = screen
 
     def draw(self, screen):
+        """
 
+        """
         self.screen.blit(surf_but, (self.x,self.y))
         screen.blit(self.text, (self.x, self.y+4))
 
     def push_me(self):
+        """
+        Описываем то, что происходит при нажатии кнопки
+        """
         names = ["Color_Battle_1", "Color_Battle_2"]
         return names[randint(0, 1)]
 

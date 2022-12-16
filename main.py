@@ -10,12 +10,7 @@ from GUNS import *
 import time as TIME
 from math import *
 
-WIDTH = 1200
-HEIGHT = 600
-
 pg.mixer.init()
-
-
 FPS = 60
 clock = pg.time.Clock()
 time_scale = 1000
@@ -57,7 +52,6 @@ sound_uwu = pg.mixer.Sound('звуки/uwu_final.wav')
 sound_shoot = pg.mixer.Sound('звуки/shoot.wav')
 '''Звук выстрела'''
 
-
 fall_raw = Fall_block_raw(screen)
 spawn_filled = False
 need_clean = False
@@ -98,8 +92,8 @@ while running:
                             pers_2 = Personage(screen, 2)
                             gun = GUN(screen, pers)
                             gun_2 = GUN(screen, pers_2)
-                            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x) )
-                            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x) )
+                            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+                            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
                         elif butt.name == "Racing_lvl":
                             map.map_list = []
                             map.read_map(butt.push_me())
@@ -126,7 +120,6 @@ while running:
     if level_chosen:
         if Color:
             color_time -= 1
-            #print(color_time)
             if color_time == 0:
                 str_map_list = str(map.map_list)
                 if str_map_list.count('6') > str_map_list.count('7'):
@@ -160,13 +153,6 @@ while running:
             game_speed += fall_raw.raw_list[0].accel
         map.map_chase(block, max(pers.x, pers_2.x))
 
-        # map.map_chase(block, pers_2.x)
-        # pers.draw()
-
-        '''
-        (если будете добавлять другие источники смерти,
-        то обозначайте их другими цифрами, чтобы разделять анимаwии)
-        '''
         if pers.died1 == 0:
             '''
             жизнь 1го перса
@@ -205,8 +191,6 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
-            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
-            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
 
             if Kim:
@@ -231,8 +215,6 @@ while running:
 
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
-            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
-            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
@@ -256,8 +238,6 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
-            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
-            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
@@ -278,8 +258,6 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
-            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
-            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
@@ -292,11 +270,6 @@ while running:
             else:
                 map.read_map(racing_lvl_but.push_me())
             game_speed = 1
-
-        # pers_2.move_personage_2(map.map_list)
-        # pers_2.Personage_animation_move_right(block, map)
-        # pers.move_personage(map)
-
         dt = time.get_ticks() - start_time
 
         if TIME.time() - t >= 1:
@@ -320,13 +293,12 @@ while running:
                 bullets.remove(i)
 
         for i in bullets:
-            if (i.x >= pers.x and i.x <= pers.x + pers.width) and (i.y >= pers.y and i.y <= pers.y + pers.height):
+            if pers.x <= i.x <= pers.x + pers.width and pers.y <= i.y <= pers.y + pers.height:
                 bullets.remove(i)
                 pers.Vx += i.Vx
                 pers.Vy += i.Vy
 
-            if (i.x >= pers_2.x and i.x <= pers_2.x + pers_2.width) and (
-                    i.y >= pers_2.y and i.y <= pers_2.y + pers_2.height):
+            if pers_2.x <= i.x <= pers_2.x + pers_2.width and pers_2.y <= i.y <= pers_2.y + pers_2.height:
                 bullets.remove(i)
                 pers_2.Vx += i.Vx
                 pers_2.Vy += i.Vy
@@ -335,10 +307,8 @@ while running:
             if event.type == pg.QUIT:
                 running = False
         if Color:
-            #rect(screen, (40, 120, 0), (500, 30, color_time // 8, 40))
             circle(screen, (20, 60, 0), (600, 80), 30)
-            arc(screen, (180, 100, 80), (600-30, 80-30, 60, 60), 0, 2*pi*(color_time/1200), 5)
-            #pie(screen, (40, 120, 0), (600, 80), 30, 0, (color_time/500)*360)
+            arc(screen, (180, 100, 80), (600 - 30, 80 - 30, 60, 60), 0, 2 * pi * (color_time / 1200), 5)
 
             pg.display.update()
         pg.display.update()
