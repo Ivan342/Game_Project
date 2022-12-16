@@ -94,6 +94,12 @@ while running:
                             level_chosen = True
                             Kim = True
                             Color = False
+                            pers = Personage(screen, 1)
+                            pers_2 = Personage(screen, 2)
+                            gun = GUN(screen, pers)
+                            gun_2 = GUN(screen, pers_2)
+                            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x) )
+                            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x) )
                         elif butt.name == "Racing_lvl":
                             map.map_list = []
                             map.read_map(butt.push_me())
@@ -131,6 +137,8 @@ while running:
 
         screen.blit(field, (0, 0))
         if Kim:
+            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             for raw in fall_raw.raw_list:
                 raw.fall()
                 raw.draw()
@@ -169,8 +177,9 @@ while running:
             pers.collusion_with_red_block1(fall_raw.raw_list)
             pers.draw_HP1()
             pers.HP1()
-            gun.move_gun()
-            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+            if Kim:
+                gun.move_gun()
+                gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
 
         if pers_2.died2 == 0:
             '''
@@ -182,8 +191,9 @@ while running:
             pers_2.collusion_with_red_block2(fall_raw.raw_list)
             pers_2.draw_HP2()
             pers_2.HP2()
-            gun_2.move_gun()
-            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+            if Kim:
+                gun_2.move_gun()
+                gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
 
         if pers.died1 == 1:
             '''
@@ -195,6 +205,8 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
+            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
 
             if Kim:
@@ -216,8 +228,11 @@ while running:
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
+
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
+            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
@@ -241,6 +256,8 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
+            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
@@ -261,6 +278,8 @@ while running:
             pers_2 = Personage(screen, 2)
             gun = GUN(screen, pers)
             gun_2 = GUN(screen, pers_2)
+            gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
+            gun_2.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
             map.map_list = []
             if Kim:
                 fall_raw.raw_list = []
@@ -281,14 +300,14 @@ while running:
         dt = time.get_ticks() - start_time
 
         if TIME.time() - t >= 1:
-            if keyboard.is_pressed('q'):
+            if keyboard.is_pressed('q') and Kim:
                 bullet = Bullet(screen, gun, pers)
                 bullets.append(bullet)
                 t = TIME.time()
                 sound_shoot.play()
 
         if TIME.time() - t_2 >= 1:
-            if keyboard.is_pressed('m'):
+            if keyboard.is_pressed('m') and Kim:
                 bullet = Bullet(screen, gun, pers_2)
                 bullets.append(bullet)
                 t_2 = TIME.time()
