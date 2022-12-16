@@ -12,6 +12,9 @@ import time as TIME
 WIDTH = 1200
 HEIGHT = 600
 
+pg.mixer.init()
+
+
 FPS = 60
 clock = pg.time.Clock()
 time_scale = 1000
@@ -38,6 +41,22 @@ map = MAP()
 Класс прописан level_constructor
 '''
 
+pg.mixer.music.load('звуки/music_menu.wav')
+pg.mixer.music.play(-1)
+flag_start = False
+'''
+Тут делается фоновая музыка. 
+flag_start показывает, что игра перешла от меню, к игре
+'''
+
+sound_fire = pg.mixer.Sound('звуки/fire.wav')
+sound_uwu = pg.mixer.Sound('звуки/uwu_final.wav')
+'''Это звуки когда девочка умирает'''
+
+sound_shoot = pg.mixer.Sound('звуки/shoot.wav')
+'''Звук выстрела'''
+
+
 fall_raw = Fall_block_raw(screen)
 spawn_filled = False
 need_clean = False
@@ -45,7 +64,7 @@ level_chosen = False
 flag = False
 game_speed = 1
 start_time = time.get_ticks()
-field = pg.image.load('фон1.jpg').convert()
+field = pg.image.load('графика/фон1.jpg').convert()
 gun = GUN(screen, pers)
 gun_2 = GUN(screen, pers_2)
 t = 0
@@ -53,7 +72,7 @@ t_2 = 0
 
 bullets = []
 bullets_2 = []
-color_time = 500
+color_time = 2000
 
 while running:
 
@@ -89,6 +108,12 @@ while running:
                         menu_opened = False
 
         pg.display.update()
+
+    if not flag_start:
+        pg.mixer.music.stop()
+        pg.mixer.music.load('звуки/music_game.wav')
+        pg.mixer.music.play(-1)
+        flag_start = True
 
     if level_chosen:
         if Color:
@@ -162,6 +187,7 @@ while running:
             '''
             смерть 1го перса
             '''
+            sound_fire.play()
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
@@ -182,6 +208,8 @@ while running:
             game_speed = 1
 
         if pers.died1 == 3:
+            sound_uwu.play()
+
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
@@ -203,6 +231,7 @@ while running:
             '''
             Смерть 2го перса
             '''
+            sound_fire.play()
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
@@ -220,6 +249,7 @@ while running:
                 map.read_map(racing_lvl_but.push_me())
             game_speed = 1
         if pers_2.died2 == 3:
+            sound_uwu.play()
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
@@ -248,34 +278,38 @@ while running:
                 bullet = Bullet(screen, gun, pers)
                 bullets.append(bullet)
                 t = TIME.time()
+                sound_shoot.play()
 
         if TIME.time() - t_2 >= 1:
             if keyboard.is_pressed('m'):
                 bullet = Bullet(screen, gun, pers_2)
                 bullets.append(bullet)
                 t_2 = TIME.time()
+                sound_shoot.play()
 
         for i in bullets:
             i.move_bullet()
             i.draw_bullet()
-
-        for j in bullets_2:
-            j.move_bullet()
-            j.draw_bullet()
+            if i.collision(map.map_list):
+                bullets.remove(i)
 
         for i in bullets:
             if (i.x >= pers.x and i.x <= pers.x + pers.width) and (i.y >= pers.y and i.y <= pers.y + pers.height):
                 bullets.remove(i)
+                pers.Vx += i.Vx
+                pers.Vy += i.Vy
 
             if (i.x >= pers_2.x and i.x <= pers_2.x + pers_2.width) and (
                     i.y >= pers_2.y and i.y <= pers_2.y + pers_2.height):
                 bullets.remove(i)
+                pers_2.Vx += i.Vx
+                pers_2.Vy += i.Vy
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
         if Color:
-            rect(screen, (40, 120, 0), (500, 30, color_time // 2, 40))
+            rect(screen, (40, 120, 0), (500, 30, color_time // 8, 40))
             pg.display.update()
         pg.display.update()
         clock.tick(FPS)

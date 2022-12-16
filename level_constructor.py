@@ -1,5 +1,6 @@
 import pygame as pg
 from pygame import draw
+from random import randint
 
 
 WIDTH = 1200
@@ -31,18 +32,29 @@ class Block:
         self.screen = screen
         self.length = block_length
         self.screen = screen
-        self.stone = pg.image.load('землятрава.jpg').convert()
+        self.stone = pg.image.load('графика/grass.png').convert_alpha()
         self.grass_box = self.stone.get_rect()
-        self.ground = pg.image.load('земля.jpg').convert()
+        self.ground = pg.image.load('графика/brick_flat.png').convert_alpha()
         self.ground_box = self.stone.get_rect()
-        self.hill_left = pg.image.load('склон_лево.png').convert_alpha()
+        self.finish_flag = pg.image.load('графика/флаг.png').convert_alpha()
         self.hill_box = self.stone.get_rect()
+        self.vine0 = pg.image.load('графика/vine0.png').convert_alpha()
+        self.vine1 = pg.image.load('графика/vine1.png').convert_alpha()
+        self.vine2 = pg.image.load('графика/vine2.png').convert_alpha()
+        self.jump_block = pg.image.load('графика/jump_block.png').convert_alpha()
+        self.death_block = pg.image.load('графика/death.png').convert_alpha()
+        self.brick = pg.image.load('графика/brick.png').convert_alpha()
 
     def draw_block_stone(self, x, y):
         '''
         рисует каменный блок
         '''
         self.screen.blit(self.stone, (x * self.length, y * self.length))
+    def draw_brick(self, x, y):
+        '''
+        рисует каменный блок
+        '''
+        self.screen.blit(self.brick, (x * self.length, y * self.length))
 
     def draw_block_under(self, x, y):
         '''
@@ -51,10 +63,10 @@ class Block:
         self.screen.blit(self.ground, (x * self.length, y * self.length))
 
     def draw_finish_block(self, x, y):
-        draw.rect(self.screen,LIGHT_GREY , (x * self.length, y * self.length, block_length, block_length))
+        self.screen.blit(self.finish_flag, (x * self.length, y * self.length))
 
     def draw_block_jump(self, x, y):
-        draw.rect(self.screen, PURPLE, (x * self.length, y * self.length, block_length, block_length))
+        self.screen.blit(self.jump_block, (x * self.length, y * self.length))
 
     def draw_pers1(self, x, y):
         draw.rect(self.screen, YELLOW, (x * self.length, y * self.length, block_length, block_length))
@@ -63,7 +75,14 @@ class Block:
         draw.rect(self.screen, BLUE, (x * self.length, y * self.length, block_length, block_length))
 
     def draw_deadly_block(self, x, y):
-        draw.rect(self.screen, RED, (x * self.length, y * self.length, block_length, block_length))
+        self.screen.blit(self.death_block, (x * self.length, y * self.length))
+    def draw_vine0_block(self, x, y):
+            self.screen.blit(self.vine0, (x * self.length, y * self.length))
+    def draw_vine1_block(self, x, y):
+            self.screen.blit(self.vine1, (x * self.length, y * self.length))
+    def draw_vine2_block(self, x, y):
+            self.screen.blit(self.vine2, (x * self.length, y * self.length))
+
 
 class MAP:
     """
@@ -92,12 +111,16 @@ class MAP:
 
         Типы блоков:
         1 - блок с травой
-        2 - земля без травы
-        3 - левый склон (удалить)
+        2 - гладкий камень
+        3 - финиш
         4 - пружинный блок
         5 - смертельный блок
         6 - цвет 1 игрока
         7 - цвет 2 игрока
+        8 - лиана 1
+        9 - лиана 2
+        10 - лиана 3
+        11 - кирпич не гладкий
         """
         if int((x + WIDTH / 2) // block_length) + 1 > len(self.map_list[0]):
             draw_distance = int((x + WIDTH / 2) // block_length) - 1
@@ -119,6 +142,18 @@ class MAP:
                     block.draw_pers2(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '5':
                     block.draw_deadly_block(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '8':
+                    block.draw_vine0_block(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '9':
+                    block.draw_vine1_block(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '10':
+                   block.draw_vine2_block(j - (x - WIDTH / 2) / block_length, i)
+                if self.map_list[i][j] == '11':
+                   block.draw_brick(j - (x - WIDTH / 2) / block_length, i)
+
+
+
+
 
 
     def map_chase(self, block, pers_x):

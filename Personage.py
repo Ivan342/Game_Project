@@ -46,21 +46,21 @@ class Personage:
         self.height = 70
         self.onGround = False
         self.direction = False
-        self.img = pg.image.load('girl0.png').convert_alpha()
-        self.img_left = pg.image.load('girl_left2.png').convert_alpha()
-        self.img2 = pg.image.load('2_pers0.png').convert_alpha()
-        self.img_left2 = pg.image.load('2_pers_left0.png').convert_alpha()
+        self.img = pg.image.load('графика/girl0.png').convert_alpha()
+        self.img_left = pg.image.load('графика/girl_left2.png').convert_alpha()
+        self.img2 = pg.image.load('графика/2_pers0.png').convert_alpha()
+        self.img_left2 = pg.image.load('графика/2_pers_left0.png').convert_alpha()
         self.block_jump_speed = 16.3
         self.died1 = 0
         self.died2 = 0
-        self.surf_wasted_img1 = pygame.image.load('wasted1.png').convert_alpha()
-        self.surf_wasted_img2 = pygame.image.load('wasted2.png').convert_alpha()
-        self.surf_wasted_draw = pygame.image.load('draw.png').convert_alpha()
+        self.surf_wasted_img1 = pygame.image.load('графика/wasted1.png').convert_alpha()
+        self.surf_wasted_img2 = pygame.image.load('графика/wasted2.png').convert_alpha()
+        self.surf_wasted_draw = pygame.image.load('графика/draw.png').convert_alpha()
 
         self.power_up = 15
         self.time_after_up = 0
-        self.bar1 = pg.image.load('голова.png').convert_alpha()
-        self.bar2 = pg.image.load('bar2.png').convert_alpha()
+        self.bar1 = pg.image.load('графика/голова.png').convert_alpha()
+        self.bar2 = pg.image.load('графика/bar2.png').convert_alpha()
         self.num = num
         self.Hp1 = 240
         self.Hp2 = 240
@@ -243,7 +243,7 @@ class Personage:
         menu_opened = False
         if self.died1 != 3:
             death_screen = True
-            animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
+            animation_set_explosion = [pygame.image.load(f"графика/explosion{w}.png").convert_alpha() for w in range(0, 8)]
             for i in range(6):
                 self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
                 clock.tick(8)
@@ -336,7 +336,7 @@ class Personage:
         menu_opened = False
         if self.died2 != 3:
             death_screen = True
-            animation_set_explosion = [pygame.image.load(f"explosion{w}.png").convert_alpha() for w in range(0, 10)]
+            animation_set_explosion = [pygame.image.load(f"графика/explosion{w}.png").convert_alpha() for w in range(0, 8)]
             for i in range(6):
                 self.screen.blit(animation_set_explosion[i], (int(self.x), int(self.y)))
                 clock.tick(8)
@@ -493,8 +493,8 @@ class Personage:
         анимация бега вправо и лево, стояния на месте
         '''
         global w
-        animation_set = [pygame.image.load(f"girl{w}.png").convert_alpha() for w in range(0, 9)]
-        animation_set_left = [pygame.image.load(f"girl_left{w}.png").convert_alpha() for w in range(0, 9)]
+        animation_set = [pygame.image.load(f"графика/girl{w}.png").convert_alpha() for w in range(0, 9)]
+        animation_set_left = [pygame.image.load(f"графика/girl_left{w}.png").convert_alpha() for w in range(0, 9)]
         if self.Vx > 0:
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
@@ -565,8 +565,8 @@ class Personage:
         анимация бега вправо и лево, стояния на месте
         '''
         global w
-        animation_set2 = [pygame.image.load(f"2_pers{w}.png").convert_alpha() for w in range(0, 8)]
-        animation_set_left2 = [pygame.image.load(f"2_pers_left{w}.png").convert_alpha() for w in range(0, 8)]
+        animation_set2 = [pygame.image.load(f"графика/2_pers{w}.png").convert_alpha() for w in range(0, 8)]
+        animation_set_left2 = [pygame.image.load(f"графика/2_pers_left{w}.png").convert_alpha() for w in range(0, 8)]
         if self.Vx > 0:
             if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik.map_list[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:

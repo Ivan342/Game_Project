@@ -17,7 +17,7 @@ class Fall_block_raw():
         self.block_pos = [randint(0, 7) for i in range(int(WIDTH / self.length))]
         self.y = -self.length
         self.vy = 0
-        self.bomb = pg.image.load('kimm.png').convert_alpha()
+        self.bomb = pg.image.load('графика/kimm.png').convert_alpha()
 
     def new_raw(self, screen, vely):
         """

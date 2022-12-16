@@ -18,8 +18,8 @@ class GUN():
         self.y = self.pers.y + self.pers.height / 2
         self.Vy = pers.Vy
         self.Vx = pers.Vx
-        self.img_right = pg.image.load('girl_new_right.png').convert_alpha()
-        self.img_left = pg.image.load('girl_new_left.png').convert_alpha()
+        self.img_right = pg.image.load('графика/girl_new_right.png').convert_alpha()
+        self.img_left = pg.image.load('графика/girl_new_left.png').convert_alpha()
         self.napr = False
 
     def draw_gun(self, block, mapik, max_pers_x):

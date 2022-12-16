@@ -24,7 +24,7 @@ class Menu:
     """
     def __init__(self):
         self.buttons = []
-        self.menu_field =pg.image.load('фон меню.png').convert_alpha()
+        self.menu_field =pg.image.load('графика/фон меню.png').convert_alpha()
 
     def put_button(self, button):
         self.buttons.append(button)
