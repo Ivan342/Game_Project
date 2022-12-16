@@ -15,6 +15,7 @@ block_length = 40
 PURPLE = (154, 50, 205)
 YELLOW = (200, 200, 0)
 BLUE = (0, 0, 200)
+VIOLET = (120, 100, 255)
 
 TIME_COLOR = GREY
 
@@ -78,13 +79,13 @@ class Block:
         '''
         рисует блок перекрашенный первым персонажем
         '''
-        draw.rect(self.screen, YELLOW, (x * self.length, y * self.length, block_length, block_length))
+        draw.rect(self.screen, VIOLET, (x * self.length, y * self.length, block_length, block_length))
 
     def draw_pers2(self, x, y):
         '''
         рисует блок перекрашенный вторым персонажем
         '''
-        draw.rect(self.screen, BLUE, (x * self.length, y * self.length, block_length, block_length))
+        draw.rect(self.screen, PURPLE, (x * self.length, y * self.length, block_length, block_length))
 
     def draw_deadly_block(self, x, y):
         '''
