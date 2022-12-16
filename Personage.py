@@ -112,8 +112,6 @@ class Personage:
             self.Hp2 = max_HP2
         if self.Hp2 < 0:
             self.died2 = 3
-
-        # print(HP2)
         self.screen.blit(self.bar2, (1200 - 255, 500))
 
     def draw_HP2(self):
