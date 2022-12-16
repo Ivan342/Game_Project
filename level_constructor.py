@@ -2,7 +2,6 @@ import pygame as pg
 from pygame import draw
 from random import randint
 
-
 WIDTH = 1200
 HEIGHT = 900
 
@@ -50,6 +49,7 @@ class Block:
         рисует каменный блок
         '''
         self.screen.blit(self.stone, (x * self.length, y * self.length))
+
     def draw_brick(self, x, y):
         '''
         рисует каменный блок
@@ -63,29 +63,57 @@ class Block:
         self.screen.blit(self.ground, (x * self.length, y * self.length))
 
     def draw_finish_block(self, x, y):
+        '''
+        рисует блок финиша
+        '''
         self.screen.blit(self.finish_flag, (x * self.length, y * self.length))
 
     def draw_block_jump(self, x, y):
+        '''
+        рисует прыгучий блок
+        '''
         self.screen.blit(self.jump_block, (x * self.length, y * self.length))
 
     def draw_pers1(self, x, y):
+        '''
+        рисует блок перекрашенный первым персонажем
+        '''
         draw.rect(self.screen, YELLOW, (x * self.length, y * self.length, block_length, block_length))
 
     def draw_pers2(self, x, y):
+        '''
+        рисует блок перекрашенный вторым персонажем
+        '''
         draw.rect(self.screen, BLUE, (x * self.length, y * self.length, block_length, block_length))
 
     def draw_deadly_block(self, x, y):
+        '''
+        рисует смертульный блок
+        '''
         self.screen.blit(self.death_block, (x * self.length, y * self.length))
+
     def draw_vine0_block(self, x, y):
-            self.screen.blit(self.vine0, (x * self.length, y * self.length))
+        '''
+        рисует лиану 0
+        '''
+        self.screen.blit(self.vine0, (x * self.length, y * self.length))
+
     def draw_vine1_block(self, x, y):
-            self.screen.blit(self.vine1, (x * self.length, y * self.length))
+        '''
+        рисует лиану 1
+        '''
+        self.screen.blit(self.vine1, (x * self.length, y * self.length))
+
     def draw_vine2_block(self, x, y):
-            self.screen.blit(self.vine2, (x * self.length, y * self.length))
+        '''
+        рисует лиану 2
+        '''
+        self.screen.blit(self.vine2, (x * self.length, y * self.length))
 
 
 class MAP:
     """
+    Создание класса карты
     """
 
     def __init__(self):
@@ -148,14 +176,9 @@ class MAP:
                 if self.map_list[i][j] == '9':
                     block.draw_vine1_block(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '10':
-                   block.draw_vine2_block(j - (x - WIDTH / 2) / block_length, i)
+                    block.draw_vine2_block(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '11':
-                   block.draw_brick(j - (x - WIDTH / 2) / block_length, i)
-
-
-
-
-
+                    block.draw_brick(j - (x - WIDTH / 2) / block_length, i)
 
     def map_chase(self, block, pers_x):
         """
@@ -164,7 +187,7 @@ class MAP:
         :param pers_x:
         :return:
         """
-        if pers_x >= WIDTH / 2 and pers_x <= len(self.map_list[0]) * block.length - WIDTH / 2:
+        if WIDTH / 2 <= pers_x <= len(self.map_list[0]) * block.length - WIDTH / 2:
             self.draw_map(block, pers_x)
         elif pers_x < WIDTH / 2:
             self.draw_map(block, WIDTH / 2)
