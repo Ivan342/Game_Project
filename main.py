@@ -18,7 +18,7 @@ pg.mixer.init()
 
 FPS = 60
 clock = pg.time.Clock()
-time_scale = 1000
+time_scale = 800
 pg.init()
 WIDTH = 1200
 HEIGHT = 600

@@ -50,7 +50,7 @@ class Personage:
         self.img_left = pg.image.load('графика/girl_left2.png').convert_alpha()
         self.img2 = pg.image.load('графика/2_pers0.png').convert_alpha()
         self.img_left2 = pg.image.load('графика/2_pers_left0.png').convert_alpha()
-        self.block_jump_speed = 16.3
+        self.block_jump_speed = 23
         self.died1 = 0
         self.died2 = 0
         self.surf_wasted_img1 = pygame.image.load('графика/wasted1.png').convert_alpha()
@@ -692,8 +692,8 @@ class Personage:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40 + 1):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-
-                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
+                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
+                    #if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
                         self.x = j * 40 - self.width
                         # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         # print(i, j)
@@ -708,7 +708,7 @@ class Personage:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
+                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
                         self.x = (j + 1) * 40
                         if Painting:
                             if self.num == 1:
@@ -728,7 +728,7 @@ class Personage:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 20, 20))  # отладка
-                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
+                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
                         self.y = i * 40 - self.height
                         # self.Vy = 0
                         self.onGround = True
@@ -746,7 +746,7 @@ class Personage:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height - 1) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
+                    if (map[i][j] not in ["0", "5", "3", "8", "9", "10"]):
                         self.y = (i + 1) * 40
                         self.Vy = 0
                         if Painting:
