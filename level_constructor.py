@@ -50,11 +50,8 @@ class Block:
         '''
         self.screen.blit(self.ground, (x * self.length, y * self.length))
 
-    def draw_block_hill_left(self, x, y):
-        '''
-        рисует блок склона(левого)
-        '''
-        self.screen.blit(self.hill_left, (x * self.length, y * self.length))
+    def draw_finish_block(self, x, y):
+        draw.rect(self.screen,LIGHT_GREY , (x * self.length, y * self.length, block_length, block_length))
 
     def draw_block_jump(self, x, y):
         draw.rect(self.screen, PURPLE, (x * self.length, y * self.length, block_length, block_length))
@@ -113,7 +110,7 @@ class MAP:
                 if self.map_list[i][j] == '2':
                     block.draw_block_under(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '3':
-                    block.draw_block_hill_left(j - (x - WIDTH / 2) / block_length, i)
+                    block.draw_finish_block(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '4':
                     block.draw_block_jump(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '6':

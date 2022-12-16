@@ -173,6 +173,7 @@ class Personage:
         self.Collision_x(map, Painting)
 
         self.Collision_with_death_block(map)
+        self.Collision_with_finish_block(map)
 
         # print(self.onGround)
         # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
@@ -481,6 +482,7 @@ class Personage:
         self.Collision_x(map, Painting)
 
         self.Collision_with_death_block(map)
+        self.Collision_with_finish_block(map)
 
         # pg.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height)) # отладка
 
@@ -650,11 +652,32 @@ class Personage:
                         self.died1 = 3
                     else:
                         self.died2 = 3
+
         # по горизонтали
         for j in range(int(self.x + 2) // 40, (int(self.x) + self.width - 2) // 40 + 1):
             for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
                 #pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                 if map[i][j] == '5':
+                    if self.num == 1:
+                        self.died1 = 3
+                    else:
+                        self.died2 = 3
+    def Collision_with_finish_block(self,map):
+        # по вертикали
+        for j in range(int(self.x + 22) // 40, (int(self.x) + self.width - 22) // 40 + 1):
+            for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
+                # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                if map[i][j] == '3':
+                    if self.num == 1:
+                        self.died1 = 3
+                    else:
+                        self.died2 = 3
+
+        # по горизонтали
+        for j in range(int(self.x + 2) // 40, (int(self.x) + self.width - 2) // 40 + 1):
+            for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
+                # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
+                if map[i][j] == '3':
                     if self.num == 1:
                         self.died1 = 3
                     else:
@@ -670,7 +693,7 @@ class Personage:
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
 
-                    if (map[i][j] != '0') and (map[i][j] != '5'):
+                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
                         self.x = j * 40 - self.width
                         # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10)) # отладка
                         # print(i, j)
@@ -685,7 +708,7 @@ class Personage:
             for j in range(int(self.x) // 40, (int(self.x) + self.width) // 40):
                 for i in range(int(self.y + 1) // 40, (int(self.y - 1) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if (map[i][j] != '0') and (map[i][j] != '5'):
+                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
                         self.x = (j + 1) * 40
                         if Painting:
                             if self.num == 1:
@@ -705,7 +728,7 @@ class Personage:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 20, 20))  # отладка
-                    if (map[i][j] != '0') and (map[i][j] != '5'):
+                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
                         self.y = i * 40 - self.height
                         # self.Vy = 0
                         self.onGround = True
@@ -723,7 +746,7 @@ class Personage:
             for j in range(int(self.x + 1) // 40, (int(self.x - 1) + self.width) // 40 + 1):
                 for i in range(int(self.y) // 40, (int(self.y) + self.height - 1) // 40 + 1):
                     # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
-                    if (map[i][j] != '0') and (map[i][j] != '5'):
+                    if (map[i][j] != '0') and (map[i][j] != '5') and (map[i][j] != '3'):
                         self.y = (i + 1) * 40
                         self.Vy = 0
                         if Painting:
