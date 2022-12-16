@@ -31,9 +31,9 @@ class Block:
         self.screen = screen
         self.length = block_length
         self.screen = screen
-        self.stone = pg.image.load('block_1.png').convert()
+        self.stone = pg.image.load('землятрава.jpg').convert()
         self.grass_box = self.stone.get_rect()
-        self.ground = pg.image.load('block_2 (1).png').convert()
+        self.ground = pg.image.load('земля.jpg').convert()
         self.ground_box = self.stone.get_rect()
         self.hill_left = pg.image.load('склон_лево.png').convert_alpha()
         self.hill_box = self.stone.get_rect()

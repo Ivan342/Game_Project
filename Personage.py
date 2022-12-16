@@ -60,7 +60,7 @@ class Personage:
         self.power_up = 15
         self.time_after_up = 0
         self.bar1 = pg.image.load('голова.png').convert_alpha()
-        self.bar2 = pg.image.load('голова2.png').convert_alpha()
+        self.bar2 = pg.image.load('bar2.png').convert_alpha()
         self.num = num
         self.Hp1 = 240
         self.Hp2 = 240
@@ -124,7 +124,7 @@ class Personage:
         '''
         рисуем жизни
         '''
-        rect(self.screen, (120, 100, 255), (1200 - 118 - self.Hp2 // 1.87, 530,self.Hp2 // 1.87, 40))
+        rect(self.screen, (200, 100, 200), (1200 - 118 - self.Hp2 // 1.87, 530,self.Hp2 // 1.87, 40))
 
     def move_personage(self, map, Painting):
         g = 0.15
