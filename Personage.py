@@ -122,6 +122,9 @@ class Personage:
 
     def move_personage(self, map, Painting):
         g = 0.3
+        '''
+        Отвечает за движение персонажа
+        '''
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
                 self.Vy = -5
@@ -163,6 +166,9 @@ class Personage:
         return 0
 
     def draw_animations(self):
+        '''
+        анимация ничьи
+        '''
         global w, my_time, prozrachost
         death_screen = True
         death_menu = Menu()
@@ -418,6 +424,9 @@ class Personage:
                                 self.died2 = 1
 
     def move_personage_2(self, map, Painting):
+        '''
+        Движение 2го перса
+        '''
         g = 0.3
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('up_arrow') and self.time_after_up < 20:
@@ -612,6 +621,9 @@ class Personage:
             w = 0
 
     def Collision_with_death_block(self, map):
+        '''
+        проверка пересечения со смертельными блоками
+        '''
         for j in range(int(self.x + 22) // 40, (int(self.x) + self.width - 22) // 40 + 1):
             for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
                 if map[i][j] == '5':
@@ -628,6 +640,9 @@ class Personage:
                         self.died2 = 3
 
     def Collision_with_finish_block(self, map):
+        '''
+        проверка пересечения со смертельными блоками
+        '''
         for j in range(int(self.x + 22) // 40, (int(self.x) + self.width - 22) // 40 + 1):
             for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
                 if map[i][j] == '3':
