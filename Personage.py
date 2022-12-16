@@ -124,15 +124,6 @@ class Personage:
 
     def move_personage(self, map, Painting):
         g = 0.3
-        '''
-        if keyboard.is_pressed('w'):
-            if self.onGround and self.power_up <= 37:
-                self.power_up += 1
-        if ( not keyboard.is_pressed('w') ) and self.power_up != 10 and self.onGround:
-            self.Vy = -1*12*(self.power_up / 60)
-            self.power_up = 0
-            self.onGround = False
-        '''
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
                 self.Vy = -5
