@@ -18,7 +18,7 @@ pg.mixer.init()
 
 FPS = 60
 clock = pg.time.Clock()
-time_scale = 800
+time_scale = 1000
 pg.init()
 WIDTH = 1200
 HEIGHT = 600
@@ -73,14 +73,7 @@ t_2 = 0
 
 bullets = []
 bullets_2 = []
-color_time = 2000
-
-def pie(scr,color,center,radius,start_angle,stop_angle):
-    theta=start_angle
-    while theta <= stop_angle:
-        pygame.draw.line(scr,color,center,
-        (center[0]+radius*cos(radians(theta)),center[1]+radius*sin(radians(theta))),2)
-        theta+=0.01
+color_time = 1200
 
 while running:
 
@@ -113,6 +106,7 @@ while running:
                             level_chosen = True
                             Kim = False
                             Color = True
+                            color_time = 1200
                         menu_opened = False
 
         pg.display.update()
@@ -133,7 +127,7 @@ while running:
                     pers_2.died2 = 3
                 else:
                     pers.died1 = 3
-                color_time = 500
+                color_time = 1200
 
         screen.blit(field, (0, 0))
         if Kim:
@@ -209,6 +203,7 @@ while running:
                 spawn_filled = False
                 map.read_map(fal_block_lvl_but.push_me())
             elif Color:
+                color_time = 1200
                 map.read_map(color_battle_lvl_but.push_me())
             else:
                 map.read_map(racing_lvl_but.push_me())
@@ -230,6 +225,7 @@ while running:
                 spawn_filled = False
                 map.read_map(fal_block_lvl_but.push_me())
             elif Color:
+                color_time = 1200
                 map.read_map(color_battle_lvl_but.push_me())
             else:
                 map.read_map(racing_lvl_but.push_me())
@@ -252,6 +248,7 @@ while running:
                 spawn_filled = False
                 map.read_map(fal_block_lvl_but.push_me())
             elif Color:
+                color_time = 1200
                 map.read_map(color_battle_lvl_but.push_me())
             else:
                 map.read_map(racing_lvl_but.push_me())
@@ -271,6 +268,7 @@ while running:
                 spawn_filled = False
                 map.read_map(fal_block_lvl_but.push_me())
             elif Color:
+                color_time = 1200
                 map.read_map(color_battle_lvl_but.push_me())
             else:
                 map.read_map(racing_lvl_but.push_me())
@@ -318,11 +316,11 @@ while running:
             if event.type == pg.QUIT:
                 running = False
         if Color:
-            rect(screen, (40, 120, 0), (500, 30, color_time // 8, 40))
-            #circle(screen, (40, 120, 0), (600, 80), 30)
-            #arc(screen, (120, 60, 0), [600 - 30,600 + 30,80 - 30,80 + 30], pi/2, pi, 2)
+            #rect(screen, (40, 120, 0), (500, 30, color_time // 8, 40))
+            circle(screen, (20, 60, 0), (600, 80), 30)
+            arc(screen, (180, 100, 80), (600-30, 80-30, 60, 60), 0, 2*pi*(color_time/1200), 5)
             #pie(screen, (40, 120, 0), (600, 80), 30, 0, (color_time/500)*360)
-            #rect(screen, (40, 120, 0), (500, 30, color_time // 2, 40))
+
             pg.display.update()
         pg.display.update()
         clock.tick(FPS)
