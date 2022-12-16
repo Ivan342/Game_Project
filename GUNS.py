@@ -23,11 +23,14 @@ class GUN():
         self.napr = False
 
     def draw_gun(self, block, mapik, max_pers_x):
+        """
+        Отрисовка пушки
+        """
         self.x = self.pers.x
         self.y = self.pers.y
         self.napr = self.pers.direction
         if not self.napr:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
+            if WIDTH / 2 <= max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(self.img_right,
@@ -48,7 +51,7 @@ class GUN():
                                   int(self.y + self.pers.height / 2)))
 
         if self.napr:
-            if max_pers_x >= WIDTH / 2 and max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
+            if WIDTH / 2 <= max_pers_x <= len(mapik[0]) * block.length - WIDTH / 2:
                 if self.x == max_pers_x:
 
                     self.screen.blit(self.img_left, (
@@ -70,6 +73,9 @@ class GUN():
                                      self.pers.width * 0.55 - self.width), int(self.y + self.pers.height / 2)))
 
     def move_gun(self):
+        """
+        Следование пушки за персонажем
+        """
         self.napr = self.pers.direction
 
         # print(self.napr)
