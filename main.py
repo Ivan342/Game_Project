@@ -8,6 +8,7 @@ from Falling_blocks import *
 from Menu import *
 from GUNS import *
 import time as TIME
+from math import *
 
 WIDTH = 1200
 HEIGHT = 600
@@ -73,6 +74,13 @@ t_2 = 0
 bullets = []
 bullets_2 = []
 color_time = 2000
+
+def pie(scr,color,center,radius,start_angle,stop_angle):
+    theta=start_angle
+    while theta <= stop_angle:
+        pygame.draw.line(scr,color,center,
+        (center[0]+radius*cos(radians(theta)),center[1]+radius*sin(radians(theta))),2)
+        theta+=0.01
 
 while running:
 
@@ -207,7 +215,7 @@ while running:
 
             game_speed = 1
 
-        if pers.died1 == 3:
+        if (pers.died1 == 3) or (pers_2.died1 == 3):
             sound_uwu.play()
 
             running, map_chosen, menu_opened = pers.death_animations1()
@@ -248,7 +256,8 @@ while running:
             else:
                 map.read_map(racing_lvl_but.push_me())
             game_speed = 1
-        if pers_2.died2 == 3:
+
+        if (pers_2.died2 == 3) or (pers.died2 == 3):
             sound_uwu.play()
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
@@ -310,6 +319,10 @@ while running:
                 running = False
         if Color:
             rect(screen, (40, 120, 0), (500, 30, color_time // 8, 40))
+            #circle(screen, (40, 120, 0), (600, 80), 30)
+            #arc(screen, (120, 60, 0), [600 - 30,600 + 30,80 - 30,80 + 30], pi/2, pi, 2)
+            #pie(screen, (40, 120, 0), (600, 80), 30, 0, (color_time/500)*360)
+            #rect(screen, (40, 120, 0), (500, 30, color_time // 2, 40))
             pg.display.update()
         pg.display.update()
         clock.tick(FPS)
