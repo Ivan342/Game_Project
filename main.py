@@ -15,8 +15,6 @@ FPS = 60
 clock = pg.time.Clock()
 time_scale = 1000
 pg.init()
-WIDTH = 1200
-HEIGHT = 600
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 running = True
 block = Block(screen)
