@@ -11,10 +11,10 @@ class Fall_block_raw():
 
     def __init__(self, screen):
         self.length = 40
-        self.accel = 0.0005
+        self.accel = 0.0017
         self.raw_list = []
         self.screen = screen
-        self.block_pos = [randint(0, 10) for i in range(int(WIDTH / self.length))]
+        self.block_pos = [randint(0, 7) for i in range(int(WIDTH / self.length))]
         self.y = -self.length
         self.vy = 0
         self.bomb = pg.image.load('kimm.png').convert_alpha()
@@ -30,11 +30,6 @@ class Fall_block_raw():
         new_raw = Fall_block_raw(screen)
         new_raw.vy = vely
         self.raw_list.append(new_raw)
-
-
-
-
-
 
 
     def fall(self):

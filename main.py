@@ -93,7 +93,7 @@ while running:
     if level_chosen:
         if Color:
             color_time -= 1
-            print(color_time)
+            #print(color_time)
             if color_time == 0:
                 str_map_list = str(map.map_list)
                 if str_map_list.count('6') > str_map_list.count('7'):

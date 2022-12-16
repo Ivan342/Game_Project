@@ -119,7 +119,6 @@ class Personage:
         #print(HP2)
         self.screen.blit(self.bar2, (1200-255, 500))
 
-
     def draw_HP2(self):
         '''
         рисуем жизни
@@ -127,7 +126,7 @@ class Personage:
         rect(self.screen, (200, 100, 200), (1200 - 118 - self.Hp2 // 1.87, 530,self.Hp2 // 1.87, 40))
 
     def move_personage(self, map, Painting):
-        g = 0.15
+        g = 0.3
         '''
         if keyboard.is_pressed('w'):
             if self.onGround and self.power_up <= 37:
@@ -140,7 +139,7 @@ class Personage:
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('w') and self.time_after_up < 20:
 
-                self.Vy = -4
+                self.Vy = -5
                 self.onGround = False
                 self.time_after_up += 1
 
@@ -445,10 +444,10 @@ class Personage:
                                 self.died2 = 1
 
     def move_personage_2(self, map, Painting):
-        g = 0.15
+        g = 0.3
         if self.Vy < 0 or self.onGround:
             if keyboard.is_pressed('up_arrow') and self.time_after_up < 20:
-                self.Vy = -4
+                self.Vy = -5
                 self.onGround = False
                 self.time_after_up += 1
 
