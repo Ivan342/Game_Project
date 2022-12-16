@@ -2,10 +2,11 @@ import pygame as pg
 from pygame.draw import *
 from level_constructor import *
 from random import randint
-from Personage import*
+from Personage import *
 
 raw_list = []
 list_pos_x = []
+
 
 class Fall_block_raw():
 
@@ -31,7 +32,6 @@ class Fall_block_raw():
         new_raw.vy = vely
         self.raw_list.append(new_raw)
 
-
     def fall(self):
         """
         Падение блоков
@@ -45,10 +45,10 @@ class Fall_block_raw():
         Отрисовка блоков
         :return:
         """
-        #print(self.block_pos)
+        # print(self.block_pos)
         for i in range(len(self.block_pos)):
             if self.block_pos[i] == 0:
-                self.screen.blit(self.bomb, ((i * self.length, self.y-20), (self.length, self.length)))
+                self.screen.blit(self.bomb, ((i * self.length, self.y - 20), (self.length, self.length)))
 
     def clear(self):
         """
