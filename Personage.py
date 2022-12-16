@@ -668,7 +668,7 @@ class Personage:
             for i in range(int(self.y - 1) // 40, (int(self.y) + self.height + 1) // 40 + 1):
                 # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                 if map[i][j] == '3':
-                    if self.num == 1:
+                    if self.num == 2:
                         self.died1 = 3
                     else:
                         self.died2 = 3
@@ -678,7 +678,7 @@ class Personage:
             for i in range(int(self.y + 10) // 40, (int(self.y) + self.height - 10) // 40 + 1):
                 # pg.draw.rect(self.screen, "black", (j * 40, i * 40, 10, 10))  # отладка
                 if map[i][j] == '3':
-                    if self.num == 1:
+                    if self.num == 2:
                         self.died1 = 3
                     else:
                         self.died2 = 3

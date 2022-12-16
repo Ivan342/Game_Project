@@ -181,7 +181,7 @@ while running:
 
             game_speed = 1
 
-        if pers.died1 == 3:
+        if (pers.died1 == 3) or (pers_2.died1 == 3):
             running, map_chosen, menu_opened = pers.death_animations1()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
@@ -219,7 +219,8 @@ while running:
             else:
                 map.read_map(racing_lvl_but.push_me())
             game_speed = 1
-        if pers_2.died2 == 3:
+
+        if (pers_2.died2 == 3) or (pers.died2 == 3):
             running, map_chosen, menu_opened = pers_2.death_animations2()
             pers = Personage(screen, 1)
             pers_2 = Personage(screen, 2)
