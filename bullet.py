@@ -10,6 +10,9 @@ GREY = (100, 100, 100)
 
 class Bullet:
     def __init__(self, screen, gun, pers):
+        """
+        Инициализация пули
+        """
         self.gun = gun
         self.pers = pers
         self.screen = screen
@@ -30,6 +33,9 @@ class Bullet:
         self.bullet_img = pg.image.load('графика/bullet.png').convert_alpha()
 
     def move_bullet(self):
+        """
+        Движение пули
+        """
         g = 0.15
         self.Vy = self.Vy_after_shot
         if self.direction:
@@ -44,10 +50,15 @@ class Bullet:
             self.y += self.Vy
 
     def draw_bullet(self):
-        #self.bullet_img = pg.transform.scale(self.bullet_img, (self.width_img, self.height_img))
+        """
+        Отрисовка пули
+        """"
         self.screen.blit(self.bullet_img, (self.x, self.y))
 
     def direction_of_the_shot(self):
+        """
+        Определение направления, в котором вылетает пуля
+        """
         if self.pers.Vx > 0:
             self.x = self.pers.x + self.pers.width / 3 + self.gun.width - 60
             self.y = self.pers.y + self.pers.height / 2 - 25
@@ -56,6 +67,9 @@ class Bullet:
             self.y = self.pers.y + self.pers.height / 2 - 25
 
     def collision(self, map):
+        """
+        Столкновение пули с картой
+        """
         i = int(self.y) // 40
         j = int(self.x) // 40
         if map[i][j] != '0':
