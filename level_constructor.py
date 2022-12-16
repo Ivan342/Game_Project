@@ -31,18 +31,18 @@ class Block:
         self.screen = screen
         self.length = block_length
         self.screen = screen
-        self.grass = pg.image.load('землятрава.jpg').convert()
-        self.grass_box = self.grass.get_rect()
-        self.ground = pg.image.load('земля.jpg').convert()
-        self.ground_box = self.grass.get_rect()
+        self.stone = pg.image.load('block_1.png').convert()
+        self.grass_box = self.stone.get_rect()
+        self.ground = pg.image.load('block_2 (1).png').convert()
+        self.ground_box = self.stone.get_rect()
         self.hill_left = pg.image.load('склон_лево.png').convert_alpha()
-        self.hill_box = self.grass.get_rect()
+        self.hill_box = self.stone.get_rect()
 
-    def draw_block_grass(self, x, y):
+    def draw_block_stone(self, x, y):
         '''
-        рисует блок с травой
+        рисует каменный блок
         '''
-        self.screen.blit(self.grass, (x * self.length, y * self.length))
+        self.screen.blit(self.stone, (x * self.length, y * self.length))
 
     def draw_block_under(self, x, y):
         '''
@@ -109,7 +109,7 @@ class MAP:
         for i in range(len(self.map_list)):
             for j in range(int((x - WIDTH / 2) // block_length), draw_distance + 1):
                 if self.map_list[i][j] == '1':
-                    block.draw_block_grass(j - (x - WIDTH / 2) / block_length, i)
+                    block.draw_block_stone(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '2':
                     block.draw_block_under(j - (x - WIDTH / 2) / block_length, i)
                 if self.map_list[i][j] == '3':

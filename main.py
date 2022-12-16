@@ -48,7 +48,6 @@ start_time = time.get_ticks()
 field = pg.image.load('фон1.jpg').convert()
 gun = GUN(screen, pers)
 gun_2 = GUN(screen, pers_2)
-
 t = 0
 t_2 = 0
 
@@ -93,7 +92,7 @@ while running:
 
     if level_chosen:
         if Color:
-            color_time-=1
+            color_time -= 1
             print(color_time)
             if color_time == 0:
                 str_map_list = str(map.map_list)
@@ -115,8 +114,6 @@ while running:
 
                 else:
                     spawn_filled = False
-
-
 
             if not spawn_filled:
                 fall_raw.new_raw(screen, game_speed)
@@ -147,7 +144,6 @@ while running:
             pers.HP1()
             gun.move_gun()
             gun.draw_gun(block, map.map_list, max(pers.x, pers_2.x))
-
 
         if pers_2.died2 == 0:
             '''
@@ -203,9 +199,6 @@ while running:
                 map.read_map(racing_lvl_but.push_me())
             game_speed = 1
 
-
-
-
         if pers_2.died2 == 1:
             '''
             Смерть 2го перса
@@ -244,17 +237,11 @@ while running:
                 map.read_map(racing_lvl_but.push_me())
             game_speed = 1
 
-
-
-
-    #pers_2.move_personage_2(map.map_list)
-    #pers_2.Personage_animation_move_right(block, map)
-    #pers.move_personage(map)
-
-
+        # pers_2.move_personage_2(map.map_list)
+        # pers_2.Personage_animation_move_right(block, map)
+        # pers.move_personage(map)
 
         dt = time.get_ticks() - start_time
-
 
         if TIME.time() - t >= 1:
             if keyboard.is_pressed('q'):
@@ -276,15 +263,12 @@ while running:
             j.move_bullet()
             j.draw_bullet()
 
-
-
         for i in bullets:
             if (i.x >= pers.x and i.x <= pers.x + pers.width) and (i.y >= pers.y and i.y <= pers.y + pers.height):
-                #print('huuuuuuuuuuuuuuuuuuuuy')
                 bullets.remove(i)
 
-            if (i.x >= pers_2.x and i.x <= pers_2.x + pers_2.width) and (i.y >= pers_2.y and i.y <= pers_2.y + pers_2.height):
-                #print('huuuuuuuuuuuuuuuuuuuuy')
+            if (i.x >= pers_2.x and i.x <= pers_2.x + pers_2.width) and (
+                    i.y >= pers_2.y and i.y <= pers_2.y + pers_2.height):
                 bullets.remove(i)
 
         for event in pg.event.get():
